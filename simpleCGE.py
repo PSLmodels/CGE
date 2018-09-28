@@ -1,4 +1,4 @@
-#import PAMS
+#import packages
 import scipy.optimize as opt
 import numpy as np
 import pandas as pd
@@ -6,7 +6,6 @@ from pandas import Series, DataFrame
 
 #load social accounting matrix
 sam = pd.read_excel('SAM.xlsx')
-sam = DataFrame(sam)
 
 #declare sets
 u = ('AGR', 'OIL', 'IND', 'SER', 'LAB', 'CAP', 'LAND', 'NTR',
@@ -127,146 +126,6 @@ hinc = Ff0.sum() #household income
 
 
 
-#Model equations
-
-
-def eqpy(b, F, beta, Y):
-    py_error = Y - b * (F ** beta).prod(axis=0)
-    return py_error
-
-def eqF(beta, py, Y, pf):
-    F = beta.div(pf, axis = 0) * Y * py
-    return F
-
-def eqX(ax, Z):
-    X = ax * Z
-    return X
-
-def eqY(ay, Z):
-    Y = ay * Z
-    return Y
-
-def eqpz(ay, ax, py, pq):
-    pz = ay * py + (ax * pq).sum(axis = 0)
-    return pz
-
-def eqTd(taud, pf, Ff):
-    Td = taud * (pf * Ff).sum()
-    return Td
-
-def eqTrf(tautr, pf, Ff):
-    Trf = tautr * pf['LAB'] * Ff['LAB']
-    return Trf
-
-def eqTz(tauz, pz, Z):
-    Tz = tauz * pz * Z
-    return Tz
-
-def eqTm(taum, pm, M):
-    Tm = taum * pm * M
-    return Tm
-
-def eqXg(mu, XXg):
-    Xg = mu * XXg.values
-    return Xg
-
-def eqXv(lam, XXv):
-    Xv = lam * XXv.values
-    return Xv
-
-def eqXXv(g, Kk):
-    XXv = g * Kk
-    return XXv
-
-def eqSp(ssp, pf, Ff, Fsh, Trf):
-    Sp = ssp * ( (pf * Ff).sum() - Fsh + Trf )
-    return Sp
-
-def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
-    Sg = Td + Tz.sum() + Tm.sum() - (Trf + XXg * (mu * pq).sum())
-    return Sg
-
-def eqFsh(R, Kf, er):
-    Fsh = R * Kf * er
-    return Fsh
-
-def eqKd(g, Sp, lam, pq):
-    Kd = Sp / (g * (lam * pq).sum())
-    return Kd
-
-def eqKf(Kk, Kd):
-    Kf = Kk - Kd
-    return Kf
-
-def eqKk(pf, Ff, R, lam, pq):
-#    R = ( (pf['CAP'] * Ff['CAP']) / Kk) / ((lam * pq).sum())
-    Kk = (pf['CAP'] * Ff['CAP']) / (R * ( (lam * pq).sum() ))
-    return Kk
-
-def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
-    Xp = alpha * ((pf * Ff).sum() - Sp - Td - Fsh + Trf) / pq
-    return Xp
-
-def eqpe(er, pWe):
-    pe = er * pWe
-    return pe
-
-def eqpm(er, pWm):
-    pm = er * pWm
-    return pm
-
-def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
-    bop_error = (pWe * E).sum() + Sf / er - ( (pWm * M).sum() + Fsh / er)
-    return bop_error
-
-def eqSf(g, lam, pq, Kf):
-    Sf = g * Kf * (lam * pq).sum()
-    return Sf
-
-def eqQ(gamma, deltam, deltad, eta, M, D):
-    Q = gamma * (deltam * M ** eta + deltad * D ** eta) ** (1 / eta)
-    return Q
-
-def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
-    M = (gamma ** eta * deltam * pq / ((1 + taum) * pm)) ** (1 / (1 - eta)) * Q
-    return M
-
-'''
-def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
-    D = (gamma ** eta * deltad * pq / pd) ** (1 / (1 - eta)) * Q
-    return pd
-'''
-
-def eqpd(gamma, deltam, deltad, eta, Q, pq, D):
-    pd = (gamma ** eta * deltad * pq) * (D / Q) ** (eta - 1)
-    return pd
-
-def eqZ(theta, xie, xid, phi, E, D):
-    Z = theta * (xie * E ** phi + xid * D ** phi) ** (1 / phi)
-    return Z
-
-def eqE(theta, xie , tauz, phi, pz, pe, Z):
-    E = (theta ** phi * xie * (1 + tauz) * pz / pe) ** (1 / (1 - phi)) * Z
-    return E
-
-def eqD(theta, xid , tauz, phi, pz, pd, Z):
-    D = (theta ** phi * xid * (1 + tauz) * pz / pd) ** (1 / (1 - phi)) * Z
-    return D
-
-def eqpq(Q, Xp, Xg, Xv, X):
-    pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
-    return pq_error
-
-def eqpf(F, Ff0):
-    F1 = F.drop(['CAP'])
-    Ff1 = Ff0.drop(['CAP'])
-    pf_error = Ff1 - F1.sum(axis=1)
-    return pf_error
-
-def eqpk(F, Kk, Kk0, Ff0):
-    Fcap = F.loc[['CAP']]
-    pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
-    return pk_error
 
 
 def cge_system(pvec, *args):
