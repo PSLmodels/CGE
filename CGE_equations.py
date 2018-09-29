@@ -5,17 +5,22 @@ This module defines the equations that characterize the CGE model.
 
 def eqpy(b, F, beta, Y):
     '''
-    Production function constraint.
+    Production function.
+
+    .. math::
+        Y_{j} = b_{j}\prod_{h}F_{h,j}^{\beta_{h,j}}
 
     Args:
-        b (float):
-        F (float):
-        beta (float):
-        Y (float): Output
+        b (1D numpy array): Scale parameter for each good j
+        F (2D numpy array): The use of factor h in the production of
+            good j
+        beta (2D numpy array): Cost share parameter for factor h in
+            production of good j
+        Y (1D numpy array): Value added for each good j
 
     Returns:
-        py_error (float): The difference between Y and the production
-            function evaluated at F.
+        py_error (1D numpy array): The difference between Y and the
+            production function evaluated at F.
     '''
     py_error = Y - b * (F ** beta).prod(axis=0)
     return py_error
@@ -23,11 +28,21 @@ def eqpy(b, F, beta, Y):
 
 def eqF(beta, py, Y, pf):
     '''
+    Factor demand.
+
+    .. math::
+        F_{h,j} = \beta_{h,j}\frac{py_{j}}{pf_{h}}Y_{j}
 
     Args:
+        beta (2D numpy array): Cost share parameter for factor h in
+            production of good j
+        py (1D array): The price of value added for each good j
+        Y (1D numpy array): Value added for each good j
+        pf (1D array): Price of each factor h
 
     Returns:
-
+        F (2D numpy array): The demand for factor h used in the
+            production of good j
     '''
     F = beta.div(pf, axis=0) * Y * py
     return F
@@ -35,11 +50,19 @@ def eqF(beta, py, Y, pf):
 
 def eqX(ax, Z):
     '''
+    Demand for intermediate inputs.
+
+    .. math::
+        X_{i,j} = ax_{i,j}Z_{j}
 
     Args:
+        ax (2D numpy array): Fixed proportions of intermeidate input i
+            used in production of good j (Leontif production function)
+        Z (1D numpy array): Output of industry j
 
     Returns:
-
+        X (2D numpy array): Demand for intermediate input i used in the
+            production of good j
     '''
     X = ax * Z
     return X
@@ -47,11 +70,18 @@ def eqX(ax, Z):
 
 def eqY(ay, Z):
     '''
+    Value added.
+
+    .. math::
+        Y_{j} = ay_{j}Z_{j}
 
     Args:
+        ay (1D numpy array): Leontif production parameter, share of
+            output of industry j in value added of good j
+        Z (1D numpy array): Output of industry j
 
     Returns:
-
+        Y (1D numpy array): Value added of good j
     '''
     Y = ay * Z
     return Y
@@ -59,11 +89,21 @@ def eqY(ay, Z):
 
 def eqpz(ay, ax, py, pq):
     '''
+    Output prices.
+
+    .. math::
+        pz_{j} = ay_{j}py_{j} + \sum_{i}ax_{i,j}pq_{i}
 
     Args:
+        ay (1D numpy array): Leontif production parameter, share of
+            output of industry j in value added of good j
+        ax (2D numpy array): Fixed proportions of intermeidate input i
+            used in production of good j (Leontif production function)
+        py (1D numpy array): The price of value added for each good j
+        pq (1D numpy array): price of XXXX for each good i
 
     Returns:
-
+        pz (1D numpy array): price of output good j
     '''
     pz = ay * py + (ax * pq).sum(axis=0)
     return pz
@@ -71,11 +111,18 @@ def eqpz(ay, ax, py, pq):
 
 def eqTd(taud, pf, Ff):
     '''
+    Direct tax revenue.
+
+    .. math::
+        Td = \tau d \sum_{h}pf_{h}FF_{h}
 
     Args:
+        taud (float): Direct tax rate
+        pf (1D numpy array): The price of factor h
+        Ff (1D numpy array): Endowment of factor h
 
     Returns:
-
+        Td (float): Total direct tax revenue.
     '''
     Td = taud * (pf * Ff).sum()
     return Td
@@ -83,11 +130,18 @@ def eqTd(taud, pf, Ff):
 
 def eqTrf(tautr, pf, Ff):
     '''
+    Total transfers to households.
+
+    .. math::
+        Trf = \tau^{tr} \sum_{h}pf_{h}FF_{h}
 
     Args:
+        tautr (float): Tranfer rate (??)
+        pf (1D numpy array): The price of factor h
+        Ff (1D numpy array): Endowment of factor h
 
     Returns:
-
+        Trf (float): Total transfers to households
     '''
     Trf = tautr * pf['LAB'] * Ff['LAB']
     return Trf
@@ -95,11 +149,18 @@ def eqTrf(tautr, pf, Ff):
 
 def eqTz(tauz, pz, Z):
     '''
+    Production tax revenue from each commodity.
+
+    .. math::
+        Tz_{j} = \tau^{z}_{j} pz_{j}Z_{j}
 
     Args:
+        tauz (1D numpy array): Ad valorem tax rate on commodity j
+        pz (1D numpy array): price of output good j
+        Z (1D numpy array): Output of industry j
 
     Returns:
-
+        Tz (1D numpy array): Production tax revenue for each commodity j
     '''
     Tz = tauz * pz * Z
     return Tz
@@ -107,11 +168,18 @@ def eqTz(tauz, pz, Z):
 
 def eqTm(taum, pm, M):
     '''
+    Tariff revenue from each commodity.
+
+    .. math::
+        Tm_{j} = \tau^{m}_{j} pm_{j}M_{j}
 
     Args:
+        taum (1D numpy array): Tariff rate on commodity j
+        pm (1D numpy array): price of import good j
+        M (1D numpy array): Imports of good j
 
     Returns:
-
+        Tm (1D numpy array): Tariff revenue for each commodity j
     '''
     Tm = taum * pm * M
     return Tm
@@ -119,11 +187,18 @@ def eqTm(taum, pm, M):
 
 def eqXg(mu, XXg):
     '''
+    Government expenditures on commodity j
+
+    .. math::
+        X^{g}_{j} = \mu_{j}XX_{g}
 
     Args:
+        mu (1D numpy array): Government expenditure share parameters for
+            each commodity j
+        XXg (float??): Total government spending on goods/services (??)
 
     Returns:
-
+        Xg (1D numpy array): Government expenditures on commodity j
     '''
     Xg = mu * XXg.values
     return Xg
@@ -131,11 +206,17 @@ def eqXg(mu, XXg):
 
 def eqXv(lam, XXv):
     '''
+    Investment demand for each good j
+
+    .. math::
+        Xv_{j} = \lambda_{j}XXv
 
     Args:
+        lam (1D numpy array): Fixed shares of investment for each good j
+        XXv (float??): Total investment
 
     Returns:
-
+        Xv = (1D numpy array): Investment demand for each good j
     '''
     Xv = lam * XXv.values
     return Xv
@@ -143,11 +224,17 @@ def eqXv(lam, XXv):
 
 def eqXXv(g, Kk):
     '''
+    Total investment.
+
+    .. math::
+        XXv = g \cdot KK
 
     Args:
+        g (float): Exogenous long run growth rate of the economy
+        KK (float): Total capital stock
 
     Returns:
-
+        XXv (float): Total investment.
     '''
     XXv = g * Kk
     return XXv
