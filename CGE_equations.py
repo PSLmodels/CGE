@@ -242,23 +242,44 @@ def eqXXv(g, Kk):
 
 def eqSp(ssp, pf, Ff, Fsh, Trf):
     '''
+    Total household savings.
+
+    .. math::
+        Sp = ssp \cdot \left(\sum_{h}pf_{h}FF_{h} \right)
 
     Args:
+        ssp (float): Fixed household savings rate
+        pf (1D numpy array): The price of factor h
+        Ff (1D numpy array): Endowment of factor h
+        Fsh (float): Repatriated profits
+        Trf (float): Total transfers to households
 
     Returns:
-
+        Sp (float): Total household savings
     '''
-    Sp = ssp * ( (pf * Ff).sum() - Fsh + Trf )
+    Sp = ssp * ((pf * Ff).sum() - Fsh + Trfs)
     return Sp
 
 
 def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
     '''
+    Total government savings.
+
+    .. math::
+        Sg = Td + \sum_{j}Tz_{j} + \sum_{j}Tm_{j} - (Trf + \sum_{j}Xg_{j})
 
     Args:
+    mu (1D numpy array): Government expenditure share parameters for
+        each commodity j
+    Td (float): Total direct tax revenue.
+    Tz (1D numpy array): Production tax revenue for each commodity j
+    Tm (1D numpy array): Tariff revenue for each commodity j
+    XXg (float??): Total government spending on goods/services (??)
+    Trf (float): Total transfers to households
+    pq (1D numpy array): price of XXXX for each good i
 
     Returns:
-
+        Sg (float): Total government savings
     '''
     Sg = Td + Tz.sum() + Tm.sum() - (Trf + XXg * (mu * pq).sum())
     return Sg
@@ -266,11 +287,18 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
 
 def eqFsh(R, Kf, er):
     '''
+    Domestic profits that are repatriated to foreign owners of capital.
+
+    .. math::
+        FSH = R \cdot KF
 
     Args:
+        R (float): Real return on capital
+        Kf (float): Foreign holdings of domestic capital (??)
+        er (??):
 
     Returns:
-
+        Fsh = Repatriated profits
     '''
     Fsh = R * Kf * er
     return Fsh
