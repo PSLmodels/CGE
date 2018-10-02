@@ -366,7 +366,7 @@ def eqKk(pf, Ff, R, lam, pq):
 
 def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
     '''
-    Demand for Xp.
+    Demand for production good i by consumers.
 
     .. math::
         X^{p}_{i}= \frac{}\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)
@@ -382,7 +382,7 @@ def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
         pq (1D numpy array): price of XXXX for each good i
 
     Returns:
-        Xp (1D numpy array): Demand for production good i
+        Xp (1D numpy array): Demand for production good i by consumers
     '''
     Xp = alpha * ((pf * Ff).sum() - Sp - Td - Fsh + Trf) / pq
     return Xp
@@ -636,7 +636,7 @@ def eqpq(Q, Xp, Xg, Xv, X):
         Q_{i} = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{j}X_{i,j}
     Args:
         Q (1D numpy array): The domestic supply of good i, the Armington good
-        Xp (1D numpy array): Demand for production good i
+        Xp (1D numpy array): Demand for production good i by consumers
         Xg (1D numpy array): Government expenditures on commodity i
         Xv (1D numpy array): Investment demand for each good i
         X (2D numpy array): Demand for intermediate input i used in the
