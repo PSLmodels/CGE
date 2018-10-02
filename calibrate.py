@@ -14,63 +14,66 @@ def read_sam(sam):
         sam (DataFrame): DataFrame containing social and economic data
 
     Returns:
-        model_data (dictionary): Data used in the model
+        model_data (data class): Data used in the CGE model
     '''
-    Sf0 = DataFrame(sam, index=['INV'], columns=['EXT']) #foreign saving
-    Sp0 = DataFrame(sam, index=['INV'], columns=['HOH']) #private saving'
-    Sg0 = DataFrame(sam, index=['INV'], columns=['GOV']) #government saving/budget balance
+    class model_data():
 
-    Fsh0 = DataFrame(sam, index=['EXT'], columns=['HOH']) #repatriation of profits
-    Kk0 = 10510 #capital stock
-    Kf0 = 6414.35 #foreign-owned capital stock
-    Kd0 = Kk0 - Kf0 #domestically-owned capital stock
+        def __init__(self):
+            self.Sf0 = DataFrame(sam, index=['INV'], columns=['EXT']) #foreign saving
+            self.Sp0 = DataFrame(sam, index=['INV'], columns=['HOH']) #private saving'
+            self.Sg0 = DataFrame(sam, index=['INV'], columns=['GOV']) #government saving/budget balance
 
-    Td0 = DataFrame(sam, index=['DTX'], columns=['HOH']) #direct tax
-    Trf0 = DataFrame(sam, index=['HOH'], columns=['GOV']) #transfers
-    Tz0 = DataFrame(sam, index=['ACT'], columns=list(ind)) #production tax
-    Tm0 = DataFrame(sam, index=['IDT'], columns=list(ind)) #import tariff
+            self.Fsh0 = DataFrame(sam, index=['EXT'], columns=['HOH']) #repatriation of profits
+            self.Kk0 = 10510 #capital stock
+            self.Kf0 = 6414.35 #foreign-owned capital stock
+            self.Kd0 = Kk0 - Kf0 #domestically-owned capital stock
 
-    F0 = DataFrame(sam, index=list(h), columns=list(ind)) #the h-th factor input by the i-th firm
-    Ff0 = F0.sum(axis=1) #factor endowment of the h-th factor
-    Y0 = F0.sum(axis=0) #composite factor (value added)
-    X0 = DataFrame(sam, index=list(ind), columns=list(ind)) #intermediate input
-    Xx0 = X0.sum(axis=0)#total intermediate input by the j-th sector
-    Z0 = Y0 + Xx0 #output of the j-th good
+            self.Td0 = DataFrame(sam, index=['DTX'], columns=['HOH']) #direct tax
+            self.Trf0 = DataFrame(sam, index=['HOH'], columns=['GOV']) #transfers
+            self.Tz0 = DataFrame(sam, index=['ACT'], columns=list(ind)) #production tax
+            self.Tm0 = DataFrame(sam, index=['IDT'], columns=list(ind)) #import tariff
 
-    Xp0 = DataFrame(sam, index=list(ind), columns=['HOH']) #household consumption of the i-th good
-    Xg0 = DataFrame(sam, index=list(ind), columns=['GOV']) #government consumption
-    Xv0 = DataFrame(sam, index=list(ind), columns=['INV']) #investment demand
-    E0 = DataFrame(sam, index=list(ind), columns=['EXT']) #exports
-    E0 = E0['EXT']
-    M0 = DataFrame(sam, index=['EXT'], columns=list(ind)) #imports
-    M0 = M0.loc['EXT']
+            self.F0 = DataFrame(sam, index=list(h), columns=list(ind)) #the h-th factor input by the i-th firm
+            self.Ff0 = F0.sum(axis=1) #factor endowment of the h-th factor
+            self.Y0 = F0.sum(axis=0) #composite factor (value added)
+            self.X0 = DataFrame(sam, index=list(ind), columns=list(ind)) #intermediate input
+            self.Xx0 = X0.sum(axis=0)#total intermediate input by the j-th sector
+            self.Z0 = Y0 + Xx0 #output of the j-th good
 
-    tauz = Tz0/Z0 #production tax rate
-    tauz = tauz.loc['ACT']
-    taum = Tm0/M0 #import tariff rate
-    taum = taum.loc['IDT']
+            self.Xp0 = DataFrame(sam, index=list(ind), columns=['HOH']) #household consumption of the i-th good
+            self.Xg0 = DataFrame(sam, index=list(ind), columns=['GOV']) #government consumption
+            self.Xv0 = DataFrame(sam, index=list(ind), columns=['INV']) #investment demand
+            self.E0 = DataFrame(sam, index=list(ind), columns=['EXT']) #exports
+            self.E0 = E0['EXT']
+            self.M0 = DataFrame(sam, index=['EXT'], columns=list(ind)) #imports
+            self.M0 = M0.loc['EXT']
 
-    Q0 = Xp0['HOH'] + Xg0['GOV'] + Xv0['INV'] + X0.sum(axis=1) #domestic supply/Armington composite good
-    D0 = (1 + tauz) * Z0 - E0 #domestic
-    #D0 = D0.loc['ACT']
+            self.tauz = Tz0/Z0 #production tax rate
+            self.tauz = tauz.loc['ACT']
+            self.taum = Tm0/M0 #import tariff rate
+            self.taum = taum.loc['IDT']
 
-    Yy0 = Y0.sum()
-    XXp0 = Xp0.sum()
-    XXv0 = Xv0.sum()
-    XXg0 = Xg0.sum()
-    Mm0 = M0.sum()
-    Ee0 = E0.sum()
-    Gdp0 = XXp0 + XXv0 + XXg0 + Ee0 - Mm0
+            self.Q0 = Xp0['HOH'] + Xg0['GOV'] + Xv0['INV'] + X0.sum(axis=1) #domestic supply/Armington composite good
+            self.D0 = (1 + tauz) * Z0 - E0 #domestic
+            #D0 = D0.loc['ACT']
 
-    g = XXv0/Kk0
-    R0 = Ff0['CAP']/Kk0
+            self.Yy0 = Y0.sum()
+            self.XXp0 = Xp0.sum()
+            self.XXv0 = Xv0.sum()
+            self.XXg0 = Xg0.sum()
+            self.Mm0 = M0.sum()
+            self.Ee0 = E0.sum()
+            self.Gdp0 = XXp0 + XXv0 + XXg0 + Ee0 - Mm0
 
-    pWe = np.ones(len(ind)) #export price index
-    pWe = Series(pWe, index=list(ind))
-    pWm = np.ones(len(ind)) #import price index
-    pWm = Series(pWm, index=list(ind))
+            self.g = XXv0/Kk0
+            self.R0 = Ff0['CAP']/Kk0
 
-    return model_data
+            self.pWe = np.ones(len(ind)) #export price index
+            self.pWe = Series(pWe, index=list(ind))
+            self.pWm = np.ones(len(ind)) #import price index
+            self.pWm = Series(pWm, index=list(ind))
+
+    return data
 
 
 def set_params():
@@ -80,7 +83,7 @@ def set_params():
     Args:
 
     Returns:
-        p (class): Class of parameters for use in CGE model.
+        parameters (parameters class): Class of parameters for use in CGE model.
     '''
     class parameters():
 
