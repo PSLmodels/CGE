@@ -231,7 +231,7 @@ def eqXXv(g, Kk):
 
     Args:
         g (float): Exogenous long run growth rate of the economy
-        KK (float): Total capital stock
+        Kk (float): Total capital stock
 
     Returns:
         XXv (float): Total investment.
@@ -269,14 +269,14 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
         Sg = Td + \sum_{j}Tz_{j} + \sum_{j}Tm_{j} - (Trf + \sum_{j}Xg_{j})
 
     Args:
-    mu (1D numpy array): Government expenditure share parameters for
-        each commodity j
-    Td (float): Total direct tax revenue.
-    Tz (1D numpy array): Production tax revenue for each commodity j
-    Tm (1D numpy array): Tariff revenue for each commodity j
-    XXg (float??): Total government spending on goods/services (??)
-    Trf (float): Total transfers to households
-    pq (1D numpy array): price of XXXX for each good i
+        mu (1D numpy array): Government expenditure share parameters for
+            each commodity j
+        Td (float): Total direct tax revenue
+        Tz (1D numpy array): Production tax revenue for each commodity j
+        Tm (1D numpy array): Tariff revenue for each commodity j
+        XXg (float??): Total government spending on goods/services (??)
+        Trf (float): Total transfers to households
+        pq (1D numpy array): price of XXXX for each good i
 
     Returns:
         Sg (float): Total government savings
@@ -290,12 +290,12 @@ def eqFsh(R, Kf, er):
     Domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
-        FSH = R \cdot KF
+        FSH = R \cdot KF \cdot \varepsilon
 
     Args:
         R (float): Real return on capital
         Kf (float): Foreign holdings of domestic capital (??)
-        er (??):
+        er (float): The real exchange rate
 
     Returns:
         Fsh = Repatriated profits
@@ -306,11 +306,19 @@ def eqFsh(R, Kf, er):
 
 def eqKd(g, Sp, lam, pq):
     '''
+    Domestic capital holdings.
+
+    .. math::
+        K^{d} = \frac{S^{p}}{g\sum_{j}\lambda_{j}pq_{j}}
 
     Args:
+        g (float): Exogenous long run growth rate of the economy
+        Sp (float): Total household savings
+        lam (1D numpy array): Fixed shares of investment for each good j
+        pq (1D numpy array): price of XXXX for each good i
 
     Returns:
-
+        Kd (float): Domestically owned capital ??
     '''
     Kd = Sp / (g * (lam * pq).sum())
     return Kd
@@ -318,11 +326,17 @@ def eqKd(g, Sp, lam, pq):
 
 def eqKf(Kk, Kd):
     '''
+    Foreign holdings of domestically used capital.
+
+    .. math::
+        K^{f} = KK - K^{d}
 
     Args:
+        Kk (float): Total capital stock
+        Kd (float): Domestically owned capital ??
 
     Returns:
-
+        Kf (float): Foreign owned capital ??
     '''
     Kf = Kk - Kd
     return Kf
@@ -330,24 +344,45 @@ def eqKf(Kk, Kd):
 
 def eqKk(pf, Ff, R, lam, pq):
     '''
+    Capital market clearing equation.
+
+    .. math::
+        KK = \frac{pf * FF}{R \sum_{j}\lambda_{j}pq_{j}}
 
     Args:
+        pf (1D numpy array): The price of factor h
+        Ff (1D numpy array): Endowment of factor h
+        R (float): Real return on capital
+        lam (1D numpy array): Fixed shares of investment for each good j
+        pq (1D numpy array): price of XXXX for each good i
 
     Returns:
-
+        Kk (float): Total capital stock
     '''
 #    R = ( (pf['CAP'] * Ff['CAP']) / Kk) / ((lam * pq).sum())
-    Kk = (pf['CAP'] * Ff['CAP']) / (R * ( (lam * pq).sum() ))
+    Kk = (pf['CAP'] * Ff['CAP']) / (R * ((lam * pq).sum()))
     return Kk
 
 
 def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
     '''
+    Demand for Xp.
+
+    .. math::
+        X^{p}_{i}= \frac{}\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)
 
     Args:
+        alpha (1D numpy array): Budget share of good i
+        pf (1D numpy array): The price of factor h
+        Ff (1D numpy array): Endowment of factor h
+        Sp (float): Total household savings
+        Td (float): Total direct tax revenue
+        Fsh = Repatriated profits
+        Trf (float): Total transfers to households
+        pq (1D numpy array): price of XXXX for each good i
 
     Returns:
-
+        Xp (1D numpy array): Demand for production good i
     '''
     Xp = alpha * ((pf * Ff).sum() - Sp - Td - Fsh + Trf) / pq
     return Xp
@@ -355,11 +390,17 @@ def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
 
 def eqpe(er, pWe):
     '''
+    Export prices.
+
+    .. math::
+        pe_{i} = \varepsilon \cdot pWe_{i}
 
     Args:
+        er (float): The real exchange rate
+        pWe (1D numpy array): The world price of commodity i in foreign currency
 
     Returns:
-
+        pe (1D numpy array): Price of commodity i exports in domestic currency
     '''
     pe = er * pWe
     return pe
@@ -367,11 +408,17 @@ def eqpe(er, pWe):
 
 def eqpm(er, pWm):
     '''
+    Import prices.
+
+    .. math::
+        pm_{i} = \varepsilon \cdot pWm_{i}
 
     Args:
+        er (float): The real exchange rate
+        pWm (1D numpy array): The world price of commodity i in foreign currency.
 
     Returns:
-
+        pm (1D numpy array): The price of commodity i imports in domestic currency.
     '''
     pm = er * pWm
     return pm
@@ -379,23 +426,43 @@ def eqpm(er, pWm):
 
 def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
     '''
+    Balance of payments.
+
+    .. math::
+        \sum_{i}pWe_{i}E_{i} + \frac{Sf}{\varepsilon} = \sum_{i}pWm_{i}M_{i} + \frac{Fsh}{\varepsilon}
 
     Args:
+        pWe (1D numpy array): The world price of commodity i in foreign currency
+        pWm (1D numpy array): The world price of commodity i in foreign currency.
+        E (1D numpy array): Exports of commodity i
+        M (1D numpy array): Imports of commodity i
+        Sf (float): Total foreign savings (??)
+        Fsh = Repatriated profits
+        er (float): The real exchange rate
 
     Returns:
+        bop_error (float): Error in balance of payments equation.
 
     '''
-    bop_error = (pWe * E).sum() + Sf / er - ( (pWm * M).sum() + Fsh / er)
+    bop_error = (pWe * E).sum() + Sf / er - ((pWm * M).sum() + Fsh / er)
     return bop_error
 
 
 def eqSf(g, lam, pq, Kf):
     '''
+    Net foreign investment/savings.
+
+    .. math::
+        Sf = g Kf \sum_{j} \lambda_{j} pq_{j}
 
     Args:
+        g (float): Exogenous long run growth rate of the economy
+        lam (1D numpy array): Fixed shares of investment for each good j
+        pq (1D numpy array): price of XXXX for each good i
+        Kf (float): Foreign owned capital ??
 
     Returns:
-
+        Sf (float): Total foreign savings (??)
     '''
     Sf = g * Kf * (lam * pq).sum()
     return Sf
