@@ -100,7 +100,7 @@ def eqpz(ay, ax, py, pq):
         ax (2D numpy array): Fixed proportions of intermeidate input i
             used in production of good j (Leontif production function)
         py (1D numpy array): The price of value added for each good j
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         pz (1D numpy array): price of output good j
@@ -195,7 +195,7 @@ def eqXg(mu, XXg):
     Args:
         mu (1D numpy array): Government expenditure share parameters for
             each commodity j
-        XXg (float??): Total government spending on goods/services (??)
+        XXg (float): Total government spending on goods/services
 
     Returns:
         Xg (1D numpy array): Government expenditures on commodity j
@@ -274,9 +274,9 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
         Td (float): Total direct tax revenue
         Tz (1D numpy array): Production tax revenue for each commodity j
         Tm (1D numpy array): Tariff revenue for each commodity j
-        XXg (float??): Total government spending on goods/services (??)
+        XXg (float): Total government spending on goods/services
         Trf (float): Total transfers to households
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Sg (float): Total government savings
@@ -294,7 +294,7 @@ def eqFsh(R, Kf, er):
 
     Args:
         R (float): Real return on capital
-        Kf (float): Foreign holdings of domestic capital (??)
+        Kf (float): Foreign holdings of domestic capital
         er (float): The real exchange rate
 
     Returns:
@@ -315,7 +315,7 @@ def eqKd(g, Sp, lam, pq):
         g (float): Exogenous long run growth rate of the economy
         Sp (float): Total household savings
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Kd (float): Domestically owned capital ??
@@ -333,10 +333,10 @@ def eqKf(Kk, Kd):
 
     Args:
         Kk (float): Total capital stock
-        Kd (float): Domestically owned capital ??
+        Kd (float): Domestically owned capital
 
     Returns:
-        Kf (float): Foreign owned capital ??
+        Kf (float): Foreign owned domestic capital
     '''
     Kf = Kk - Kd
     return Kf
@@ -354,7 +354,7 @@ def eqKk(pf, Ff, R, lam, pq):
         Ff (1D numpy array): Endowment of factor h
         R (float): Real return on capital
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Kk (float): Total capital stock
@@ -379,7 +379,7 @@ def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
         Td (float): Total direct tax revenue
         Fsh = Repatriated profits
         Trf (float): Total transfers to households
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
@@ -458,8 +458,8 @@ def eqSf(g, lam, pq, Kf):
     Args:
         g (float): Exogenous long run growth rate of the economy
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of XXXX for each good i
-        Kf (float): Foreign owned capital ??
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        Kf (float): Foreign owned domestic capital
 
     Returns:
         Sf (float): Total foreign savings (??)
@@ -503,7 +503,7 @@ def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
         pm (1D numpy array): The price of commodity i imports in domestic currency.
         taum (1D numpy array): Tariff rate on commodity i
 
@@ -527,7 +527,7 @@ def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
         pd (1D numpy array): price of domesically produced good i
 
     Returns:
@@ -550,7 +550,7 @@ def eqpd(gamma, deltam, deltad, eta, Q, pq, D):
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
-        pq (1D numpy array): price of XXXX for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
         D (1D numpy array): Demand for domestically produced good i from importers
 
     Returns:
