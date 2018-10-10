@@ -476,7 +476,7 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
         Q_{i} = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\right]^{\frac{1}{\eta_{i}}}
 
     Args:
-        gamma (1D numpy array): ??
+        gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
@@ -498,7 +498,7 @@ def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
         M_{i} = \left(\gamma^{\eta_{i}}_{i}\delta^{m}_{i}\frac{pq_{i}}{(1+\tau^{m}_{i})pm_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}
 
     Args:
-        gamma (1D numpy array): ??
+        gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
@@ -522,7 +522,7 @@ def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
         D_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}\frac{pq_{i}}{pd_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}
 
     Args:
-        gamma (1D numpy array): ??
+        gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
@@ -545,7 +545,7 @@ def eqpd(gamma, deltam, deltad, eta, Q, pq, D):
         pd_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}pq_{i}\right)\left(\frac{D_{i}}{Q_{i}}\right)^{\eta_{i}-1}
 
     Args:
-        gamma (1D numpy array): ??
+        gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
@@ -651,14 +651,14 @@ def eqpq(Q, Xp, Xg, Xv, X):
 
 def eqpf(F, Ff0):
     '''
-    ??
+    Comparing labor supply from the model to that in the data.
 
     .. math::
 
     Args:
         F (2D numpy array): The use of factor h in the production of
             good j
-        Ff0 (??))
+        Ff0 (float): Total labor demand from SAM
 
     Returns:
         pf_error ():
@@ -671,7 +671,7 @@ def eqpf(F, Ff0):
 
 def eqpk(F, Kk, Kk0, Ff0):
     '''
-    ??
+    Comparing capital demand in the model and data.
 
     .. math::
 
@@ -679,6 +679,8 @@ def eqpk(F, Kk, Kk0, Ff0):
         F (2D numpy array): The use of factor h in the production of
             good j
         Kk (float): Total capital stock
+        Kk0 (float): Total capital stock from SAM??
+        Ff0 (float): Total labor demand from SAM??
 
     Returns:
         pk_error ():
