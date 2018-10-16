@@ -8,7 +8,7 @@ def eqpy(b, F, beta, Y):
     Production function.
 
     .. math::
-        Y_{j} = b_{j}\prod_{h}F_{h,j}^{\beta_{h,j}}
+        Y_{j} = b_{j}\prod_{h}F_{h,j}^{\\beta_{h,j}}
 
     Args:
         b (1D numpy array): Scale parameter for each good j
@@ -31,7 +31,7 @@ def eqF(beta, py, Y, pf):
     Factor demand.
 
     .. math::
-        F_{h,j} = \beta_{h,j}\frac{py_{j}}{pf_{h}}Y_{j}
+        F_{h,j} = \\beta_{h,j}\\frac{py_{j}}{pf_{h}}Y_{j}
 
     Args:
         beta (2D numpy array): Cost share parameter for factor h in
@@ -245,7 +245,7 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
     Total household savings.
 
     .. math::
-        Sp = ssp \cdot \left(\sum_{h}pf_{h}FF_{h} \right)
+        Sp = ssp \cdot \left(\sum_{h}pf_{h}FF_{h} \\right)
 
     Args:
         ssp (float): Fixed household savings rate
@@ -257,7 +257,7 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
     Returns:
         Sp (float): Total household savings
     '''
-    Sp = ssp * ((pf * Ff).sum() - Fsh + Trfs)
+    Sp = ssp * ((pf * Ff).sum() - Fsh + Trf)
     return Sp
 
 
@@ -290,7 +290,7 @@ def eqFsh(R, Kf, er):
     Domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
-        FSH = R \cdot KF \cdot \varepsilon
+        FSH = R \cdot KF \cdot \\varepsilon
 
     Args:
         R (float): Real return on capital
@@ -309,7 +309,7 @@ def eqKd(g, Sp, lam, pq):
     Domestic capital holdings.
 
     .. math::
-        K^{d} = \frac{S^{p}}{g\sum_{j}\lambda_{j}pq_{j}}
+        K^{d} = \\frac{S^{p}}{g\sum_{j}\lambda_{j}pq_{j}}
 
     Args:
         g (float): Exogenous long run growth rate of the economy
@@ -347,7 +347,7 @@ def eqKk(pf, Ff, R, lam, pq):
     Capital market clearing equation.
 
     .. math::
-        KK = \frac{pf * FF}{R \sum_{j}\lambda_{j}pq_{j}}
+        KK = \\frac{pf * FF}{R \sum_{j}\lambda_{j}pq_{j}}
 
     Args:
         pf (1D numpy array): The price of factor h
@@ -369,7 +369,7 @@ def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
     Demand for production good i by consumers.
 
     .. math::
-        X^{p}_{i}= \frac{}\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)
+        X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
 
     Args:
         alpha (1D numpy array): Budget share of good i
@@ -393,7 +393,7 @@ def eqpe(er, pWe):
     Export prices.
 
     .. math::
-        pe_{i} = \varepsilon \cdot pWe_{i}
+        pe_{i} = \\varepsilon \cdot pWe_{i}
 
     Args:
         er (float): The real exchange rate
@@ -411,7 +411,7 @@ def eqpm(er, pWm):
     Import prices.
 
     .. math::
-        pm_{i} = \varepsilon \cdot pWm_{i}
+        pm_{i} = \\varepsilon \cdot pWm_{i}
 
     Args:
         er (float): The real exchange rate
@@ -429,7 +429,7 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
     Balance of payments.
 
     .. math::
-        \sum_{i}pWe_{i}E_{i} + \frac{Sf}{\varepsilon} = \sum_{i}pWm_{i}M_{i} + \frac{Fsh}{\varepsilon}
+        \sum_{i}pWe_{i}E_{i} + \\frac{Sf}{\\varepsilon} = \sum_{i}pWm_{i}M_{i} + \\frac{Fsh}{\\varepsilon}
 
     Args:
         pWe (1D numpy array): The world price of commodity i in foreign currency
@@ -473,7 +473,7 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
     CES production function for the importing firm.
 
     .. math::
-        Q_{i} = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\right]^{\frac{1}{\eta_{i}}}
+        Q_{i} = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\\right]^{\\frac{1}{\eta_{i}}}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -495,7 +495,7 @@ def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
     Demand for imports.
 
     .. math::
-        M_{i} = \left(\gamma^{\eta_{i}}_{i}\delta^{m}_{i}\frac{pq_{i}}{(1+\tau^{m}_{i})pm_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}
+        M_{i} = \left(\gamma^{\eta_{i}}_{i}\delta^{m}_{i}\\frac{pq_{i}}{(1+\\tau^{m}_{i})pm_{i}}\\right)^{\\frac{1}{1-\eta_{i}}}Q_{i}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -519,7 +519,7 @@ def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
     Demand for domestically produced goods from importers.
 
     .. math::
-        D_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}\frac{pq_{i}}{pd_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}
+        D_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}\\frac{pq_{i}}{pd_{i}}\\right)^{\\frac{1}{1-\eta_{i}}}Q_{i}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -542,7 +542,7 @@ def eqpd(gamma, deltam, deltad, eta, Q, pq, D):
     Price of domestically produced goods from importers.
 
     .. math::
-        pd_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}pq_{i}\right)\left(\frac{D_{i}}{Q_{i}}\right)^{\eta_{i}-1}
+        pd_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}pq_{i}\\right)\left(\\frac{D_{i}}{Q_{i}}\\right)^{\eta_{i}-1}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -565,7 +565,7 @@ def eqZ(theta, xie, xid, phi, E, D):
     Exporting firm production function.
 
     .. math::
-        Z_{i} = \theta_{i}\left[\xi_{i}^{E}E_{i}^{\phi_{i}} + \xi_{i}^{D}D_{i}^{\phi_{i}}\right]^{\frac{1}{\phi_{i}}}
+        Z_{i} = \\theta_{i}\left[\\xi_{i}^{E}E_{i}^{\phi_{i}} + \\xi_{i}^{D}D_{i}^{\phi_{i}}\\right]^{\\frac{1}{\phi_{i}}}
 
     Args:
         theta (1D numpy array):
@@ -587,7 +587,7 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
     Supply of exports.
 
     .. math::
-        E_{i} = \left(\theta_{i}^{\phi_{i}}\xi^{E}_{i}(1+\tau^{z}_{i}\frac{pz_{i}}{pe_{i}})\right)^{\frac{1}{1-\phi_{i}}}Z_{i}
+        E_{i} = \left(\\theta_{i}^{\phi_{i}}\\xi^{E}_{i}(1+\\tau^{z}_{i}\\frac{pz_{i}}{pe_{i}})\\right)^{\\frac{1}{1-\phi_{i}}}Z_{i}
 
     Args:
         theta (1D numpy array):
@@ -605,12 +605,12 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
     return E
 
 
-def eqD(theta, xid, tauz, phi, pz, pd, Z):
+def eqDex(theta, xid, tauz, phi, pz, pd, Z):
     '''
     Demand for domestic goods by exporters.
 
     .. math::
-        D_{i} = \left(\theta_{i}^{\phi_{i}}\xi^{D}_{i}(1+\tau^{z}_{i}\frac{pz_{i}}{pd_{i}})\right)^{\frac{1}{1-\phi_{i}}}Z_{i}
+        D_{i} = \left(\\theta_{i}^{\phi_{i}}\\xi^{D}_{i}(1+\\tau^{z}_{i}\\frac{pz_{i}}{pd_{i}})\\right)^{\\frac{1}{1-\phi_{i}}}Z_{i}
 
     Args:
         theta (1D numpy array):
@@ -634,6 +634,7 @@ def eqpq(Q, Xp, Xg, Xv, X):
 
     .. math::
         Q_{i} = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{j}X_{i,j}
+
     Args:
         Q (1D numpy array): The domestic supply of good i, the Armington good
         Xp (1D numpy array): Demand for production good i by consumers

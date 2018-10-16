@@ -15,7 +15,7 @@ Contents
    :caption: API
 
    calibrate
-   CGE_equations
+   CGE-equations
    simpleCGE
 
 .. _`user documentation`:

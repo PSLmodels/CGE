@@ -14,6 +14,8 @@
 #
 import os
 import sys
+import alabaster
+
 sys.path.insert(0, os.path.abspath('../..'))
 
 
@@ -59,6 +61,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'numpydoc',
     'sphinx.ext.napoleon',
+    'alabaster'
 ]
 
 
@@ -135,7 +138,9 @@ sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+html_theme_path = [alabaster.get_path()]
 html_theme = 'alabaster'
+
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -156,7 +161,15 @@ html_static_path = ['_static']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-# html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+        'donate.html',
+    ]
+}
 
 # If false, no module index is generated.
 html_domain_indices = False
