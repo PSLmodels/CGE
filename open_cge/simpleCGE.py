@@ -20,6 +20,17 @@ w = ('LAB', 'LAND', 'NTR')
 
 
 def cge_system(pvec, *args):
+    '''
+    This function solves the system of equations that represents the
+    CGE model.
+
+    Args:
+        pvec (Numpy array): Vector of prices
+        args (tuple): Tuple of arguments for equations
+
+    Returns:
+        p_error (Numpy array): Errors from CGE equations
+    '''
     (eta, phi, alpha, beta, b, ax, ay, mu, lam, deltam, deltad, gamma, xid, xie,
      theta, ssp, taud, tautr, tauz, taum, g, pWe, pWm, Kk0, Ff0, XXg, R, ind, h, er, Z, Q, Kd, pd, Ff) = args
 
