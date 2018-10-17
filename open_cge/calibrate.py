@@ -1,7 +1,5 @@
-#import packages
-import scipy.optimize as opt
+# import packages
 import numpy as np
-import pandas as pd
 from pandas import Series, DataFrame
 
 
@@ -47,13 +45,10 @@ class model_data(object):
         self.M0 = DataFrame(sam, index=['EXT'], columns=list(ind))  # imports
         self.M0 = self.M0.loc['EXT']
 
-        self.tauz = self.Tz0 / self.Z0  # production tax rate
-        self.tauz = self.tauz.loc['ACT']
-        self.taum = self.Tm0 / self.M0  # import tariff rate
-        self.taum = self.taum.loc['IDT']
-
-        self.Q0 = self.Xp0['HOH'] + self.Xg0['GOV'] + self.Xv0['INV'] + self.X0.sum(axis=1)  # domestic supply/Armington composite good
-        self.D0 = (1 + self.tauz) * self.Z0 - self.E0  # domestic
+        self.Q0 = (self.Xp0['HOH'] + self.Xg0['GOV'] + self.Xv0['INV']
+                   + self.X0.sum(axis=1))  # domestic supply/Armington composite good
+        tauz = self.Tz0 / self.Z0  # production tax rate
+        self.D0 = (1 + tauz.loc['ACT']) * self.Z0 - self.E0  # domestic
         # D0 = D0.loc['ACT']
 
         # Compute aggregates
@@ -95,7 +90,7 @@ class parameters(object):
         self.phi = (self.psi + 1) / self.psi  # transformation elasticity parameter
 
         self.alpha = d.Xp0 / d.XXp0  # share parameter in utility function
-        self.alpha = self.alpha ['HOH']
+        self.alpha = self.alpha['HOH']
         self.beta = d.F0 / d.Y0  # share parameter in production function
         temp = d.F0 ** self.beta
         self.b = d.Y0 / temp.prod(axis=0)  # scale parameter in production function
@@ -107,26 +102,39 @@ class parameters(object):
         self.lam = d.Xv0 / d.XXv0  # investment demand share
         self.lam = self.lam['INV']
 
+        self.tauz = d.Tz0 / d.Z0  # production tax rate
+        self.tauz = self.tauz.loc['ACT']
+        self.taum = d.Tm0 / d.M0  # import tariff rate
+        self.taum = self.taum.loc['IDT']
+
         # share parameter in Armington function
         self.deltam = ((1 + self.taum) * d.M0 ** (1 - self.eta) /
-                       ((1 + self.taum) * d.M0 ** (1 - self.eta) + d.D0 ** (1 - self.eta)))
+                       ((1 + self.taum) * d.M0 ** (1 - self.eta) + d.D0
+                        ** (1 - self.eta)))
         self.deltad = (d.D0 ** (1 - self.eta) /
-                       ((1 + self.taum) * d.M0 ** (1 - self.eta) + d.D0 ** (1 - self.eta)))
+                       ((1 + self.taum) * d.M0 ** (1 - self.eta) + d.D0
+                        ** (1 - self.eta)))
 
-        #scale parameter in Armington function
-        self.gamma = d.Q0 / (self.deltam * d.M0 ** self.eta + self.deltad * d.D0 ** self.eta ) ** (1 / self.eta)
+        # scale parameter in Armington function
+        self.gamma = (d.Q0 / (self.deltam * d.M0 ** self.eta +
+                              self.deltad * d.D0 ** self.eta ) **
+                      (1 / self.eta))
 
-        #share parameter in transformation function
-        self.xie = d.E0 ** (1 - self.phi) / (d.E0 ** (1 - self.phi) + d.D0 ** (1 - self.phi))
+        # share parameter in transformation function
+        self.xie = (d.E0 ** (1 - self.phi) / (d.E0 ** (1 - self.phi) +
+                                              d.D0 ** (1 - self.phi)))
         self.xie = self.xie.iloc[0]
-        self.xid = d.D0 ** (1 - self.phi) / (d.E0 ** (1 - self.phi) + d.D0 ** (1 - self.phi))
+        self.xid = (d.D0 ** (1 - self.phi) / (d.E0 ** (1 - self.phi) +
+                                              d.D0 ** (1 - self.phi)))
         self.xid = self.xid.iloc[0]
 
-        #scale parameter in transformation function
-        self.theta = d.Z0 / (self.xie * d.E0 ** self.phi + self.xid * d.D0 ** self.phi) ** (1 / self.phi)
+        # scale parameter in transformation function
+        self.theta = (d.Z0 / (self.xie * d.E0 ** self.phi + self.xid *
+                              d.D0 ** self.phi) ** (1 / self.phi))
         self.theta = self.theta.iloc[0]
 
-        self.ssp = d.Sp0.values / (d.Ff0.sum() - d.Fsh0.values + d.Trf0.values)  # average propensity to save
+        self.ssp = (d.Sp0.values / (d.Ff0.sum() - d.Fsh0.values +
+                                    d.Trf0.values))  # average propensity to save
         self.ssp = np.asscalar(self.ssp)
         self.taud = d.Td0.values / d.Ff0.sum()  # direct tax rate
         self.taud = np.asscalar(self.taud)
