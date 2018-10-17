@@ -34,8 +34,6 @@ def cge_system(pvec, args):
     Returns:
         p_error (Numpy array): Errors from CGE equations
     '''
-    # (eta, phi, alpha, beta, b, ax, ay, mu, lam, deltam, deltad, gamma, xid, xie,
-    #  theta, ssp, taud, tautr, tauz, taum, g, pWe, pWm, Kk0, Ff0, XXg, R, ind, h, er, Z, Q, Kd, pd, Ff) = args
     (p, d, ind, h, Z, Q, Kd, pd, Ff, R, er) = args
 
     py = pvec[0:len(ind)]
@@ -182,10 +180,6 @@ p_error = np.append(p_error, pf_error)
 
 while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
     tpi_iter += 1
-
-    # cge_args = (eta, phi, alpha, beta, b, ax, ay, mu, lam, deltam, deltad, gamma, xid, xie,
-    #      theta, ssp, taud, tautr, tauz, taum, g, pWe, pWm, Kk0, Ff0, XXg, R, ind, h, er,
-    #      Zbar, Qbar, Kdbar, pdbar, Ffbar)
     cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
 
     results = opt.root(cge_system, pvec, args=cge_args, method='lm',
