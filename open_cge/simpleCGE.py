@@ -4,11 +4,13 @@ import numpy as np
 import pandas as pd
 from pandas import Series, DataFrame
 import os
+current_path = os.path.abspath(os.path.dirname(__file__))
+import sys
+sys.path.insert(0, current_path)
 import CGE_equations as eq
 import calibrate
 
 # load social accounting matrix
-current_path = os.path.abspath(os.path.dirname(__file__))
 sam_path = os.path.join(current_path, 'SAM.xlsx')
 sam = pd.read_excel(sam_path)
 
@@ -61,7 +63,7 @@ def cge_system(pvec, args):
     Sp = eq.eqSp(p.ssp, pf, Ff, Fsh, Trf)
     Xp = eq.eqXp(p.alpha, pf, Ff, Sp, Td, Fsh, Trf, pq)
     E = eq.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Z)
-    D = eq.eqD(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
+    D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
     M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Q, pq, pm, p.taum)
     Tm = eq.eqTm(p.taum, pm, M)
 
