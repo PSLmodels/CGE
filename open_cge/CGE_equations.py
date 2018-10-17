@@ -624,6 +624,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
     Returns:
         D (1D numpy array): Demand for domestic good i by exporters.
     '''
+    # print('Objects: ', type(theta), type(phi), type(xid), type(tauz), type(pz), type(pd), type(phi), type(Z))
     D = (theta ** phi * xid * (1 + tauz) * pz / pd) ** (1 / (1 - phi)) * Z
     return D
 

@@ -215,17 +215,17 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
     Sp = eq.eqSp(p.ssp, pfprime, Ffbar, Fsh, Trf)
     Xp = eq.eqXp(p.alpha, pfprime, Ffbar, Sp, Td, Fsh, Trf, pqprime)
     E = eq.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
-    D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Zbar)
+    D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
     M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pqprime, pm, p.taum)
     Qprime = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
     pdprime = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pqprime, D)
     Zprime = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
     Zprime = Zprime.iloc[0]
-    Kdprime = eqKd(d.g, Sp, p.lam, pqprime)
+    Kdprime = eq.eqKd(d.g, Sp, p.lam, pqprime)
     Ffprime = d.Ff0
     # Ffprime['CAP'] = R * d.Kk * (p.lam * pq).sum() / pf[1]
-    Ffprime['CAP'] = R * d.Kk * (p.lam * pqprime).sum() / pfprime[1]
-'''
+    Ffprime['CAP'] = R * Kk * (p.lam * pqprime).sum() / pfprime[1]
+
     dist = (((Zbar - Zprime) ** 2 ) ** (1 / 2)).sum()
     print('Distance at iteration ', tpi_iter, ' is ', dist)
     pdbar = xi * pdprime + (1 - xi) * pdbar
@@ -233,13 +233,12 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
     Kdbar = xi * Kdprime + (1 - xi) * Kdbar
     Qbar = xi * Qprime + (1 - xi) * Qbar
     Ffbar = xi * Ffprime + (1 - xi) * Ffbar
-'''
 
-'''
-    bop_error = eqbop(pWe, pWm, E, M, Sf, Fsh, er)
+    bop_error = eq.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
 
-    pd = eqpd(gamma, deltam, deltad, eta, Q, pq, D)
-    Z = eqZ(theta, xie, xid, phi, E, D)
-    Kd = eqKd(g, Sp, lam, pq)
-    Q = eqQ(gamma, deltam, deltad, eta, M, D)
-'''
+    pd = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pqprime, D)
+    Z = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
+    Kd = eq.eqKd(d.g, Sp, p.lam, pqprime)
+    Q = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
+
+print('Model solved, Q = ', Q)
