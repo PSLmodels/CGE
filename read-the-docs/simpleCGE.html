@@ -34,8 +34,33 @@
   <div class="section" id="simple-cge-model">
 <span id="simplecge"></span><h1>Simple CGE Model<a class="headerlink" href="#simple-cge-model" title="Permalink to this headline">¶</a></h1>
 <p><strong>Simple CGE</strong></p>
-<div class="section" id="open-cge-simplecge">
-<h2>open_cge.simpleCGE<a class="headerlink" href="#open-cge-simplecge" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-open_cge.simpleCGE">
+<span id="open-cge-simplecge"></span><h2>open_cge.simpleCGE<a class="headerlink" href="#module-open_cge.simpleCGE" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="open_cge.simpleCGE.cge_system">
+<code class="descclassname">open_cge.simpleCGE.</code><code class="descname">cge_system</code><span class="sig-paren">(</span><em>pvec</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/simpleCGE.html#cge_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.simpleCGE.cge_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function solves the system of equations that represents the
+CGE model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pvec</strong> (<em>Numpy array</em>) – Vector of prices</li>
+<li><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Tuple of arguments for equations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Errors from CGE equations</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">p_error (Numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
