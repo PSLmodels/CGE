@@ -1,0 +1,318 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contributor Guide &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open CGE API" href="public_api.html" />
+    <link rel="prev" title="Open CGE" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="contributor-guide">
+<h1>Contributor Guide<a class="headerlink" href="#contributor-guide" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this guide is to provide the necessary background
+such that you can make improvements to Open CGE and share them with
+others working on the model.</p>
+<p>Open CGE code is tracked by using the version control software
+<a class="reference external" href="https://help.github.com/articles/github-glossary/#git">Git</a>.  Following the next steps will get you up and running and
+contributing to the model even if you’ve never used Git or other
+version control software.</p>
+<p>If you have already completed the Setup Python and Setup Git sections,
+please skip to <a class="reference internal" href="#workflow">Workflow</a>.</p>
+<div class="section" id="setup-python">
+<h2>Setup Python<a class="headerlink" href="#setup-python" title="Permalink to this headline">¶</a></h2>
+<p>Open CGE is written in the Python programming language.
+Download and install the free Anaconda distribution of Python 3.6 from
+<a class="reference external" href="https://www.anaconda.com/download/">Anaconda</a>.  You must do this even if you already have
+Python installed on your computer because the Anaconda distribution
+contains additional Python packages that are used by Open CGE (many of
+which are not included in other Python installations).  You can install
+the Anaconda distribution without having administrative privileges on your
+computer and the Anaconda distribution will not interfere with any Python
+installation that came as part of your computer’s operating system.</p>
+</div>
+<div class="section" id="setup-git">
+<h2>Setup Git<a class="headerlink" href="#setup-git" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Create a <a class="reference external" href="https://github.com/">GitHub</a> user account.</p>
+</li>
+<li><p class="first">Install Git on your local machine by following steps 1-4 on <a class="reference external" href="https://help.github.com/articles/set-up-git/">Git
+setup</a>.</p>
+</li>
+<li><p class="first">Tell Git to remember your GitHub password by following steps 1-4 on
+<a class="reference external" href="https://help.github.com/articles/caching-your-github-password-in-git/">password setup</a>.</p>
+</li>
+<li><p class="first">Sign in to GitHub and create your own <a class="reference external" href="https://help.github.com/articles/github-glossary/#remote">remote</a> <a class="reference external" href="https://help.github.com/articles/github-glossary/#repository">repository</a>
+(repo) of Open CGE by clicking <a class="reference external" href="https://help.github.com/articles/github-glossary/#fork">Fork</a> in the upper
+right corner of the <a href="#id4"><span class="problematic" id="id5">`Open CGE GitHub page`_</span></a>. Select your
+username when asked “Where should we fork this repository?”</p>
+</li>
+<li><p class="first">From your command line, navigate to the directory on your computer
+where you would like your local repo to live.</p>
+</li>
+<li><p class="first">Create a local repo by entering at the command line the text after
+the $. <a class="footnote-reference" href="#id3" id="id1">[1]</a> This step creates a directory called CGE in
+the directory that you specified in the prior step:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/[github-username]/CGE.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">From your command line or terminal, navigate to your local
+CGE directory.</p>
+</li>
+<li><p class="first">Make it easier to <a class="reference external" href="https://help.github.com/articles/github-glossary/#push">push</a> your local work to others and <a class="reference external" href="https://help.github.com/articles/github-glossary/#pull">pull</a>
+others’ work to your local machine by entering at the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd CGE
+CGE$ git remote add upstream https://github.com/open-source-economics/CGE.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a conda environment with all of the necessary packages to
+execute the source code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ conda env create
+</pre></div>
+</div>
+</li>
+<li><p class="first">The prior command will create a conda environment called “cge_env”.
+Activate this environment as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ source activate cge_env
+</pre></div>
+</div>
+<p>If you are working on Windows, use the following from the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGEr$ activate cge_env
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If you’ve made it this far, you’ve successfully made a remote copy (a
+fork) of the central Open CGE repo. That remote repo is hosted on
+GitHub.com. You’ve also created a local repo (a <a class="reference external" href="https://help.github.com/articles/github-glossary/#clone">clone</a>) that lives
+on your machine and only you can see; you will make your changes to
+the Open CGE model by editing the files in the CGE
+directory on your machine and then submitting those changes to your
+local repo. As a new contributor, you will push your changes from your
+local repo to your remote repo when you’re ready to share that work
+with the team.</p>
+<p>Don’t be alarmed if the above paragraph is confusing. The following
+section introduces some standard Git practices and guides you through
+the contribution process.</p>
+</div>
+<div class="section" id="workflow">
+<span id="id2"></span><h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
+<p>The following text describes a typical workflow for changing
+Open CGE.  Different workflows may be necessary in some
+situations, in which case other contributors are here to help.</p>
+<ol class="arabic">
+<li><p class="first">Before you edit the Open CGE source code on your machine,
+make sure you have the latest version of the central Open CGE
+repository by executing the following <strong>four</strong> Git commands:</p>
+<ol class="loweralpha">
+<li><p class="first">Tell Git to switch to the master branch in your local repo.
+Navigate to your local CGE directory and enter the
+following text at the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git checkout master
+</pre></div>
+</div>
+</li>
+<li><p class="first">Download all of the content from the central Open CGE repo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git fetch upstream
+</pre></div>
+</div>
+</li>
+<li><p class="first">Update your local master branch to contain the latest content of
+the central master branch using <a class="reference external" href="https://help.github.com/articles/github-glossary/#merge">merge</a>. This step ensures that
+you are working with the latest version of Open CGE:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git merge upstream/master
+</pre></div>
+</div>
+</li>
+<li><p class="first">Push the updated master branch in your local repo to your GitHub repo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git push origin master
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p class="first">Create a new <a class="reference external" href="https://help.github.com/articles/github-glossary/#branch">branch</a> on your local machine. Think of your
+branches as a way to organize your projects. If you want to work on
+this documentation, for example, create a separate branch for that
+work. If you want to change an element of the Open CGE model, create
+a different branch for that project:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git checkout -b [new-branch-name]
+</pre></div>
+</div>
+</li>
+<li><p class="first">As you make changes, frequently check that your changes do not
+introduce bugs or degrade the accuracy of the Open CGE. To do
+this, run the following command from the command line from inside
+the CGE/open_cge directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE/open_cge$ py.test
+</pre></div>
+</div>
+<p>If the tests do not pass, try to fix the issue by using the
+information provided by the error message. If this isn’t possible
+or doesn’t work, we are here to help.</p>
+</li>
+<li><p class="first">Now you’re ready to <a class="reference external" href="https://help.github.com/articles/github-glossary/#commit">commit</a> your changes to your local repo using
+the code below. The first line of code tells Git to track a
+file. Use “git status” to find all the files you’ve edited, and
+“git add” each of the files that you’d like Git to track. As a
+rule, do not add large files. If you’d like to add a file that is
+larger than 25 MB, please contact the other contributors and ask how to
+proceed. The second line of code commits your changes to your local
+repo and allows you to create a commit message; this should be a
+short description of your changes.</p>
+<p><em>Tip</em>: Committing often is a good idea as Git keeps a record of
+your changes. This means that you can always revert to a previous
+version of your work if you need to.  Do this to commit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git add [filename]
+CGE$ git commit -m &quot;[description-of-your-commit]&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Periodically, make sure that the branch you created in step 2
+is in sync with the changes other contributors are making to
+the central master branch by fetching upstream and merging
+upstream/master into your branch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git fetch upstream
+CGE$ git merge upstream/master
+</pre></div>
+</div>
+<p>You may need to resolve conflicts that arise when another
+contributor changed the same section of code that you are
+changing. Feel free to ask other contributors for guidance
+if this happens to you. If you do need to fix a merge
+conflict, re-run the test suite afterwards (step 4.)</p>
+</li>
+<li><p class="first">When you are ready for other team members to review your code, make
+your final commit and push your local branch to your remote repo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CGE$ git push origin [new-branch-name]
+</pre></div>
+</div>
+</li>
+<li><p class="first">From the GitHub.com user interface, <a class="reference external" href="https://help.github.com/articles/creating-a-pull-request/#creating-the-pull-request">open a pull request</a>.</p>
+</li>
+<li><p class="first">When you open a GitHub pull request, a code coverage report will be
+automatically generated.  If your branch adds new code that is not
+tested, the code coverage percent will decline and the number of
+untested statements (“misses” in the report) will increase.  If
+this happens, you need to add to your branch one or more tests of
+your newly added code.  Add tests so that the number of untested
+statements is the same as it is on the master branch.</p>
+</li>
+</ol>
+<p>You should now read the more <a href="#id6"><span class="problematic" id="id7">`detailed pull-request workflow`_</span></a> document.</p>
+</div>
+<div class="section" id="simple-usage">
+<h2>Simple Usage<a class="headerlink" href="#simple-usage" title="Permalink to this headline">¶</a></h2>
+<p>For examples of Tax-Calculator usage, see the <a href="#id8"><span class="problematic" id="id9">`Cookbook of Tested
+Recipes for Python Programming with Tax-Calculator`_</span></a>, which contains
+Python scripts that can be executed by the Python command-line
+interpreter or imported into a Python notebook for interactive execution.</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The dollar sign is the end of the command prompt on a Mac.  If
+you’re on Windows, this is usually the right angle bracket (&gt;).
+No matter the symbol, you don’t need to type it (or anything to
+its left, which shows the current working directory) at the
+command line before you enter a command; the prompt symbol and
+preceding characters should already be there.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributor Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup-python">Setup Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-git">Setup Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simple-usage">Simple Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="public_api.html">Open CGE API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Open CGE</a></li>
+      <li>Next: <a href="public_api.html" title="next chapter">Open CGE API</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/contributor_guide.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

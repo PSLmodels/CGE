@@ -14,7 +14,7 @@ There is also a link to the source code for each documented member.
 
 .. toctree::
    :maxdepth: 1
-   : caption: API
+   :caption: API
 
    calibrate
    CGE-equations
