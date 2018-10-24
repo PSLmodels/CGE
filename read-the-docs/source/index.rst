@@ -11,12 +11,10 @@ Contents
 --------
 
 .. toctree::
-   :maxdepth: 1
-   :caption: API
+   :maxdepth: 2
 
-   calibrate
-   CGE-equations
-   simpleCGE
+   contributor_guide
+   public_api
 
 .. _`user documentation`:
    http://open-source-economics.github.io/CGE/
