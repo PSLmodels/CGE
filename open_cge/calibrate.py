@@ -123,15 +123,15 @@ class parameters(object):
         # share parameter in transformation function
         self.xie = (d.E0 ** (1 - self.phi) / (d.E0 ** (1 - self.phi) +
                                               d.D0 ** (1 - self.phi)))
-        self.xie = self.xie.iloc[0]
+#        self.xie = self.xie.iloc[0]
         self.xid = (d.D0 ** (1 - self.phi) / (d.E0 ** (1 - self.phi) +
                                               d.D0 ** (1 - self.phi)))
-        self.xid = self.xid.iloc[0]
+#        self.xid = self.xid.iloc[0]
 
         # scale parameter in transformation function
         self.theta = (d.Z0 / (self.xie * d.E0 ** self.phi + self.xid *
                               d.D0 ** self.phi) ** (1 / self.phi))
-        self.theta = self.theta.iloc[0]
+#        self.theta = self.theta.iloc[0]
 
         self.ssp = (d.Sp0.values / (d.Ff0.sum() - d.Fsh0.values +
                                     d.Trf0.values))  # average propensity to save
