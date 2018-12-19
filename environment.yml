@@ -6,6 +6,7 @@ dependencies:
 - matplotlib
 - numpy>=1.12.1
 - pandas>=0.20.1
+- xlrd>=1.2.0
 - pytest
 - pytest-pep8
 - pytest-xdist
