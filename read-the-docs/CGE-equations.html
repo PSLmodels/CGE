@@ -1,0 +1,1040 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>CGE Equations &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Simple CGE Model" href="simpleCGE.html" />
+    <link rel="prev" title="CGE Calibration" href="calibrate.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cge-equations">
+<span id="id1"></span><h1>CGE Equations<a class="headerlink" href="#cge-equations" title="Permalink to this headline">¶</a></h1>
+<p><strong>CGE Equations</strong></p>
+<div class="section" id="module-open_cge.CGE_equations">
+<span id="open-cge-cge-equations"></span><h2>open_cge.CGE_equations<a class="headerlink" href="#module-open_cge.CGE_equations" title="Permalink to this headline">¶</a></h2>
+<p>This module defines the equations that characterize the CGE model.</p>
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpy">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpy</code><span class="sig-paren">(</span><em>b</em>, <em>F</em>, <em>beta</em>, <em>Y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Production function.</p>
+<div class="math notranslate nohighlight">
+\[Y_{j} = b_{j}\prod_{h}F_{h,j}^{\beta_{h,j}}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>b</strong> (<em>1D numpy array</em>) – Scale parameter for each good j</li>
+<li><strong>F</strong> (<em>2D numpy array</em>) – The use of factor h in the production of
+good j</li>
+<li><strong>beta</strong> (<em>2D numpy array</em>) – Cost share parameter for factor h in
+production of good j</li>
+<li><strong>Y</strong> (<em>1D numpy array</em>) – Value added for each good j</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>The difference between Y and the</dt>
+<dd><p class="first last">production function evaluated at F.</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">py_error (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqF">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqF</code><span class="sig-paren">(</span><em>beta</em>, <em>py</em>, <em>Y</em>, <em>pf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factor demand.</p>
+<div class="math notranslate nohighlight">
+\[F_{h,j} = \beta_{h,j}\frac{py_{j}}{pf_{h}}Y_{j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>beta</strong> (<em>2D numpy array</em>) – Cost share parameter for factor h in
+production of good j</li>
+<li><strong>py</strong> (<em>1D array</em>) – The price of value added for each good j</li>
+<li><strong>Y</strong> (<em>1D numpy array</em>) – Value added for each good j</li>
+<li><strong>pf</strong> (<em>1D array</em>) – Price of each factor h</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>The demand for factor h used in the</dt>
+<dd><p class="first last">production of good j</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">F (2D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqX">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqX</code><span class="sig-paren">(</span><em>ax</em>, <em>Z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demand for intermediate inputs.</p>
+<div class="math notranslate nohighlight">
+\[X_{i,j} = ax_{i,j}Z_{j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ax</strong> (<em>2D numpy array</em>) – Fixed proportions of intermeidate input i
+used in production of good j (Leontif production function)</li>
+<li><strong>Z</strong> (<em>1D numpy array</em>) – Output of industry j</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>Demand for intermediate input i used in the</dt>
+<dd><p class="first last">production of good j</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">X (2D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqY">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqY</code><span class="sig-paren">(</span><em>ay</em>, <em>Z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value added.</p>
+<div class="math notranslate nohighlight">
+\[Y_{j} = ay_{j}Z_{j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ay</strong> (<em>1D numpy array</em>) – Leontif production parameter, share of
+output of industry j in value added of good j</li>
+<li><strong>Z</strong> (<em>1D numpy array</em>) – Output of industry j</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value added of good j</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Y (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpz">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpz</code><span class="sig-paren">(</span><em>ay</em>, <em>ax</em>, <em>py</em>, <em>pq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output prices.</p>
+<div class="math notranslate nohighlight">
+\[pz_{j} = ay_{j}py_{j} + \sum_{i}ax_{i,j}pq_{i}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ay</strong> (<em>1D numpy array</em>) – Leontif production parameter, share of
+output of industry j in value added of good j</li>
+<li><strong>ax</strong> (<em>2D numpy array</em>) – Fixed proportions of intermeidate input i
+used in production of good j (Leontif production function)</li>
+<li><strong>py</strong> (<em>1D numpy array</em>) – The price of value added for each good j</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">price of output good j</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pz (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqTd">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqTd</code><span class="sig-paren">(</span><em>taud</em>, <em>pf</em>, <em>Ff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqTd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqTd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direct tax revenue.</p>
+<div class="math notranslate nohighlight">
+\[Td =    au d \sum_{h}pf_{h}FF_{h}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>taud</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Direct tax rate</li>
+<li><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</li>
+<li><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total direct tax revenue.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Td (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqTrf">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqTrf</code><span class="sig-paren">(</span><em>tautr</em>, <em>pf</em>, <em>Ff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqTrf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqTrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total transfers to households.</p>
+<div class="math notranslate nohighlight">
+\[Trf =   au^{tr} \sum_{h}pf_{h}FF_{h}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tautr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Tranfer rate (??)</li>
+<li><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</li>
+<li><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total transfers to households</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Trf (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqTz">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqTz</code><span class="sig-paren">(</span><em>tauz</em>, <em>pz</em>, <em>Z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqTz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqTz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Production tax revenue from each commodity.</p>
+<div class="math notranslate nohighlight">
+\[Tz_{j} =        au^{z}_{j} pz_{j}Z_{j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tauz</strong> (<em>1D numpy array</em>) – Ad valorem tax rate on commodity j</li>
+<li><strong>pz</strong> (<em>1D numpy array</em>) – price of output good j</li>
+<li><strong>Z</strong> (<em>1D numpy array</em>) – Output of industry j</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Production tax revenue for each commodity j</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tz (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqTm">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqTm</code><span class="sig-paren">(</span><em>taum</em>, <em>pm</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqTm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqTm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tariff revenue from each commodity.</p>
+<div class="math notranslate nohighlight">
+\[Tm_{j} =        au^{m}_{j} pm_{j}M_{j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>taum</strong> (<em>1D numpy array</em>) – Tariff rate on commodity j</li>
+<li><strong>pm</strong> (<em>1D numpy array</em>) – price of import good j</li>
+<li><strong>M</strong> (<em>1D numpy array</em>) – Imports of good j</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Tariff revenue for each commodity j</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tm (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqXg">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqXg</code><span class="sig-paren">(</span><em>mu</em>, <em>XXg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqXg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqXg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Government expenditures on commodity j</p>
+<div class="math notranslate nohighlight">
+\[X^{g}_{j} = \mu_{j}XX_{g}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mu</strong> (<em>1D numpy array</em>) – Government expenditure share parameters for
+each commodity j</li>
+<li><strong>XXg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total government spending on goods/services</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Government expenditures on commodity j</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Xg (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqXv">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqXv</code><span class="sig-paren">(</span><em>lam</em>, <em>XXv</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqXv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqXv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Investment demand for each good j</p>
+<div class="math notranslate nohighlight">
+\[Xv_{j} = \lambda_{j}XXv\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good j</li>
+<li><strong>XXv</strong> (<em>float??</em>) – Total investment</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Investment demand for each good j</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Xv (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqXXv">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqXXv</code><span class="sig-paren">(</span><em>g</em>, <em>Kk</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqXXv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqXXv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total investment.</p>
+<div class="math notranslate nohighlight">
+\[XXv = g \cdot KK\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>g</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Exogenous long run growth rate of the economy</li>
+<li><strong>Kk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total capital stock</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total investment.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">XXv (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqSp">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqSp</code><span class="sig-paren">(</span><em>ssp</em>, <em>pf</em>, <em>Ff</em>, <em>Fsh</em>, <em>Trf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqSp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqSp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total household savings.</p>
+<div class="math notranslate nohighlight">
+\[Sp = ssp \cdot \left(\sum_{h}pf_{h}FF_{h} \right)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ssp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Fixed household savings rate</li>
+<li><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</li>
+<li><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</li>
+<li><strong>Fsh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Repatriated profits</li>
+<li><strong>Trf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total transfers to households</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total household savings</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Sp (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqSg">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqSg</code><span class="sig-paren">(</span><em>mu</em>, <em>Td</em>, <em>Tz</em>, <em>Tm</em>, <em>XXg</em>, <em>Trf</em>, <em>pq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqSg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqSg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total government savings.</p>
+<div class="math notranslate nohighlight">
+\[Sg = Td + \sum_{j}Tz_{j} + \sum_{j}Tm_{j} - (Trf + \sum_{j}Xg_{j})\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mu</strong> (<em>1D numpy array</em>) – Government expenditure share parameters for
+each commodity j</li>
+<li><strong>Td</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total direct tax revenue</li>
+<li><strong>Tz</strong> (<em>1D numpy array</em>) – Production tax revenue for each commodity j</li>
+<li><strong>Tm</strong> (<em>1D numpy array</em>) – Tariff revenue for each commodity j</li>
+<li><strong>XXg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total government spending on goods/services</li>
+<li><strong>Trf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total transfers to households</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total government savings</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Sg (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqFsh">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqFsh</code><span class="sig-paren">(</span><em>R</em>, <em>Kf</em>, <em>er</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqFsh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqFsh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Domestic profits that are repatriated to foreign owners of capital.</p>
+<div class="math notranslate nohighlight">
+\[FSH = R \cdot KF \cdot \varepsilon\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Real return on capital</li>
+<li><strong>Kf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Foreign holdings of domestic capital</li>
+<li><strong>er</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The real exchange rate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Fsh = Repatriated profits</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqKd">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqKd</code><span class="sig-paren">(</span><em>g</em>, <em>Sp</em>, <em>lam</em>, <em>pq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqKd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqKd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Domestic capital holdings.</p>
+<div class="math notranslate nohighlight">
+\[K^{d} = \frac{S^{p}}{g\sum_{j}\lambda_{j}pq_{j}}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>g</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Exogenous long run growth rate of the economy</li>
+<li><strong>Sp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total household savings</li>
+<li><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good j</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Domestically owned capital ??</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Kd (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqKf">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqKf</code><span class="sig-paren">(</span><em>Kk</em>, <em>Kd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqKf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqKf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Foreign holdings of domestically used capital.</p>
+<div class="math notranslate nohighlight">
+\[K^{f} = KK - K^{d}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Kk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total capital stock</li>
+<li><strong>Kd</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Domestically owned capital</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Foreign owned domestic capital</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Kf (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqKk">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqKk</code><span class="sig-paren">(</span><em>pf</em>, <em>Ff</em>, <em>R</em>, <em>lam</em>, <em>pq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqKk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqKk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capital market clearing equation.</p>
+<div class="math notranslate nohighlight">
+\[KK = \frac{pf * FF}{R \sum_{j}\lambda_{j}pq_{j}}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</li>
+<li><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</li>
+<li><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Real return on capital</li>
+<li><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good j</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total capital stock</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Kk (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqXp">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqXp</code><span class="sig-paren">(</span><em>alpha</em>, <em>pf</em>, <em>Ff</em>, <em>Sp</em>, <em>Td</em>, <em>Fsh</em>, <em>Trf</em>, <em>pq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqXp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqXp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demand for production good i by consumers.</p>
+<div class="math notranslate nohighlight">
+\[X^{p}_{i}= \frac{}\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>alpha</strong> (<em>1D numpy array</em>) – Budget share of good i</li>
+<li><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</li>
+<li><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</li>
+<li><strong>Sp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total household savings</li>
+<li><strong>Td</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total direct tax revenue</li>
+<li><strong>= Repatriated profits</strong> (<em>Fsh</em>) – </li>
+<li><strong>Trf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total transfers to households</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Demand for production good i by consumers</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Xp (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpm">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpm</code><span class="sig-paren">(</span><em>er</em>, <em>pWm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import prices.</p>
+<div class="math notranslate nohighlight">
+\[pm_{i} = \varepsilon \cdot pWm_{i}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>er</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The real exchange rate</li>
+<li><strong>pWm</strong> (<em>1D numpy array</em>) – The world price of commodity i in foreign currency.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The price of commodity i imports in domestic currency.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pm (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqbop">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqbop</code><span class="sig-paren">(</span><em>pWe</em>, <em>pWm</em>, <em>E</em>, <em>M</em>, <em>Sf</em>, <em>Fsh</em>, <em>er</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqbop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqbop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Balance of payments.</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i}pWe_{i}E_{i} + \frac{Sf}{\varepsilon} = \sum_{i}pWm_{i}M_{i} + \frac{Fsh}{\varepsilon}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pWe</strong> (<em>1D numpy array</em>) – The world price of commodity i in foreign currency</li>
+<li><strong>pWm</strong> (<em>1D numpy array</em>) – The world price of commodity i in foreign currency.</li>
+<li><strong>E</strong> (<em>1D numpy array</em>) – Exports of commodity i</li>
+<li><strong>M</strong> (<em>1D numpy array</em>) – Imports of commodity i</li>
+<li><strong>Sf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total foreign savings (??)</li>
+<li><strong>= Repatriated profits</strong> (<em>Fsh</em>) – </li>
+<li><strong>er</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The real exchange rate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Error in balance of payments equation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bop_error (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqSf">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqSf</code><span class="sig-paren">(</span><em>g</em>, <em>lam</em>, <em>pq</em>, <em>Kf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqSf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqSf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Net foreign investment/savings.</p>
+<div class="math notranslate nohighlight">
+\[Sf = g Kf \sum_{j} \lambda_{j} pq_{j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>g</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Exogenous long run growth rate of the economy</li>
+<li><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good j</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+<li><strong>Kf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Foreign owned domestic capital</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Total foreign savings (??)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Sf (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqQ">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqQ</code><span class="sig-paren">(</span><em>gamma</em>, <em>deltam</em>, <em>deltad</em>, <em>eta</em>, <em>M</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqQ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqQ" title="Permalink to this definition">¶</a></dt>
+<dd><p>CES production function for the importing firm.</p>
+<div class="math notranslate nohighlight">
+\[Q_{i} = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\right]^{\frac{1}{\eta_{i}}}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gamma</strong> (<em>1D numpy array</em>) – Scale parameter for CES production function</li>
+<li><strong>deltam</strong> (<em>1D numpy array</em>) – Share parameter for use of imports of good i in produciton Armington good i</li>
+<li><strong>deltad</strong> (<em>1D numpy array</em>) – Share parameter for use of domestically produced good i in produciton Armington good i</li>
+<li><strong>eta</strong> (<em>1D numpy array</em>) – The elasticity of substitution between imports and domestically supplied good i</li>
+<li><strong>M</strong> (<em>1D numpy array</em>) – The imports of good i</li>
+<li><strong>D</strong> (<em>1D numpy array</em>) – The domestic supply of good i from domestic production</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The domestic supply of good i, the Armington good</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Q (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqM">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqM</code><span class="sig-paren">(</span><em>gamma</em>, <em>deltam</em>, <em>deltad</em>, <em>eta</em>, <em>Q</em>, <em>pq</em>, <em>pm</em>, <em>taum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demand for imports.</p>
+<div class="math notranslate nohighlight">
+\[M_{i} = \left(\gamma^{\eta_{i}}_{i}\delta^{m}_{i}\frac{pq_{i}}{(1+\tau^{m}_{i})pm_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gamma</strong> (<em>1D numpy array</em>) – Scale parameter for CES production function</li>
+<li><strong>deltam</strong> (<em>1D numpy array</em>) – Share parameter for use of imports of good i in produciton Armington good i</li>
+<li><strong>deltad</strong> (<em>1D numpy array</em>) – Share parameter for use of domestically produced good i in produciton Armington good i</li>
+<li><strong>eta</strong> (<em>1D numpy array</em>) – The elasticity of substitution between imports and domestically supplied good i</li>
+<li><strong>Q</strong> (<em>1D numpy array</em>) – The domestic supply of good i, the Armington good</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+<li><strong>pm</strong> (<em>1D numpy array</em>) – The price of commodity i imports in domestic currency.</li>
+<li><strong>taum</strong> (<em>1D numpy array</em>) – Tariff rate on commodity i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Demand for imports of good i</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">M (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqD">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqD</code><span class="sig-paren">(</span><em>gamma</em>, <em>deltam</em>, <em>deltad</em>, <em>eta</em>, <em>Q</em>, <em>pq</em>, <em>pd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demand for domestically produced goods from importers.</p>
+<div class="math notranslate nohighlight">
+\[D_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}\frac{pq_{i}}{pd_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gamma</strong> (<em>1D numpy array</em>) – Scale parameter for CES production function</li>
+<li><strong>deltam</strong> (<em>1D numpy array</em>) – Share parameter for use of imports of good i in produciton Armington good i</li>
+<li><strong>deltad</strong> (<em>1D numpy array</em>) – Share parameter for use of domestically produced good i in produciton Armington good i</li>
+<li><strong>eta</strong> (<em>1D numpy array</em>) – The elasticity of substitution between imports and domestically supplied good i</li>
+<li><strong>Q</strong> (<em>1D numpy array</em>) – The domestic supply of good i, the Armington good</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+<li><strong>pd</strong> (<em>1D numpy array</em>) – price of domesically produced good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Demand for domestically produced good i from importers</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">D (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpd">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpd</code><span class="sig-paren">(</span><em>gamma</em>, <em>deltam</em>, <em>deltad</em>, <em>eta</em>, <em>Q</em>, <em>pq</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Price of domestically produced goods from importers.</p>
+<div class="math notranslate nohighlight">
+\[pd_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}pq_{i}\right)\left(\frac{D_{i}}{Q_{i}}\right)^{\eta_{i}-1}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gamma</strong> (<em>1D numpy array</em>) – Scale parameter for CES production function</li>
+<li><strong>deltam</strong> (<em>1D numpy array</em>) – Share parameter for use of imports of good i in produciton Armington good i</li>
+<li><strong>deltad</strong> (<em>1D numpy array</em>) – Share parameter for use of domestically produced good i in produciton Armington good i</li>
+<li><strong>eta</strong> (<em>1D numpy array</em>) – The elasticity of substitution between imports and domestically supplied good i</li>
+<li><strong>Q</strong> (<em>1D numpy array</em>) – The domestic supply of good i, the Armington good</li>
+<li><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic + imports) for each good i</li>
+<li><strong>D</strong> (<em>1D numpy array</em>) – Demand for domestically produced good i from importers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">price of domesically produced good i</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqZ">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqZ</code><span class="sig-paren">(</span><em>theta</em>, <em>xie</em>, <em>xid</em>, <em>phi</em>, <em>E</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqZ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqZ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exporting firm production function.</p>
+<div class="math notranslate nohighlight">
+\[Z_{i} = \theta_{i}\left[\xi_{i}^{E}E_{i}^{\phi_{i}} + \xi_{i}^{D}D_{i}^{\phi_{i}}\right]^{\frac{1}{\phi_{i}}}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>theta</strong> (<em>1D numpy array</em>) – </li>
+<li><strong>xie</strong> (<em>1D numpy array</em>) – Share parameter for the share of exports of good i used by firms exporting good i</li>
+<li><strong>xie</strong> – Share parameter for the share of domestically produced good i used by firms exporting good i</li>
+<li><strong>phi</strong> (<em>1D numpy array</em>) – Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i</li>
+<li><strong>E</strong> (<em>1D numpy array</em>) – Exports of good i</li>
+<li><strong>D</strong> (<em>1D numpy array</em>) – Domestically produced good i</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Output from exporters CET production function</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Z (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqE">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqE</code><span class="sig-paren">(</span><em>theta</em>, <em>xie</em>, <em>tauz</em>, <em>phi</em>, <em>pz</em>, <em>pe</em>, <em>Z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supply of exports.</p>
+<div class="math notranslate nohighlight">
+\[E_{i} = \left(\theta_{i}^{\phi_{i}}\xi^{E}_{i}(1+\tau^{z}_{i}\frac{pz_{i}}{pe_{i}})\right)^{\frac{1}{1-\phi_{i}}}Z_{i}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>theta</strong> (<em>1D numpy array</em>) – </li>
+<li><strong>xie</strong> (<em>1D numpy array</em>) – Share parameter for the share of exports of good i used by firms exporting good i</li>
+<li><strong>tauz</strong> (<em>1D numpy array</em>) – Ad valorem tax rate on commodity i</li>
+<li><strong>phi</strong> (<em>1D numpy array</em>) – Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i</li>
+<li><strong>pz</strong> (<em>1D numpy array</em>) – price of output good i</li>
+<li><strong>pe</strong> (<em>1D numpy array</em>) – Price of commodity i exports in domestic currency</li>
+<li><strong>Z</strong> (<em>1D numpy array</em>) – Output from exporters CET production function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Exports of good i</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">E (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqDex">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqDex</code><span class="sig-paren">(</span><em>theta</em>, <em>xid</em>, <em>tauz</em>, <em>phi</em>, <em>pz</em>, <em>pd</em>, <em>Z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqDex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqDex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demand for domestic goods by exporters.</p>
+<div class="math notranslate nohighlight">
+\[D_{i} = \left(\theta_{i}^{\phi_{i}}\xi^{D}_{i}(1+\tau^{z}_{i}\frac{pz_{i}}{pd_{i}})\right)^{\frac{1}{1-\phi_{i}}}Z_{i}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>theta</strong> (<em>1D numpy array</em>) – </li>
+<li><strong>xid</strong> (<em>1D numpy array</em>) – Share parameter for the share of domestically produced good i used by firms exporting good i</li>
+<li><strong>tauz</strong> (<em>1D numpy array</em>) – Ad valorem tax rate on commodity i</li>
+<li><strong>phi</strong> (<em>1D numpy array</em>) – Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i</li>
+<li><strong>pz</strong> (<em>1D numpy array</em>) – price of output good i</li>
+<li><strong>pd</strong> (<em>1D numpy array</em>) – price of domesically produced good i</li>
+<li><strong>Z</strong> (<em>1D numpy array</em>) – Output from exporters CET production function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Demand for domestic good i by exporters.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">D (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpq">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpq</code><span class="sig-paren">(</span><em>Q</em>, <em>Xp</em>, <em>Xg</em>, <em>Xv</em>, <em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resource constraint.</p>
+<div class="math notranslate nohighlight">
+\[Q_{i} = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{j}X_{i,j}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Q</strong> (<em>1D numpy array</em>) – The domestic supply of good i, the Armington good</li>
+<li><strong>Xp</strong> (<em>1D numpy array</em>) – Demand for production good i by consumers</li>
+<li><strong>Xg</strong> (<em>1D numpy array</em>) – Government expenditures on commodity i</li>
+<li><strong>Xv</strong> (<em>1D numpy array</em>) – Investment demand for each good i</li>
+<li><strong>X</strong> (<em>2D numpy array</em>) – Demand for intermediate input i used in the
+production of good j</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Error in resource constraint for each good i</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pq_error (1D numpy array)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpf">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpf</code><span class="sig-paren">(</span><em>F</em>, <em>Ff0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comparing labor supply from the model to that in the data.</p>
+<div class="math notranslate nohighlight">
+\[\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>2D numpy array</em>) – The use of factor h in the production of
+good j</li>
+<li><strong>Ff0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total labor demand from SAM</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pf_error ()</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="open_cge.CGE_equations.eqpk">
+<code class="descclassname">open_cge.CGE_equations.</code><code class="descname">eqpk</code><span class="sig-paren">(</span><em>F</em>, <em>Kk</em>, <em>Kk0</em>, <em>Ff0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/CGE_equations.html#eqpk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.CGE_equations.eqpk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comparing capital demand in the model and data.</p>
+<div class="math notranslate nohighlight">
+\[\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>2D numpy array</em>) – The use of factor h in the production of
+good j</li>
+<li><strong>Kk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total capital stock</li>
+<li><strong>Kk0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total capital stock from SAM??</li>
+<li><strong>Ff0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Total labor demand from SAM??</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pk_error ()</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="calibrate.html">CGE Calibration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CGE Equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleCGE.html">Simple CGE Model</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="calibrate.html" title="previous chapter">CGE Calibration</a></li>
+      <li>Next: <a href="simpleCGE.html" title="next chapter">Simple CGE Model</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/CGE-equations.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,12 @@
+name: cge_env
+dependencies:
+- python>=3.6
+- setuptools
+- scipy>=0.18.1
+- matplotlib
+- numpy>=1.12.1
+- pandas>=0.20.1
+- xlrd>=1.2.0
+- pytest
+- pytest-pep8
+- pytest-xdist
