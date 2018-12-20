@@ -111,71 +111,15 @@ Kdbar = d.Kd0
 Qbar = d.Q0
 pdbar = pvec[0:len(ind)]
 
+
+
 '''
-#checking system
-py = pvec[0:len(ind)]
-pq = pvec[len(ind):len(ind)*2]
-pf = pvec[len(ind)*2:12]
-
-py = Series(py, index=list(ind))
-pq = Series(pq, index=list(ind))
-pf = Series(pf, index=list(h))
-
-pe = eqpe(er, pWe)
-pm = eqpm(er, pWm)
-
-pz = eqpz(ay, ax, py, pq)
-
-Kk = eqKk(pf, Ffbar, R, lam, pq)
-XXv = eqXXv(g, Kk)
-Xv = eqXv(lam, XXv)
-
-Xg = eqXg(mu, XXg)
-
-Kf = eqKf(Kk, Kdbar)
-Fsh = eqFsh(R, Kf, er)
-Sf = eqSf(g, lam, pq, Kf)
-
-Td = eqTd(taud, pf, Ffbar)
-Trf = eqTrf(tautr, pf, Ffbar)
-Tz = eqTz(tauz, pz, Zbar)
-
-X = eqX(ax, Zbar)
-Y = eqY(ay, Zbar)
-F = eqF(beta, py, Y, pf)
-
-Sp = eqSp(ssp, pf, Ffbar, Fsh, Trf)
-Xp = eqXp(alpha, pf, Ffbar, Sp, Td, Fsh, Trf, pq)
-
-E = eqE(theta, xie , tauz, phi, pz, pe, Zbar)
-D = eqD(theta, xid , tauz, phi, pz, pdbar, Zbar)
-
-M = eqM(gamma, deltam, deltad, eta, Qbar, pq, pm, taum)
-Tm = eqTm(taum, pm, M)
-Sg = eqSg(mu, Td, Tz, Tm, XXg, Trf, pq)
-
-pq_error = eqpq(Qbar, Xp, Xg, Xv, X)
-pf_error = eqpf(F, Ff0)
-pk_error = eqpk(F, Kk, Kk0, Ff0)
-py_error = eqpy(b, F, beta, Y)
-
-
-pf_error = pf_error.append(pk_error)
-pf_error = DataFrame(pf_error)
-pf_error = pf_error.T
-pf_error = DataFrame(pf_error, columns = list(h))
-pf_error = pf_error.iloc[0]
-#pf_error.columns = list(ind)
-
-py_error = py_error.values
-pf_error = pf_error.values
-pq_error = pq_error.values
-
-p_error = np.append(py_error, pq_error)
-p_error = np.append(p_error, pf_error)
-#p_error = py_error.append([pq_error, pf_error])
-#p_error = p_error.values
+#checking calibration of model
+cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
+errors = cge_system(pvec, cge_args)
 #---------------------------------------------
+
+
 '''
 
 while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
@@ -214,7 +158,7 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
     Qprime = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
     pdprime = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pqprime, D)
     Zprime = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
-    Zprime = Zprime.iloc[0]
+#    Zprime = Zprime.iloc[0]
     Kdprime = eq.eqKd(d.g, Sp, p.lam, pqprime)
     Ffprime = d.Ff0
     # Ffprime['CAP'] = R * d.Kk * (p.lam * pq).sum() / pf[1]
