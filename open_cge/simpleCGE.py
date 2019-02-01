@@ -34,7 +34,7 @@ def cge_system(pvec, args):
     Returns:
         p_error (Numpy array): Errors from CGE equations
     '''
-    (p, d, ind, h, Z, Q, Kd, pd, Ff, R, er) = args
+    (p, d, ind, h, Z, Q, Kd, pd, Ff, R, er, Sg) = args
 
     py = pvec[0:len(ind)]
     pf = pvec[len(ind): len(ind) + len(h)]
@@ -48,7 +48,6 @@ def cge_system(pvec, args):
     Kk = eq.eqKk(pf, Ff, R, p.lam, pq)
     XXv = eq.eqXXv(d.g, Kk)
     Xv = eq.eqXv(p.lam, XXv)
-    Xg = eq.eqXg(p.mu, XXg)
     Kf = eq.eqKf(Kk, Kd)
     Fsh = eq.eqFsh(R, Kf, er)
     Td = eq.eqTd(p.taud, pf, Ff)
@@ -63,9 +62,10 @@ def cge_system(pvec, args):
     D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
     M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Q, pq, pm, p.taum)
     Tm = eq.eqTm(p.taum, pm, M)
+    XXg = eq.eqSg(p.mu, Td, Tz, Tm, Sg, Trf, pq)
+    Xg = eq.eqXg(p.mu, XXg)
 
-
-    pf_error = eq.eqpf(F, d.Ff0)
+    pf_error = eq.eqpf(F, Ff)
     pk_error = eq.eqpk(F, Kk, d.Kk0, d.Ff0)
     py_error = eq.eqpy(p.b, F, p.beta, Y)
 
@@ -86,9 +86,9 @@ def cge_system(pvec, args):
 # solve cge_system
 dist = 10
 tpi_iter = 0
-tpi_max_iter = 1000
-tpi_tol = 1e-10
-xi = 0.1
+tpi_max_iter = 500
+tpi_tol = 1e-5
+xi = 0.15
 
 # pvec = pvec_init
 pvec = np.ones(len(ind) + len(h))
@@ -97,32 +97,58 @@ pvec = np.ones(len(ind) + len(h))
 d = calibrate.model_data(sam, h, u, ind)
 p = calibrate.parameters(d, ind)
 
-XXg = d.XXg0
+
 R = d.R0
+Sg = d.Sg0
 er = 1
+p.taum = p.taum * 1.1
 
-Zbar = d.Z0
-Ffbar = d.Ff0
-Kdbar = d.Kd0
-Qbar = d.Q0
+Zbar = d.Z0 * 1
+Ffbar = d.Ff0 * 1
+Kdbar = d.Kd0 * 1
+Qbar = d.Q0 * 1
 pdbar = pvec[0:len(ind)]
-
-pm = eq.eqpm(er, d.pWm)
-test = eq.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
 
 
 '''
 #checking calibration of model
-cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
-errors = cge_system(pvec, cge_args)
+#cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er, Sg]
+#errors = cge_system(pvec, cge_args)
 #---------------------------------------------
 
+py = pvec[0:len(ind)]
+pf = pvec[len(ind): len(ind) + len(h)]
+py = Series(py, index=list(ind))
+pf = Series(pf, index=list(h))
+pe = eq.eqpe(er, d.pWe)
+pm = eq.eqpm(er, d.pWm)
+pq = eq.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
+pz = eq.eqpz(p.ay, p.ax, py, pq)
+Kk = eq.eqKk(pf, Ffbar, R, p.lam, pq)
+XXv = eq.eqXXv(d.g, Kk)
+Xv = eq.eqXv(p.lam, XXv)
+Kf = eq.eqKf(Kk, Kdbar)
+Fsh = eq.eqFsh(R, Kf, er)
+Td = eq.eqTd(p.taud, pf, Ffbar)
+Trf = eq.eqTrf(p.tautr, pf, Ffbar)
+Tz = eq.eqTz(p.tauz, pz, Zbar)
+X = eq.eqX(p.ax, Zbar)
+Y = eq.eqY(p.ay, Zbar)
+F = eq.eqF(p.beta, py, Y, pf)
+Sp = eq.eqSp(p.ssp, pf, Ffbar, Fsh, Trf)
+Xp = eq.eqXp(p.alpha, pf, Ffbar, Sp, Td, Fsh, Trf, pq)
+E = eq.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
+D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
+M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
+Tm = eq.eqTm(p.taum, pm, M)
+XXg = eq.eqSg(p.mu, Td, Tz, Tm, Sg, Trf, pq)
+Xg = eq.eqXg(p.mu, XXg)
 
 '''
 
 while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 	tpi_iter += 1
-	cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
+	cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er, Sg]
 
 	results = opt.root(cge_system, pvec, args=cge_args, method='lm',
 					   tol=1e-5)
@@ -152,28 +178,32 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 	E = eq.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
 	D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
 	M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
-	Qprime = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
+	X = eq.eqX(p.ax, Zbar)
+	Tm = eq.eqTm(p.taum, pm, M)
+	XXg = eq.eqSg(p.mu, Td, Tz, Tm, Sg, Trf, pq)
+	Xg = eq.eqXg(p.mu, XXg)
+	XXv = eq.eqXXv(d.g, Kk)
+	Xv = eq.eqXv(p.lam, XXv)
+	Qprime = eq.eqpqerror(Xp, Xg, Xv, X)
 	pdprime = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
 	Zprime = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
-	#    Zprime = Zprime.iloc[0]
 	Kdprime = eq.eqKd(d.g, Sp, p.lam, pq)
-	Ffprime = d.Ff0
-	# Ffprime['CAP'] = R * d.Kk * (p.lam * pq).sum() / pf[1]
+	Ffprime = Ffbar
 	Ffprime['CAP'] = R * Kk * (p.lam * pq).sum() / pfprime[1]
 
-	dist = (((Zbar - Zprime) ** 2 ) ** (1 / 2)).sum()
+	dist = (((Qbar - Qprime) ** 2 ) ** (1 / 2) + ((pdbar - pdprime) ** 2 ) ** (1 / 2)).sum()
 	print('Distance at iteration ', tpi_iter, ' is ', dist)
+
 	pdbar = xi * pdprime + (1 - xi) * pdbar
 	Zbar = xi * Zprime + (1 - xi) * Zbar
 	Kdbar = xi * Kdprime + (1 - xi) * Kdbar
 	Qbar = xi * Qprime + (1 - xi) * Qbar
 	Ffbar = xi * Ffprime + (1 - xi) * Ffbar
 
-	bop_error = eq.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
 
-	pd = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
-	Z = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
-	Kd = eq.eqKd(d.g, Sp, p.lam, pq)
-	Q = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
 
-print('Model solved, Q = ', Q)
+bop_error = eq.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
+
+
+print('Model solved, Q = ', Qprime)
+
