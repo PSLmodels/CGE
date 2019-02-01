@@ -261,7 +261,7 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
     return Sp
 
 
-def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
+def eqSg(mu, Td, Tz, Tm, Sg, Trf, pq):
     '''
     Total government savings.
 
@@ -281,8 +281,9 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
     Returns:
         Sg (float): Total government savings
     '''
-    Sg = Td + Tz.sum() + Tm.sum() - (Trf + XXg * (mu * pq).sum())
-    return Sg
+    XXg = (Td + Tz.sum() + Tm.sum() - Trf  - Sg) / (mu * pq).sum()
+    XXg = XXg.iloc[0]
+    return XXg
 
 
 def eqFsh(R, Kf, er):
@@ -321,6 +322,7 @@ def eqKd(g, Sp, lam, pq):
         Kd (float): Domestically owned capital ??
     '''
     Kd = Sp / (g * (lam * pq).sum())
+    Kd = Kd.iloc[0]
     return Kd
 
 
@@ -628,7 +630,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
     return D
 
 
-def eqpqerror(Q, Xp, Xg, Xv, X):
+def eqpqerror(Xp, Xg, Xv, X):
     '''
     Resource constraint.
 
@@ -646,8 +648,8 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
     Returns:
         pq_error (1D numpy array): Error in resource constraint for each good i
     '''
-    pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
-    return pq_error
+    Q = (Xp + Xg + Xv + X.sum(axis=1))
+    return Q
 
 def eqpq(pm, pd, taum, eta, deltam, deltad, gamma):
 
@@ -656,7 +658,7 @@ def eqpq(pm, pd, taum, eta, deltam, deltad, gamma):
     return pq
 
 
-def eqpf(F, Ff0):
+def eqpf(F, Ff):
     '''
     Comparing labor supply from the model to that in the data.
 
@@ -671,7 +673,7 @@ def eqpf(F, Ff0):
         pf_error ():
     '''
     F1 = F.drop(['CAP'])
-    Ff1 = Ff0.drop(['CAP'])
+    Ff1 = Ff.drop(['CAP'])
     pf_error = Ff1 - F1.sum(axis=1)
     return pf_error
 
