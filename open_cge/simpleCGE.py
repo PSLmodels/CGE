@@ -7,7 +7,11 @@ import os
 current_path = os.path.abspath(os.path.dirname(__file__))
 import sys
 sys.path.insert(0, current_path)
-import equations as eq
+# import equations as eq
+import government as gov
+import household as hh
+import aggregates as agg
+import firms
 import calibrate
 
 # load social accounting matrix
@@ -41,33 +45,33 @@ def cge_system(pvec, args):
     py = Series(py, index=list(ind))
     pf = Series(pf, index=list(h))
 
-    pe = eq.eqpe(er, d.pWe)
-    pm = eq.eqpm(er, d.pWm)
-    pq = eq.eqpq(pm, pd, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
-    pz = eq.eqpz(p.ay, p.ax, py, pq)
-    Kk = eq.eqKk(pf, Ff, R, p.lam, pq)
-    XXv = eq.eqXXv(d.g, Kk)
-    Xv = eq.eqXv(p.lam, XXv)
-    Xg = eq.eqXg(p.mu, XXg)
-    Kf = eq.eqKf(Kk, Kd)
-    Fsh = eq.eqFsh(R, Kf, er)
-    Td = eq.eqTd(p.taud, pf, Ff)
-    Trf = eq.eqTrf(p.tautr, pf, Ff)
-    Tz = eq.eqTz(p.tauz, pz, Z)
-    X = eq.eqX(p.ax, Z)
-    Y = eq.eqY(p.ay, Z)
-    F = eq.eqF(p.beta, py, Y, pf)
-    Sp = eq.eqSp(p.ssp, pf, Ff, Fsh, Trf)
-    Xp = eq.eqXp(p.alpha, pf, Ff, Sp, Td, Fsh, Trf, pq)
-    E = eq.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Z)
-    D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
-    M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Q, pq, pm, p.taum)
-    Tm = eq.eqTm(p.taum, pm, M)
+    pe = firms.eqpe(er, d.pWe)
+    pm = firms.eqpm(er, d.pWm)
+    pq = firms.eqpq(pm, pd, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
+    pz = firms.eqpz(p.ay, p.ax, py, pq)
+    Kk = agg.eqKk(pf, Ff, R, p.lam, pq)
+    XXv = agg.eqXXv(d.g, Kk)
+    Xv = firms.eqXv(p.lam, XXv)
+    Xg = agg.eqXg(p.mu, XXg)
+    Kf = agg.eqKf(Kk, Kd)
+    Fsh = firms.eqFsh(R, Kf, er)
+    Td =gov.eqTd(p.taud, pf, Ff)
+    Trf = gov.eqTrf(p.tautr, pf, Ff)
+    Tz = gov.eqTz(p.tauz, pz, Z)
+    X = firms.eqX(p.ax, Z)
+    Y = firms.eqY(p.ay, Z)
+    F = hh.eqF(p.beta, py, Y, pf)
+    Sp = agg.eqSp(p.ssp, pf, Ff, Fsh, Trf)
+    Xp = hh.eqXp(p.alpha, pf, Ff, Sp, Td, Fsh, Trf, pq)
+    E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Z)
+    D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
+    M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Q, pq, pm, p.taum)
+    Tm = gov.eqTm(p.taum, pm, M)
 
 
-    pf_error = eq.eqpf(F, d.Ff0)
-    pk_error = eq.eqpk(F, Kk, d.Kk0, d.Ff0)
-    py_error = eq.eqpy(p.b, F, p.beta, Y)
+    pf_error = agg.eqpf(F, d.Ff0)
+    pk_error = agg.eqpk(F, Kk, d.Kk0, d.Ff0)
+    py_error = firms.eqpy(p.b, F, p.beta, Y)
 
     pf_error = pf_error.append(pk_error)
     pf_error = DataFrame(pf_error)
@@ -107,8 +111,8 @@ Kdbar = d.Kd0
 Qbar = d.Q0
 pdbar = pvec[0:len(ind)]
 
-pm = eq.eqpm(er, d.pWm)
-test = eq.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
+pm = firms.eqpm(er, d.pWm)
+test = firms.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
 
 
 '''
@@ -136,27 +140,27 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 
 	temp = cge_system(pvec, cge_args)
 
-	pe = eq.eqpe(er, d.pWe)
-	pm = eq.eqpm(er, d.pWm)
-	pq = eq.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
-	pz = eq.eqpz(p.ay, p.ax, pyprime, pq)
-	Kk = eq.eqKk(pfprime, Ffbar, R, p.lam, pq)
-	Td = eq.eqTd(p.taud, pfprime, Ffbar)
-	Trf = eq.eqTrf(p.tautr, pfprime, Ffbar)
-	Tz = eq.eqTz(p.tauz, pz, Zbar)
-	Kf = eq.eqKf(Kk, Kdbar)
-	Fsh = eq.eqFsh(R, Kf, er)
-	Sf = eq.eqSf(d.g, p.lam, pq, Kf)
-	Sp = eq.eqSp(p.ssp, pfprime, Ffbar, Fsh, Trf)
-	Xp = eq.eqXp(p.alpha, pfprime, Ffbar, Sp, Td, Fsh, Trf, pq)
-	E = eq.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
-	D = eq.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
-	M = eq.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
-	Qprime = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
-	pdprime = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
-	Zprime = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
+	pe = firms.eqpe(er, d.pWe)
+	pm = firms.eqpm(er, d.pWm)
+	pq = firms.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
+	pz = firms.eqpz(p.ay, p.ax, pyprime, pq)
+	Kk = agg.eqKk(pfprime, Ffbar, R, p.lam, pq)
+	Td = gov.eqTd(p.taud, pfprime, Ffbar)
+	Trf = gov.eqTrf(p.tautr, pfprime, Ffbar)
+	Tz = gov.eqTz(p.tauz, pz, Zbar)
+	Kf = agg.eqKf(Kk, Kdbar)
+	Fsh = firms.eqFsh(R, Kf, er)
+	Sf = agg.eqSf(d.g, p.lam, pq, Kf)
+	Sp = agg.eqSp(p.ssp, pfprime, Ffbar, Fsh, Trf)
+	Xp = hh.eqXp(p.alpha, pfprime, Ffbar, Sp, Td, Fsh, Trf, pq)
+	E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
+	D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
+	M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
+	Qprime = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
+	pdprime = firms.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
+	Zprime = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
 	#    Zprime = Zprime.iloc[0]
-	Kdprime = eq.eqKd(d.g, Sp, p.lam, pq)
+	Kdprime = agg.eqKd(d.g, Sp, p.lam, pq)
 	Ffprime = d.Ff0
 	# Ffprime['CAP'] = R * d.Kk * (p.lam * pq).sum() / pf[1]
 	Ffprime['CAP'] = R * Kk * (p.lam * pq).sum() / pfprime[1]
@@ -169,11 +173,11 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 	Qbar = xi * Qprime + (1 - xi) * Qbar
 	Ffbar = xi * Ffprime + (1 - xi) * Ffbar
 
-	bop_error = eq.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
+	bop_error = agg.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
 
-	pd = eq.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
-	Z = eq.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
-	Kd = eq.eqKd(d.g, Sp, p.lam, pq)
-	Q = eq.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
+	pd = firms.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
+	Z = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
+	Kd = agg.eqKd(d.g, Sp, p.lam, pq)
+	Q = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
 
 print('Model solved, Q = ', Q)
