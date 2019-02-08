@@ -1,4 +1,4 @@
-def eqXXv(g, Kk):
+def eqXg(g, Kk):
     '''
     Total investment.
 
@@ -200,3 +200,20 @@ def eqpk(F, Kk, Kk0, Ff0):
     Fcap = F.loc[['CAP']]
     pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
     return pk_error
+
+def eqXXv(g, Kk):
+    '''
+    Total investment.
+
+    .. math::
+        XXv = g \cdot KK
+
+    Args:
+        g (float): Exogenous long run growth rate of the economy
+        Kk (float): Total capital stock
+
+    Returns:
+        XXv (float): Total investment.
+    '''
+    XXv = g * Kk
+    return XXv
