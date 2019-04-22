@@ -19,26 +19,41 @@ def eqF(beta, py, Y, pf):
     F = beta.div(pf, axis=0) * Y * py
     return F
 
-
-def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
+def eqI(pf, Ff, Sp, Td, Fsh, Trf):
     '''
-    Demand for production good i by consumers.
+    Total income of consumers.
 
     .. math::
-        X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
+        I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
 
     Args:
-        alpha (1D numpy array): Budget share of good i
         pf (1D numpy array): The price of factor h
         Ff (1D numpy array): Endowment of factor h
         Sp (float): Total household savings
         Td (float): Total direct tax revenue
         Fsh = Repatriated profits
         Trf (float): Total transfers to households
+
+    Returns:
+        I (1D numpy array): Total income of consumers
+    '''
+    I =  (pf * Ff).sum() - Sp - Td - Fsh + Trf
+    return I
+
+def eqXp(alpha, I, pq):
+    '''
+    Demand for production good i by consumers.
+
+    .. math::
+        X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}I
+
+    Args:
+        alpha (1D numpy array): Budget share of good i
+        I (1D numpy array): Total income of consumers
         pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
     '''
-    Xp = alpha * ((pf * Ff).sum() - Sp - Td - Fsh + Trf) / pq
+    Xp = alpha / pq * I
     return Xp
