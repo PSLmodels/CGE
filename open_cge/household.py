@@ -35,7 +35,7 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
         Trf (float): Total transfers to households
 
     Returns:
-        I (1D numpy array): Total income of consumers
+        I (float): Total income of consumers
     '''
     I =  (pf * Ff).sum() - Sp - Td - Fsh + Trf
     return I
@@ -49,11 +49,11 @@ def eqXp(alpha, I, pq):
 
     Args:
         alpha (1D numpy array): Budget share of good i
-        I (1D numpy array): Total income of consumers
+        I (float): Total income of consumers
         pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
     '''
-    Xp = alpha / pq * I
+    Xp = alpha.div(pq, axis = 0) * I
     return Xp
