@@ -27,13 +27,13 @@ def test_eqI():
     Ff = np.array([10, 4, 2, 10])
     Sp = 10
     Td = 10
-    Fsh = 3
+    Fsh = 7
     Trf = 2
     expected_I = 75
     test_I = household.eqI(pf, Ff, Sp, Td, Fsh, Trf)
     print('Type = ', type(test_I))
-    print(I)
-    assert test_I == expected_I_vals
+    print(expected_I)
+    assert test_I == expected_I
 
 def test_eqXp():
     alpha_vals = np.array([0.2, 0.4, 0.4])
