@@ -27,7 +27,8 @@ def test_eqI():
     Ff = np.array([10, 4, 2, 10])
     Sp = 10
     Td = 10
-    Fsh = 5
+    Fsh = 3
+    Trf = 2
     expected_I = 75
     test_I = household.eqI(pf, Ff, Sp, Td, Fsh, Trf)
     print('Type = ', type(test_I))
