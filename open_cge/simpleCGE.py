@@ -16,7 +16,7 @@ import calibrate
 
 # load social accounting matrix
 sam_path = os.path.join(current_path, 'SAM.xlsx')
-sam = pd.read_excel(sam_path)
+sam = pd.read_excel(sam_path, index_col=0, header=0)
 
 # declare sets
 u = ('AGR', 'OIL', 'IND', 'SER', 'LAB', 'CAP', 'LAND', 'NTR',

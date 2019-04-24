@@ -21,3 +21,32 @@ def test_eqF():
         expected_F,
         test_F,
         check_dtype=False)
+
+def test_eqI():
+    pf = np.array([4, 5, 10, 2])
+    Ff = np.array([10, 4, 2, 10])
+    Sp = 10
+    Td = 10
+    Fsh = 5
+    expected_I = 75
+    test_I = household.eqI(pf, Ff, Sp, Td, Fsh, Trf)
+    print('Type = ', type(test_I))
+    print(I)
+    assert test_I == expected_I_vals
+
+def test_eqXp():
+    alpha_vals = np.array([0.2, 0.4, 0.4])
+    assert sum(alpha_vals) == 1
+    index = ['Row'+str(i) for i in range(1, alpha_vals.shape[0]+ 1)]
+    alpha = pd.DataFrame(alpha_vals, index=index)
+    I = 75
+    pq = np.array([1, 3, 5])
+    expected_Xp_vals = np.array([15, 10, 6])
+    expected_Xp = pd.DataFrame(expected_Xp_vals, index=index)
+    test_Xp = household.eqXp(alpha, I, pq)
+    print('Type = ', type(test_Xp))
+    print(alpha)
+    assert_frame_equal(
+        expected_Xp,
+        test_Xp,
+        check_dtype=False)
