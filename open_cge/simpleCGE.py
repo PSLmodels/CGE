@@ -16,7 +16,7 @@ import calibrate
 
 # load social accounting matrix
 sam_path = os.path.join(current_path, 'SAM.xlsx')
-sam = pd.read_excel(sam_path)
+sam = pd.read_excel(sam_path, index_col=0, header=0)
 
 # declare sets
 u = ('AGR', 'OIL', 'IND', 'SER', 'LAB', 'CAP', 'LAND', 'NTR',
@@ -62,7 +62,8 @@ def cge_system(pvec, args):
     Y = firms.eqY(p.ay, Z)
     F = hh.eqF(p.beta, py, Y, pf)
     Sp = agg.eqSp(p.ssp, pf, Ff, Fsh, Trf)
-    Xp = hh.eqXp(p.alpha, pf, Ff, Sp, Td, Fsh, Trf, pq)
+    I = hh.eqI(pf, Ff, Sp, Td, Fsh, Trf)
+    Xp = hh.eqXp(p.alpha, I, pq)
     E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Z)
     D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
     M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Q, pq, pm, p.taum)
@@ -152,7 +153,8 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 	Fsh = firms.eqFsh(R, Kf, er)
 	Sf = agg.eqSf(d.g, p.lam, pq, Kf)
 	Sp = agg.eqSp(p.ssp, pfprime, Ffbar, Fsh, Trf)
-	Xp = hh.eqXp(p.alpha, pfprime, Ffbar, Sp, Td, Fsh, Trf, pq)
+	I = hh.eqI(pfprime, Ffbar, Sp, Td, Fsh, Trf)
+	Xp = hh.eqXp(p.alpha, I, pq)
 	E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
 	D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
 	M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
