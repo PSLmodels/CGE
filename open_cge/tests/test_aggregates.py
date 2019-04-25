@@ -10,10 +10,10 @@ from open_cge import aggregates
 def test_eqXg():
     g = 0.03
     kk = 100
-    expected_XXv = 3
-    test_XXv = aggregates.eqXg(g, kk)
-    print('Type = ', type(test_XXv))
-    assert expected_XXv == test_XXv
+    expected_XXg = 3
+    test_XXg = aggregates.eqXg(g, kk)
+    print('Type = ', type(test_XXg))
+    assert expected_XXg == test_XXg
 
 
 # Total household saving
@@ -54,7 +54,16 @@ def test_eqKk():
 
 # Balance of payments
 def test_eqbop():
-
+    pWe = np.array( [2, 4, 6, 7])
+    pWm = np.array([3, 6, 2, 5])
+    E = np.array([6, 8, 10, 12])
+    M = np.array([10, 6, 12, 14])
+    Sf = 10
+    Fsh = 5
+    er = 2.0
+    expected_bop_error = 29
+    test_bop_error = aggregates.eqbop(pWe, pWm, E, M, Sf, Fsh, er)
+    assert expected_bop_error == test_bop_error
 
 # Net foreign investment/savings
 def test_eqSf():
