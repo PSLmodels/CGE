@@ -67,6 +67,13 @@ def test_eqbop():
 
 # Net foreign investment/savings
 def test_eqSf():
+    g = 0.03
+    Kf = 100
+    lam = np.array([0.2, 0.3, 0.2, 0.3])
+    pq = np.array([4, 6, 3, 5])
+    assert sum(lam) == 1
+    expected_Sf = 54
+    test_Sf = aggregates.eqSf(g, Kf, lam, pq)
 
 
 # Resource constraint
