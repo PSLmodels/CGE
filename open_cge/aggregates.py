@@ -1,27 +1,12 @@
-def eqXg(g, Kk):
-    '''
-    Total investment.
-
-    .. math::
-        XXv = g \cdot KK
-
-    Args:
-        g (float): Exogenous long run growth rate of the economy
-        Kk (float): Total capital stock
-
-    Returns:
-        XXv (float): Total investment.
-    '''
-    XXv = g * Kk
-    return XXv
-
+## This file defines equations used to calculate aggregate quantities for the
+## simple CGE model.
 
 def eqSp(ssp, pf, Ff, Fsh, Trf):
     '''
     Total household savings.
 
     .. math::
-        Sp = ssp \cdot \left(\sum_{h}pf_{h}FF_{h} \\right)
+        Sp = ssp \cdot \left(\sum_{h}pf_{h}Ff_{h} \\right)
 
     Args:
         ssp (float): Fixed household savings rate
@@ -48,7 +33,7 @@ def eqKd(g, Sp, lam, pq):
         g (float): Exogenous long run growth rate of the economy
         Sp (float): Total household savings
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
 
     Returns:
         Kd (float): Domestically owned capital ??
@@ -86,7 +71,7 @@ def eqKk(pf, Ff, R, lam, pq):
         Ff (1D numpy array): Endowment of factor h
         R (float): Real return on capital
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
 
     Returns:
         Kk (float): Total capital stock
@@ -129,7 +114,7 @@ def eqSf(g, lam, pq, Kf):
     Args:
         g (float): Exogenous long run growth rate of the economy
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
         Kf (float): Foreign owned domestic capital
 
     Returns:
