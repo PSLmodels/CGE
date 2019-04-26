@@ -8,16 +8,6 @@ from pandas.testing import assert_frame_equal
 from numpy.testing import assert_allclose
 from open_cge import aggregates
 
-# Total investment
-def test_eqXg():
-    g = 0.03
-    kk = 100.0
-    expected_XXg = 3.0
-    test_XXg = aggregates.eqXg(g, kk)
-    print('Type = ', type(test_XXg))
-    assert expected_XXg == test_XXg
-
-
 # Total household saving
 def test_eqSp():
     ssp = 0.1
@@ -51,8 +41,15 @@ def test_eqKf():
 
 # Capital market clearing equation
 def test_eqKk():
-    pf = np.array([])
-    Ff = np.array([])
+    pf = np.array([2, 4, 5, 1])
+    Ff= np.array([3, 4, 5, 7])
+    R = 0.02
+    lam = np.array([0.3, 0.2, 0.1, 0.4])
+    assert sum(lam) == 1
+    pq = np.array([5, 6, 8, 4])
+    expected_Kk = 529.41
+    test_Kk = aggregates.eqKk(pf, Ff, R, lam, pq)
+    assert_allclose(expected_Kk, test_Kk)
 
 # Balance of payments
 def test_eqbop():
