@@ -8,6 +8,14 @@ from pandas.testing import assert_frame_equal
 from numpy.testing import assert_allclose
 from open_cge import aggregates
 
+# Total investment
+def eqXXv():
+    g = 0.03
+    Kk = 100
+    expected_eqXXv = 3
+    test_eqXXv = aggregates.eqXXv(g, Kk)
+    assert expected_eqXXv == test_eqXXv
+
 # Total household saving
 def test_eqSp():
     ssp = 0.1
