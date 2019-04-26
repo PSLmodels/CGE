@@ -72,5 +72,6 @@ def cge_system(pvec, args):
     pf_error = pf_error.values
 
     p_error = np.append(py_error, pf_error)
-
+    print("perrors =", p_error)
+    quit()
     return p_error
