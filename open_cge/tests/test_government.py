@@ -31,7 +31,13 @@ def test_eqTz():
     assert_allclose(expected_Tz, test_Tz)
 
 # Tariff revenue from each commodity
-
+def test_eqTm():
+    taum = np.array([0.05, 0.09, 0.10, 0.15])
+    pm = np.array([10, 12, 15, 20])
+    M = np.array([20, 15, 14, 10])
+    expected_Tm = np.array([10, 16.2, 21, 30])
+    test_Tm = government.eqTm(taum, pm, M)
+    assert_allclose(expected_Tm, test_Tm)
 
 # Government expenditures on commodity j
 
