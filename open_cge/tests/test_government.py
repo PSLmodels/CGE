@@ -22,7 +22,13 @@ def test_eqTd():
 
 
 # Production tax revenue from each commodity
-
+def test_eqTz():
+    tauz = np.array([0.02, 0.05, 0.08, 0.10])
+    pz = np.array([8, 12, 15, 20])
+    Z = np.array([100, 50, 60, 30])
+    expected_Tz = np.array([16, 30, 72, 60])
+    test_Tz = government.eqTz(tauz, pz, Z)
+    assert_allclose(expected_Tz, test_Tz)
 
 # Tariff revenue from each commodity
 
