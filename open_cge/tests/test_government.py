@@ -40,6 +40,11 @@ def test_eqTm():
     assert_allclose(expected_Tm, test_Tm)
 
 # Government expenditures on commodity j
-
+def test_eqXg():
+    mu = np.array([0.2, 0.4, 0.3, 0.1])
+    XXg = 100.0
+    expected_Xg = np.array([20, 40, 30, 10])
+    test_Xg = government.eqXg(mu, XXg)
+    assert_allclose(expected_Xg, test_Xg)
 
 # Total government savings
