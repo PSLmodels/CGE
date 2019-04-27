@@ -48,3 +48,14 @@ def test_eqXg():
     assert_allclose(expected_Xg, test_Xg)
 
 # Total government savings
+def test_eqSg():
+    mu = np.array([0.2, 0.4, 0.3, 0.1])
+    Td = 500.0
+    Tz = np.array([50, 10, 40, 60])
+    Tm = np.array([20, 30, 70, 90])
+    XXg = 100.0
+    Trf = 10.0
+    pq = np.array([8, 10, 13, 15])
+    expected_Sg = -240
+    test_Sg = government.eqSg(mu, Td, Tz, Tm, XXg, Trf, pq)
+    assert_allclose(expected_Sg, test_Sg)
