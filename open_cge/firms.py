@@ -96,7 +96,7 @@ def eqXv(lam, XXv):
     Returns:
         Xv (1D numpy array): Investment demand for each good j
     '''
-    Xv = lam * XXv.values
+    Xv = lam * XXv
     return Xv
 
 
