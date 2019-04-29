@@ -1,20 +1,5 @@
-def eqXg(g, Kk):
-    '''
-    Total investment.
-
-    .. math::
-        XXv = g \cdot KK
-
-    Args:
-        g (float): Exogenous long run growth rate of the economy
-        Kk (float): Total capital stock
-
-    Returns:
-        XXv (float): Total investment.
-    '''
-    XXv = g * Kk
-    return XXv
-
+## This file defines equations used to calculate aggregate quantities for the
+## simple CGE model.
 
 def eqSp(ssp, pf, Ff, Fsh, Trf):
     '''
@@ -48,7 +33,7 @@ def eqKd(g, Sp, lam, pq):
         g (float): Exogenous long run growth rate of the economy
         Sp (float): Total household savings
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
 
     Returns:
         Kd (float): Domestically owned capital ??
@@ -86,7 +71,7 @@ def eqKk(pf, Ff, R, lam, pq):
         Ff (1D numpy array): Endowment of factor h
         R (float): Real return on capital
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
 
     Returns:
         Kk (float): Total capital stock
@@ -129,7 +114,7 @@ def eqSf(g, lam, pq, Kf):
     Args:
         g (float): Exogenous long run growth rate of the economy
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
         Kf (float): Foreign owned domestic capital
 
     Returns:
@@ -144,18 +129,18 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
     Resource constraint.
 
     .. math::
-        Q_{i} = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{j}X_{i,j}
+        Q_{i} = X^{p}_{j} + X^{g}_{j} + X^{v}_{j} + \sum_{j}X_{i,j}
 
     Args:
-        Q (1D numpy array): The domestic supply of good i, the Armington good
-        Xp (1D numpy array): Demand for production good i by consumers
+        Q (1D numpy array): The domestic supply of good j, the Armington good
+        Xp (1D numpy array): Demand for production good j by consumers
         Xg (1D numpy array): Government expenditures on commodity i
-        Xv (1D numpy array): Investment demand for each good i
+        Xv (1D numpy array): Investment demand for each good j
         X (2D numpy array): Demand for intermediate input i used in the
             production of good j
 
     Returns:
-        pq_error (1D numpy array): Error in resource constraint for each good i
+        pq_error (1D numpy array): Error in resource constraint for each good j
     '''
     pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
     return pq_error
