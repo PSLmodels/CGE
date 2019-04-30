@@ -77,6 +77,7 @@ def eqKk(pf, Ff, R, lam, pq):
         Kk (float): Total capital stock
     '''
 #    R = ( (pf['CAP'] * Ff['CAP']) / Kk) / ((lam * pq).sum())
+    print('kk inputs= ', pf['CAP'], Ff['CAP'], R, lam, pq)
     Kk = (pf['CAP'] * Ff['CAP']) / (R * ((lam * pq).sum()))
     return Kk
 

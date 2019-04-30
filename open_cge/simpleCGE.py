@@ -52,7 +52,7 @@ def cge_system(pvec, args):
     Kk = agg.eqKk(pf, Ff, R, p.lam, pq)
     XXv = agg.eqXXv(d.g, Kk)
     Xv = firms.eqXv(p.lam, XXv)
-    Xg = agg.eqXg(p.mu, XXg)
+    Xg = gov.eqXg(p.mu, XXg)
     Kf = agg.eqKf(Kk, Kd)
     Fsh = firms.eqFsh(R, Kf, er)
     Td =gov.eqTd(p.taud, pf, Ff)
@@ -84,7 +84,6 @@ def cge_system(pvec, args):
     pf_error = pf_error.values
 
     p_error = np.append(py_error, pf_error)
-
     return p_error
 
 
@@ -128,7 +127,6 @@ errors = cge_system(pvec, cge_args)
 while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 	tpi_iter += 1
 	cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
-
 	results = opt.root(cge_system, pvec, args=cge_args, method='lm',
 					   tol=1e-5)
 	pprime = results.x
