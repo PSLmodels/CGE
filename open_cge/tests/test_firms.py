@@ -79,12 +79,95 @@ def test_eqpm():
     assert_allclose(expected_pm, test_pm)
 
 # Test CES production for importing firms
+def test_eqQ():
+    gamma = np.array([0.8, 0.5])
+    deltad = np.array([0.6, 0.4])
+    deltam = np.array([0.3, 0.7])
+    assert sum(deltad) == 1
+    assert sum(deltam) == 1
+    eta = np.array([-0.6, -0.2])
+    M = np.array([20, 10])
+    D = np.array([10, 20])
+    expected_Q = np.array([])
+    test_Q = np.array([])
+    assert_allclose(expected_Q, test_Q)
+
+
+# Test demand for imports
+def test_eqM():
+    gamma = np.array([0.8, 0.5])
+    deltam = np.array([0.3, 0.7])
+    assert sum(deltam) == 1
+    eta = np.array([-0.5, -0.2])
+    Q = np.array([20.0, 40.0])
+    pq = np.array([10.0, 6.0])
+    pm = np.array([12.0, 8.0])
+    taum = np.array([0.10, 0.05])
+    expected_M = np.array([8.023519, 25.198421])
+    test_M = firms.eqM(gamma, deltam, eta, Q, pq, pm, taum)
+    assert_allclose(expected_M, test_M)
 
 
 # Test demand for domestically produced goods from importers
+def test_eqD():
+    gamma = np.array([0.8, 0.5])
+    deltad = np.array([0.6, 0.4])
+    eta = np.array([-0.5, -0.2])
+    Q = np.array([20.0, 20.0])
+    pq = np.array([8.0, 5.0])
+    pd = np.array([9.0, 6.0])
+    expected_D = np.array([9, 6])
+    test_D = firms.eqD(gamma, deltad, eta, Q, pq, pd)
+    assert_allclose(expected_D, test_D)
+
+# Test price of domestically produced goods from importers
+def test_eqpd():
+    gamma = np.array([0.8, 0.5])
+    deltad = np.array([0.6, 0.4])
+    eta = np.array([-0.5, -0.2])
+    Q = np.array([20.0, 40.0])
+    pq = np.array([8.0, 5.0])
+    D = np.array([18.0, 30.0])
+    expected_pd = np.array([6.285394, 3.24461])
+    test_pd = firms.eqpd(gamma, deltad, eta, Q, pq, D)
+    assert_allclose(expected_pd, test_pd)
 
 
 # Test exporting firm production function
-
+def test_eqZ():
+    theta = np.array([0.8, 0.5])
+    xie = np.array([0.2, 0.3])
+    xid = np.array([0.2, 0.8])
+    phi = np.array([-0.6, 0.8])
+    E = np.array([20, 30])
+    D = np.array([75, 150])
+    expected_Z = np.array([125.572867, 64.176968])
+    test_Z = firms.eqZ(theta, xie, xid, phi, E, D)
+    assert_allclose(expected_Z, test_Z)
 
 # Test supply of exports
+def test_eqE():
+    theta = np.array([0.8, 0.5])
+    xie = np.array([0.2, 0.3])
+    tauz = np.array([0.09, 0.06])
+    phi = np.array([-0.4, -0.8])
+    pz = np.array([10, 15])
+    pe = np.array([20, 30])
+    Z = np.array([125, 64])
+    expected_E = np.array([27.35559, 31.354712])
+    test_E = firms.eqE(theta, xie, tauz, phi, pz, pe, Z)
+    assert_allclose(expected_E, test_E)
+
+
+# Test demand for domestic goods by exporters
+def test_eqDex():
+    theta = np.array([0.8, 0.5])
+    xid = np.array([0.3, 0.2])
+    tauz = np.array([0.09, 0.06])
+    phi = np.array([-0.4, -0.8])
+    pz = np.array([10, 15])
+    pd = np.array([12, 13])
+    Z = np.array([50, 100])
+    expected_Dex = np.array([21.054694, 62.238608])
+    test_Dex = firms.eqDex(theta, xid, tauz, phi, pz, pd, Z)
+    assert_allclose(expected_Dex, test_Dex)
