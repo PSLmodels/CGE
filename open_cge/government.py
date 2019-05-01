@@ -89,7 +89,7 @@ def eqXg(mu, XXg):
     Returns:
         Xg (1D numpy array): Government expenditures on commodity j
     '''
-    Xg = mu * XXg.values
+    Xg = mu * XXg
     return Xg
 
 

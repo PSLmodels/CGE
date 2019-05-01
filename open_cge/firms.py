@@ -96,7 +96,7 @@ def eqXv(lam, XXv):
     Returns:
         Xv (1D numpy array): Investment demand for each good j
     '''
-    Xv = lam * XXv.values
+    Xv = lam * XXv
     return Xv
 
 
@@ -177,7 +177,7 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
     return Q
 
 
-def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
+def eqM(gamma, deltam, eta, Q, pq, pm, taum):
     '''
     Demand for imports.
 
@@ -187,7 +187,6 @@ def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
-        deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
         pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
@@ -201,7 +200,7 @@ def eqM(gamma, deltam, deltad, eta, Q, pq, pm, taum):
     return M
 
 
-def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
+def eqD(gamma, deltad, eta, Q, pq, pd):
     '''
     Demand for domestically produced goods from importers.
 
@@ -210,7 +209,6 @@ def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
-        deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
@@ -224,7 +222,7 @@ def eqD(gamma, deltam, deltad, eta, Q, pq, pd):
     return pd
 
 
-def eqpd(gamma, deltam, deltad, eta, Q, pq, D):
+def eqpd(gamma, deltad, eta, Q, pq, D):
     '''
     Price of domestically produced goods from importers.
 
@@ -233,7 +231,6 @@ def eqpd(gamma, deltam, deltad, eta, Q, pq, D):
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
-        deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
@@ -255,7 +252,7 @@ def eqZ(theta, xie, xid, phi, E, D):
         Z_{i} = \\theta_{i}\left[\\xi_{i}^{E}E_{i}^{\phi_{i}} + \\xi_{i}^{D}D_{i}^{\phi_{i}}\\right]^{\\frac{1}{\phi_{i}}}
 
     Args:
-        theta (1D numpy array):
+        theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xie (1D numpy array): Share parameter for the share of exports of good i used by firms exporting good i
         xie (1D numpy array): Share parameter for the share of domestically produced good i used by firms exporting good i
         phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
@@ -276,7 +273,7 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
         E_{i} = \left(\\theta_{i}^{\phi_{i}}\\xi^{E}_{i}(1+\\tau^{z}_{i}\\frac{pz_{i}}{pe_{i}})\\right)^{\\frac{1}{1-\phi_{i}}}Z_{i}
 
     Args:
-        theta (1D numpy array):
+        theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xie (1D numpy array): Share parameter for the share of exports of good i used by firms exporting good i
         tauz (1D numpy array): Ad valorem tax rate on commodity i
         phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
@@ -299,7 +296,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
         D_{i} = \left(\\theta_{i}^{\phi_{i}}\\xi^{D}_{i}(1+\\tau^{z}_{i}\\frac{pz_{i}}{pd_{i}})\\right)^{\\frac{1}{1-\phi_{i}}}Z_{i}
 
     Args:
-        theta (1D numpy array):
+        theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xid (1D numpy array): Share parameter for the share of domestically produced good i used by firms exporting good i
         tauz (1D numpy array): Ad valorem tax rate on commodity i
         phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
