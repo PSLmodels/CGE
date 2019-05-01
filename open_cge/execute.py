@@ -101,7 +101,7 @@ def runner():
         Xp = hh.eqXp(p.alpha, I, pq)
         E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
         D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
-        M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
+        M = firms.eqM(p.gamma, p.deltam, p.eta, Qbar, pq, pm, p.taum)
         Qprime = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
         pdprime = firms.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
         Zprime = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
