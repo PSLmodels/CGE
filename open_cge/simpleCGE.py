@@ -66,7 +66,7 @@ def cge_system(pvec, args):
     Xp = hh.eqXp(p.alpha, I, pq)
     E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Z)
     D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pd, Z)
-    M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Q, pq, pm, p.taum)
+    M = firms.eqM(p.gamma, p.deltam, p.eta, Q, pq, pm, p.taum)
     Tm = gov.eqTm(p.taum, pm, M)
 
 
@@ -155,9 +155,9 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 	Xp = hh.eqXp(p.alpha, I, pq)
 	E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
 	D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
-	M = firms.eqM(p.gamma, p.deltam, p.deltad, p.eta, Qbar, pq, pm, p.taum)
+	M = firms.eqM(p.gamma, p.deltam, p.eta, Qbar, pq, pm, p.taum)
 	Qprime = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
-	pdprime = firms.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
+	pdprime = firms.eqpd(p.gamma, p.deltam, p.eta, Qprime, pq, D)
 	Zprime = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
 	#    Zprime = Zprime.iloc[0]
 	Kdprime = agg.eqKd(d.g, Sp, p.lam, pq)
@@ -175,7 +175,7 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
 
 	bop_error = agg.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
 
-	pd = firms.eqpd(p.gamma, p.deltam, p.deltad, p.eta, Qprime, pq, D)
+	pd = firms.eqpd(p.gamma, p.deltam, p.eta, Qprime, pq, D)
 	Z = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
 	Kd = agg.eqKd(d.g, Sp, p.lam, pq)
 	Q = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)

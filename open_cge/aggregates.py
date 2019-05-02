@@ -130,18 +130,18 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
     Resource constraint.
 
     .. math::
-        Q_{i} = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{j}X_{i,j}
+        Q_{i} = X^{p}_{j} + X^{g}_{j} + X^{v}_{j} + \sum_{j}X_{i,j}
 
     Args:
-        Q (1D numpy array): The domestic supply of good i, the Armington good
-        Xp (1D numpy array): Demand for production good i by consumers
+        Q (1D numpy array): The domestic supply of good j, the Armington good
+        Xp (1D numpy array): Demand for production good j by consumers
         Xg (1D numpy array): Government expenditures on commodity i
-        Xv (1D numpy array): Investment demand for each good i
+        Xv (1D numpy array): Investment demand for each good j
         X (2D numpy array): Demand for intermediate input i used in the
             production of good j
 
     Returns:
-        pq_error (1D numpy array): Error in resource constraint for each good i
+        pq_error (1D numpy array): Error in resource constraint for each good j
     '''
     pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
     return pq_error
