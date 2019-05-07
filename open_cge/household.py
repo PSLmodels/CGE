@@ -19,6 +19,7 @@ def eqF(beta, py, Y, pf):
     F = beta.div(pf, axis=0) * Y * py
     return F
 
+
 def eqI(pf, Ff, Sp, Td, Fsh, Trf):
     '''
     Total income of consumers.
@@ -37,23 +38,25 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
     Returns:
         I (float): Total income of consumers
     '''
-    I =  (pf * Ff).sum() - Sp - Td - Fsh + Trf
+    I = (pf * Ff).sum() - Sp - Td - Fsh + Trf
     return I
+
 
 def eqXp(alpha, I, pq):
     '''
     Demand for production good i by consumers.
 
     .. math::
-        X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}I
+        X^{p}_{i}= \\frac{\\alpha_{i}}{pq_{i}}I
 
     Args:
         alpha (1D numpy array): Budget share of good i
         I (float): Total income of consumers
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic +
+            imports) for each good i
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
     '''
-    Xp = alpha.div(pq, axis = 0) * I
+    Xp = alpha.div(pq, axis=0) * I
     return Xp
