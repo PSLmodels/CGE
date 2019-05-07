@@ -42,7 +42,6 @@ def runner():
     d = calibrate.model_data(sam, h, u, ind)
     p = calibrate.parameters(d, ind)
 
-    XXg = d.XXg0
     R = d.R0
     er = 1
 
@@ -53,17 +52,6 @@ def runner():
     pdbar = pvec[0:len(ind)]
 
     pm = firms.eqpm(er, d.pWm)
-    test = firms.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
-
-
-    '''
-    #checking calibration of model
-    cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
-    errors = cge_system(pvec, cge_args)
-    #---------------------------------------------
-
-
-    '''
 
     while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
         tpi_iter += 1
@@ -80,8 +68,6 @@ def runner():
 
         pvec = pprime
 
-        temp = cge.cge_system(pvec, cge_args)
-
         pe = firms.eqpe(er, d.pWe)
         pm = firms.eqpm(er, d.pWm)
         pq = firms.eqpq(pm, pdbar, p.taum, p.eta, p.deltam, p.deltad, p.gamma)
@@ -89,13 +75,10 @@ def runner():
         Kk = agg.eqKk(pfprime, Ffbar, R, p.lam, pq)
         Td = gov.eqTd(p.taud, pfprime, Ffbar)
         Trf = gov.eqTrf(p.tautr, pfprime, Ffbar)
-        Tz = gov.eqTz(p.tauz, pz, Zbar)
         Kf = agg.eqKf(Kk, Kdbar)
         Fsh = firms.eqFsh(R, Kf, er)
-        Sf = agg.eqSf(d.g, p.lam, pq, Kf)
         Sp = agg.eqSp(p.ssp, pfprime, Ffbar, Fsh, Trf)
         I = hh.eqI(pfprime, Ffbar, Sp, Td, Fsh, Trf)
-        Xp = hh.eqXp(p.alpha, I, pq)
         E = firms.eqE(p.theta, p.xie, p.tauz, p.phi, pz, pe, Zbar)
         D = firms.eqDex(p.theta, p.xid, p.tauz, p.phi, pz, pdbar, Zbar)
         M = firms.eqM(p.gamma, p.deltam, p.eta, Qbar, pq, pm, p.taum)
@@ -108,7 +91,7 @@ def runner():
         # Ffprime['CAP'] = R * d.Kk * (p.lam * pq).sum() / pf[1]
         Ffprime['CAP'] = R * Kk * (p.lam * pq).sum() / pfprime[1]
 
-        dist = (((Zbar - Zprime) ** 2 ) ** (1 / 2)).sum()
+        dist = (((Zbar - Zprime) ** 2) ** (1 / 2)).sum()
         print('Distance at iteration ', tpi_iter, ' is ', dist)
         pdbar = xi * pdprime + (1 - xi) * pdbar
         Zbar = xi * Zprime + (1 - xi) * Zbar
@@ -116,16 +99,12 @@ def runner():
         Qbar = xi * Qprime + (1 - xi) * Qbar
         Ffbar = xi * Ffprime + (1 - xi) * Ffbar
 
-        bop_error = agg.eqbop(d.pWe, d.pWm, E, M, Sf, Fsh, er)
-
-        pd = firms.eqpd(p.gamma, p.deltam, p.eta, Qprime, pq, D)
-        Z = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
-        Kd = agg.eqKd(d.g, Sp, p.lam, pq)
         Q = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
 
     print('Model solved, Q = ', Q)
 
     return Q
+
 
 if __name__ == "__main__":
     runner()
