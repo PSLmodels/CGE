@@ -1,7 +1,7 @@
 .. _aggregates:
 
 Economic Aggregates Equations
-===============
+==============================
 
 **Aggregates**
 
@@ -10,5 +10,5 @@ open_cge.aggregates
 
 .. currentmodule:: open_cge.aggregates
 
-.. automodule:: open_cge.CGE_equations
+.. automodule:: open_cge.aggregates
   :members: eqSp, eqKd, eqKf, eqKk, eqbop, eqSf, eqpqerror, eqpf, eqpk, eqXXv

@@ -1,7 +1,7 @@
 .. _government:
 
 Government Equations
-===============
+=====================
 
 **Government**
 

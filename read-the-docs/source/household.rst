@@ -1,7 +1,7 @@
 .. _household:
 
 Household Equations
-===============
+====================
 
 **Household**
 
