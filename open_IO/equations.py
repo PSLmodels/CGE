@@ -3,49 +3,25 @@ This module defines the equations that characterize the CGE model.
 '''
 
 
-def eqpy(b, F, beta, Y):
+def eqpy(pf, beta):
     '''
-    Production function.
+    Price of value added
 
     .. math::
-        Y_{j} = b_{j}\prod_{h}F_{h,j}^{\\beta_{h,j}}
+        py_{j} = \sum_{h}F_{h,j}{\\beta_{h,j}}
 
     Args:
-        b (1D numpy array): Scale parameter for each good j
         F (2D numpy array): The use of factor h in the production of
             good j
         beta (2D numpy array): Cost share parameter for factor h in
             production of good j
-        Y (1D numpy array): Value added for each good j
 
     Returns:
-        py_error (1D numpy array): The difference between Y and the
-            production function evaluated at F.
+        py (1D numpy array): The price of value added for good j.
     '''
-    py_error = Y - b * (F ** beta).prod(axis=0)
-    return py_error
+    py = beta.mul(pf, axis=0).sum(axis=0)
+    return py
 
-
-def eqF(beta, py, Y, pf):
-    '''
-    Factor demand.
-
-    .. math::
-        F_{h,j} = \\beta_{h,j}\\frac{py_{j}}{pf_{h}}Y_{j}
-
-    Args:
-        beta (2D numpy array): Cost share parameter for factor h in
-            production of good j
-        py (1D array): The price of value added for each good j
-        Y (1D numpy array): Value added for each good j
-        pf (1D array): Price of each factor h
-
-    Returns:
-        F (2D numpy array): The demand for factor h used in the
-            production of good j
-    '''
-    F = beta.div(pf, axis=0) * Y * py
-    return F
 
 
 def eqX(ax, Z):
@@ -89,7 +65,7 @@ def eqY(ay, Z):
 
 def eqpz(ay, ax, py, pq):
     '''
-    Output prices.
+    Domestic Production/Output prices.
 
     .. math::
         pz_{j} = ay_{j}py_{j} + \sum_{i}ax_{i,j}pq_{i}
@@ -364,43 +340,27 @@ def eqKk(pf, Ff, R, lam, pq):
     return Kk
 
 
-def eqI(pf, Ff, Sp, Td, Fsh, Trf):
+def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
     '''
-    Total income of consumers.
+    Demand for production good i by consumers.
 
     .. math::
-        I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
+        X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
 
     Args:
+        alpha (1D numpy array): Budget share of good i
         pf (1D numpy array): The price of factor h
         Ff (1D numpy array): Endowment of factor h
         Sp (float): Total household savings
         Td (float): Total direct tax revenue
         Fsh = Repatriated profits
         Trf (float): Total transfers to households
-
-    Returns:
-        I (1D numpy array): Total income of consumers
-    '''
-    I =  (pf * Ff).sum() - Sp - Td - Fsh + Trf
-    return I
-
-def eqXp(alpha, I, pq):
-    '''
-    Demand for production good i by consumers.
-
-    .. math::
-        X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}I
-
-    Args:
-        alpha (1D numpy array): Budget share of good i
-        I (1D numpy array): Total income of consumers
         pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
     '''
-    Xp = alpha / pq * I
+    Xp = alpha * ((pf * Ff).sum() - Sp - Td - Fsh + Trf) / pq
     return Xp
 
 
@@ -644,64 +604,31 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
     return D
 
 
-def eqpq(Q, Xp, Xg, Xv, X):
+def eqpq(deltam, taum, tauz, pm, pz, pq):
     '''
-    Resource constraint.
+    Domestic supply prices.
 
     .. math::
-        Q_{i} = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{j}X_{i,j}
+        pq_{j} = deltam_{j}pm_{j}(1+\\tau^{m}_{i}) + (1-deltam_{j})pz_{j}(1+\\tau^{z}_{i})
 
     Args:
-        Q (1D numpy array): The domestic supply of good i, the Armington good
-        Xp (1D numpy array): Demand for production good i by consumers
-        Xg (1D numpy array): Government expenditures on commodity i
-        Xv (1D numpy array): Investment demand for each good i
-        X (2D numpy array): Demand for intermediate input i used in the
-            production of good j
+        deltam (1D numpy array): import propensity for good j
+        tauz (1D numpy array): Ad valorem tax rate on commodity i
+		taum (1D numpy array): Tariff rate on commodity i
+        pz (1D numpy array): price of output good i
+		pm (1D numpy array): The price of commodity i imports in domestic currency.
 
     Returns:
-        pq_error (1D numpy array): Error in resource constraint for each good i
+        pq_error (1D numpy array): Difference between current value of pq and model calculated value of pq
     '''
-    pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
+    pq_error = pq - ( deltam * pm * (1 + taum) + (1 - deltam) * pz * (1 + tauz))
     return pq_error
 
 
-def eqpf(F, Ff0):
-    '''
-    Comparing labor supply from the model to that in the data.
-
-    .. math::
-
-    Args:
-        F (2D numpy array): The use of factor h in the production of
-            good j
-        Ff0 (float): Total labor demand from SAM
-
-    Returns:
-        pf_error ():
-    '''
-    F1 = F.drop(['CAP'])
-    Ff1 = Ff0.drop(['CAP'])
-    pf_error = Ff1 - F1.sum(axis=1)
-    return pf_error
+def eqpqbar(deltam, taum, tauz, pm, pz):
+    pq = deltam * pm * (1 + taum) + (1 - deltam) * pz * (1 + tauz)
+    return pq
 
 
-def eqpk(F, Kk, Kk0, Ff0):
-    '''
-    Comparing capital demand in the model and data.
 
-    .. math::
 
-    Args:
-        F (2D numpy array): The use of factor h in the production of
-            good j
-        Kk (float): Total capital stock
-        Kk0 (float): Total capital stock from SAM??
-        Ff0 (float): Total labor demand from SAM??
-
-    Returns:
-        pk_error ():
-    '''
-    Fcap = F.loc[['CAP']]
-    pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
-    return pk_error

@@ -107,13 +107,11 @@ class parameters(object):
         self.taum = d.Tm0 / d.M0  # import tariff rate
         self.taum = self.taum.loc['IDT']
 
-        # share parameter in Armington function
-        self.deltam = ((1 + self.taum) * d.M0 ** (1 - self.eta) /
-                       ((1 + self.taum) * d.M0 ** (1 - self.eta) + d.D0
-                        ** (1 - self.eta)))
-        self.deltad = (d.D0 ** (1 - self.eta) /
-                       ((1 + self.taum) * d.M0 ** (1 - self.eta) + d.D0
-                        ** (1 - self.eta)))
+        # import propensity
+        self.deltam = ((1 + self.taum) * d.M0 /
+                       ((1 + self.taum) * d.M0 + d.D0 ))
+        self.deltad = ( d.D0 /
+                       ((1 + self.taum) * d.M0 + d.D0 ))
 
         # scale parameter in Armington function
         self.gamma = (d.Q0 / (self.deltam * d.M0 ** self.eta +

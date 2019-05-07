@@ -363,7 +363,6 @@ def eqKk(pf, Ff, R, lam, pq):
     Kk = (pf['CAP'] * Ff['CAP']) / (R * ((lam * pq).sum()))
     return Kk
 
-
 def eqI(pf, Ff, Sp, Td, Fsh, Trf):
     '''
     Total income of consumers.
@@ -385,6 +384,7 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
     I =  (pf * Ff).sum() - Sp - Td - Fsh + Trf
     return I
 
+
 def eqXp(alpha, I, pq):
     '''
     Demand for production good i by consumers.
@@ -400,7 +400,7 @@ def eqXp(alpha, I, pq):
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
     '''
-    Xp = alpha / pq * I
+    Xp = alpha / pq * I 
     return Xp
 
 
@@ -644,7 +644,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
     return D
 
 
-def eqpq(Q, Xp, Xg, Xv, X):
+def eqpqerror(Q, Xp, Xg, Xv, X):
     '''
     Resource constraint.
 
@@ -664,6 +664,12 @@ def eqpq(Q, Xp, Xg, Xv, X):
     '''
     pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
     return pq_error
+
+def eqpq(pm, pd, taum, eta, deltam, deltad, gamma):
+
+    pq = (((pm * (1 + taum)) ** eta / (deltam * gamma ** eta)) ** (1 / (eta - 1))
+			+ (pd ** eta / (deltad * gamma ** eta)) ** (1 / (eta - 1))) ** ((eta - 1) / eta)
+    return pq
 
 
 def eqpf(F, Ff0):
