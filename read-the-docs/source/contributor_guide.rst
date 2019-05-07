@@ -226,7 +226,7 @@ interpreter or imported into a Python notebook for interactive execution.
    https://help.github.com/articles/caching-your-github-password-in-git/
 
 .. _`Open CGE's GitHub page`:
-   https://github.com/open-source-economics/CGE
+   https://github.com/PSLmodels/CGE
 
 .. _`repository`:
    https://help.github.com/articles/github-glossary/#repository
@@ -247,7 +247,7 @@ interpreter or imported into a Python notebook for interactive execution.
    https://help.github.com/articles/github-glossary/#remote
 
 .. _`testing documentation`:
-   https://github.com/open-source-economics/CGE/blob/master/TESTING.md
+   https://github.com/PSLmodels/CGE/blob/master/TESTING.md
 
 .. _`clone`:
    https://help.github.com/articles/github-glossary/#clone

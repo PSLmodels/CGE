@@ -20,4 +20,4 @@ Contents
    http://open-source-economics.github.io/CGE/
 
 .. _`Open CGE Public API`:
-   http://taxcalc.readthedocs.io/en/latest/public_api.html
+   http://cge.readthedocs.io/en/latest/public_api.html

@@ -16,6 +16,10 @@ There is also a link to the source code for each documented member.
    :maxdepth: 1
    :caption: API
 
+   aggregates
    calibrate
-   CGE-equations
+   execute
+   firms
+   government
+   household
    simpleCGE
