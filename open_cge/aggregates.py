@@ -1,6 +1,3 @@
-## This file defines equations used to calculate aggregate quantities for the
-## simple CGE model.
-
 def eqSp(ssp, pf, Ff, Fsh, Trf):
     '''
     Total household savings.
@@ -33,13 +30,15 @@ def eqKd(g, Sp, lam, pq):
         g (float): Exogenous long run growth rate of the economy
         Sp (float): Total household savings
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
+        pq (1D numpy array): price of the Armington good (domestic +
+            imports) for each good j
 
     Returns:
         Kd (float): Domestically owned capital ??
     '''
     Kd = Sp / (g * (lam * pq).sum())
     return Kd
+
 
 def eqKf(Kk, Kd):
     '''
@@ -71,7 +70,8 @@ def eqKk(pf, Ff, R, lam, pq):
         Ff (1D numpy array): Endowment of factor h
         R (float): Real return on capital
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
+        pq (1D numpy array): price of the Armington good (domestic +
+            imports) for each good j
 
     Returns:
         Kk (float): Total capital stock
@@ -90,8 +90,10 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
         \sum_{i}pWe_{i}E_{i} + \\frac{Sf}{\\varepsilon} = \sum_{i}pWm_{i}M_{i} + \\frac{Fsh}{\\varepsilon}
 
     Args:
-        pWe (1D numpy array): The world price of commodity i in foreign currency
-        pWm (1D numpy array): The world price of commodity i in foreign currency.
+        pWe (1D numpy array): The world price of commodity i in foreign
+            currency
+        pWm (1D numpy array): The world price of commodity i in foreign
+            currency.
         E (1D numpy array): Exports of commodity i
         M (1D numpy array): Imports of commodity i
         Sf (float): Total foreign savings (??)
@@ -105,6 +107,7 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
     bop_error = (pWe * E).sum() + Sf / er - ((pWm * M).sum() + Fsh / er)
     return bop_error
 
+
 def eqSf(g, lam, pq, Kf):
     '''
     Net foreign investment/savings.
@@ -115,7 +118,8 @@ def eqSf(g, lam, pq, Kf):
     Args:
         g (float): Exogenous long run growth rate of the economy
         lam (1D numpy array): Fixed shares of investment for each good j
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good j
+        pq (1D numpy array): price of the Armington good (domestic +
+            imports) for each good j
         Kf (float): Foreign owned domestic capital
 
     Returns:
@@ -151,8 +155,6 @@ def eqpf(F, Ff0):
     '''
     Comparing labor supply from the model to that in the data.
 
-    .. math::
-
     Args:
         F (2D numpy array): The use of factor h in the production of
             good j
@@ -171,8 +173,6 @@ def eqpk(F, Kk, Kk0, Ff0):
     '''
     Comparing capital demand in the model and data.
 
-    .. math::
-
     Args:
         F (2D numpy array): The use of factor h in the production of
             good j
@@ -186,6 +186,7 @@ def eqpk(F, Kk, Kk0, Ff0):
     Fcap = F.loc[['CAP']]
     pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
     return pk_error
+
 
 def eqXXv(g, Kk):
     '''
