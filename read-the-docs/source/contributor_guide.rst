@@ -187,17 +187,11 @@ situations, in which case other contributors are here to help.
    your newly added code.  Add tests so that the number of untested
    statements is the same as it is on the master branch.
 
-You should now read the more `detailed pull-request workflow`_ document.
-
 
 Simple Usage
 ------------
 
-For examples of Tax-Calculator usage, see the `Cookbook of Tested
-Recipes for Python Programming with Tax-Calculator`_, which contains
-Python scripts that can be executed by the Python command-line
-interpreter or imported into a Python notebook for interactive execution.
-
+Examples coming soon...
 
 .. [1] The dollar sign is the end of the command prompt on a Mac.  If
        you're on Windows, this is usually the right angle bracket (>).
@@ -225,7 +219,7 @@ interpreter or imported into a Python notebook for interactive execution.
 .. _`password setup`:
    https://help.github.com/articles/caching-your-github-password-in-git/
 
-.. _`Open CGE's GitHub page`:
+.. _`Open CGE GitHub page`:
    https://github.com/PSLmodels/CGE
 
 .. _`repository`:
