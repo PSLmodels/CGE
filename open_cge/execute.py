@@ -1,20 +1,17 @@
 import scipy.optimize as opt
 import numpy as np
 import pandas as pd
-from pandas import Series, DataFrame
+from pandas import Series
 import os
-current_path = os.path.abspath(os.path.dirname(__file__))
-import sys
-sys.path.insert(0, current_path)
-# import equations as eq
-import government as gov
-import household as hh
-import aggregates as agg
-import firms
-import calibrate
-import simpleCGE as cge
+from open_cge import government as gov
+from open_cge import household as hh
+from open_cge import aggregates as agg
+from open_cge import firms
+from open_cge import calibrate
+from open_cge import simpleCGE as cge
 
 # load social accounting matrix
+current_path = os.path.abspath(os.path.dirname(__file__))
 sam_path = os.path.join(current_path, 'SAM.xlsx')
 sam = pd.read_excel(sam_path, index_col=0, header=0)
 
