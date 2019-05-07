@@ -108,7 +108,8 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
         Tm (1D numpy array): Tariff revenue for each commodity j
         XXg (float): Total government spending on goods/services
         Trf (float): Total transfers to households
-        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+        pq (1D numpy array): price of the Armington good (domestic +
+            imports) for each good i
 
     Returns:
         Sg (float): Total government savings
