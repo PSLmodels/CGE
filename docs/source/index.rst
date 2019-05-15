@@ -17,7 +17,7 @@ Contents
    public_api
 
 .. _`user documentation`:
-   http://open-source-economics.github.io/CGE/
+   https://cge.readthedocs.io/en/latest/
 
 .. _`Open CGE Public API`:
    http://cge.readthedocs.io/en/latest/public_api.html
