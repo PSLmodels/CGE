@@ -23,6 +23,49 @@ h = ('LAB', 'CAP', 'LAND', 'NTR')
 w = ('LAB', 'LAND', 'NTR')
 
 
+def check_square():
+    '''
+    this function tests whether the SAM is a square matrix.
+    '''
+    sam_small = sam.iloc[:, :-3]
+    sam_small = sam_small.drop("TOTAL")
+    sam_small.to_numpy(dtype=None, copy=True)
+    if not sam_small.shape[0] == sam_small.shape[1]:
+        raise ValueError(f"SAM is not square. It has {sam_small.shape[0]} rows and {sam_small.shape[0]} columns")
+
+def row_total():
+    '''
+    this function tests whether the row sums
+    of the SAM equal the expected value.
+    '''
+    sam_small = sam.iloc[:, :-3]
+    sam_small = sam_small.drop("TOTAL")
+    row_sum = sam_small.sum(axis=0)
+    row_sum = pd.Series(row_sum)
+    return row_sum
+
+def col_total():
+    '''
+    this function tests whether column sums
+    of the SAM equal the expected values.
+    '''
+    sam_small = sam.iloc[:, :-3]
+    sam_small = sam_small.drop("TOTAL")
+    col_sum = sam_small.sum(axis=1)
+    col_sum = pd.Series(col_sum)
+    return col_sum
+
+def row_col_equal():
+    '''
+    this function tests whether row sums
+    and column sums of the SAM are equal.
+    '''
+    sam_small = sam.iloc[:, :-3]
+    sam_small = sam_small.drop("TOTAL")
+    row_sum = sam_small.sum(axis=0)
+    col_sum = sam_small.sum(axis=1)
+    np.testing.assert_allclose(row_sum, col_sum)
+
 def runner():
     '''
     this function runs the cge model
@@ -107,4 +150,6 @@ def runner():
 
 
 if __name__ == "__main__":
+    check_square()
+    row_col_equal()
     runner()
