@@ -1,6 +1,6 @@
 # CGE
 
-This repository contains a computational general equilibrium model for policy analysis.  The model is writte in Pytho 3.6.  More details as development continues.
+This repository contains a computational general equilibrium model for policy analysis. The model is written in Python 3.6. More details will be posted as development continues.
 
 
 ## Disclaimer
