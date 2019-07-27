@@ -105,12 +105,12 @@ def eqFsh(R, Kf, er):
     Domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
-        FSH = R \cdot KF \cdot \\varepsilon
+        Fsh = R \cdot Kf \cdot \\varepsilon
 
     Args:
-        R (float): Real return on capital
+        R (float): Real return on domestic capital
         Kf (float): Foreign holdings of domestic capital
-        er (float): The real exchange rate
+        er (float): The real exchange rate (foreign/domestic)
 
     Returns:
         Fsh = Repatriated profits
@@ -127,11 +127,11 @@ def eqpe(er, pWe):
         pe_{i} = \\varepsilon \cdot pWe_{i}
 
     Args:
-        er (float): The real exchange rate
-        pWe (1D numpy array): The export price of good in domestic currency
+        er (float): The real exchange rate (foreign/domestic)
+        pWe (1D numpy array): The export price of good i in domestic currency
 
     Returns:
-        pe (1D numpy array): Price of good i exports in foreign currency
+        pe (1D numpy array): The world export price of good i exports in foreign currency
     '''
     pe = er * pWe
     return pe
@@ -145,11 +145,11 @@ def eqpm(er, pWm):
         pm_{i} = \\varepsilon \cdot pWm_{i}
 
     Args:
-        er (float): The real exchange rate
-        pWm (1D numpy array): The world price of good i in domestic currency.
+        er (float): The real exchange rate (foreign/domestic)
+        pWm (1D numpy array): The world import price of good i in domestic currency.
 
     Returns:
-        pm (1D numpy array): The price of good i imports in foreign currency.
+        pm (1D numpy array): The world import price of good i imports in foreign currency.
     '''
     pm = er * pWm
     return pm
@@ -166,7 +166,7 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
         gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
-        eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
+        eta (1D numpy array): The elasticity of substitution between imports of good i and domestically supplied good i
         M (1D numpy array): The imports of good i
         D (1D numpy array): The domestic supply of good i from domestic production
 
@@ -276,7 +276,7 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xie (1D numpy array): Share parameter for the share of exports of good i used by firms exporting good i
         tauz (1D numpy array): Ad valorem tax rate on commodity i
-        phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
+        phi (1D numpy array): Transformation elasticity parameter between exports and domestic production of good i
         pz (1D numpy array): price of output good i
         pe (1D numpy array): Price of commodity i exports in domestic currency
         Z (1D numpy array): Output from exporters CET production function
@@ -299,7 +299,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xid (1D numpy array): Share parameter for the share of domestically produced good i used by firms exporting good i
         tauz (1D numpy array): Ad valorem tax rate on commodity i
-        phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
+        phi (1D numpy array): Transformation elasticity parameter between exports and domestic production of good i
         pz (1D numpy array): price of output good i
         pd (1D numpy array): price of domesically produced good i
         Z (1D numpy array): Output from exporters CET production function
