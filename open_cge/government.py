@@ -38,18 +38,18 @@ def eqTrf(tautr, pf, Ff):
 
 def eqTz(tauz, pz, Z):
     '''
-    Production tax revenue from each commodity.
+    Production tax revenue from each good.
 
     .. math::
-        Tz_{j} = \tau^{z}_{j} pz_{j}Z_{j}
+        Tz_{i} = \tau^{z}_{i} pz_{i}Z_{i}
 
     Args:
-        tauz (1D numpy array): Ad valorem tax rate on commodity j
-        pz (1D numpy array): price of output good j
-        Z (1D numpy array): Output of industry j
+        tauz (1D numpy array): Ad valorem tax rate on good i
+        pz (1D numpy array): Price of output good i
+        Z (1D numpy array): Total output of good i
 
     Returns:
-        Tz (1D numpy array): Production tax revenue for each commodity j
+        Tz (1D numpy array): Production tax revenue for each good i
     '''
     Tz = tauz * pz * Z
     return Tz
@@ -57,18 +57,18 @@ def eqTz(tauz, pz, Z):
 
 def eqTm(taum, pm, M):
     '''
-    Tariff revenue from each commodity.
+    Tariff revenue from each good i.
 
     .. math::
-        Tm_{j} = \tau^{m}_{j} pm_{j}M_{j}
+        Tm_{i} = \tau^{m}_{i} pm_{i}M_{i}
 
     Args:
-        taum (1D numpy array): Tariff rate on commodity j
-        pm (1D numpy array): price of import good j
-        M (1D numpy array): Imports of good j
+        taum (1D numpy array): Tariff rate on good i
+        pm (1D numpy array): price of import good i
+        M (1D numpy array): Imports of good i
 
     Returns:
-        Tm (1D numpy array): Tariff revenue for each commodity j
+        Tm (1D numpy array): Tariff revenue for each good i
     '''
     Tm = taum * pm * M
     return Tm
@@ -76,18 +76,18 @@ def eqTm(taum, pm, M):
 
 def eqXg(mu, XXg):
     '''
-    Government expenditures on commodity j
+    Government expenditures on good i
 
     .. math::
-        X^{g}_{j} = \mu_{j}XX_{g}
+        X^{g}_{i} = \mu_{i}XX_{g}
 
     Args:
         mu (1D numpy array): Government expenditure share parameters for
-            each commodity j
+            each good i
         XXg (float): Total government spending on goods/services
 
     Returns:
-        Xg (1D numpy array): Government expenditures on commodity j
+        Xg (1D numpy array): Government expenditures on good i
     '''
     Xg = mu * XXg
     return Xg
@@ -98,14 +98,14 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
     Total government savings.
 
     .. math::
-        Sg = Td + \sum_{j}Tz_{j} + \sum_{j}Tm_{j} - (Trf + \sum_{j}Xg_{j})
+        Sg = Td + \sum_{i}Tz_{i} + \sum_{i}Tm_{i} - (Trf + \sum_{i}Xg_{i})
 
     Args:
         mu (1D numpy array): Government expenditure share parameters for
-            each commodity j
+            each good i
         Td (float): Total direct tax revenue
-        Tz (1D numpy array): Production tax revenue for each commodity j
-        Tm (1D numpy array): Tariff revenue for each commodity j
+        Tz (1D numpy array): Production tax revenue for each good i
+        Tm (1D numpy array): Tariff revenue for each good i
         XXg (float): Total government spending on goods/services
         Trf (float): Total transfers to households
         pq (1D numpy array): price of the Armington good (domestic +
