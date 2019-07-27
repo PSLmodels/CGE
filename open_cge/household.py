@@ -3,18 +3,18 @@ def eqF(beta, py, Y, pf):
     Factor demand.
 
     .. math::
-        F_{h,j} = \\beta_{h,j}\\frac{py_{j}}{pf_{h}}Y_{j}
+        F_{h,i} = \\beta_{h,i}\\frac{py_{i}}{pf_{h}}Y_{i}
 
     Args:
         beta (2D numpy array): Cost share parameter for factor h in
-            production of good j
-        py (1D array): The price of value added for each good j
-        Y (1D numpy array): Value added for each good j
+            production of good i
+        py (1D array): The price of value added for each good i
+        Y (1D numpy array): Value added for each good i
         pf (1D array): Price of each factor h
 
     Returns:
         F (2D numpy array): The demand for factor h used in the
-            production of good j
+            production of good i
     '''
     F = beta.div(pf, axis=0) * Y * py
     return F
