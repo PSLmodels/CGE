@@ -34,7 +34,7 @@ def eqKd(g, Sp, lam, pq):
             imports) for each good i
 
     Returns:
-        Kd (float): Domestically owned capital ??
+        Kd (float): Domestically owned capital
     '''
     Kd = Sp / (g * (lam * pq).sum())
     return Kd
@@ -90,14 +90,14 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
         \sum_{i}pWe_{i}E_{i} + \\frac{Sf}{\\varepsilon} = \sum_{i}pWm_{i}M_{i} + \\frac{Fsh}{\\varepsilon}
 
     Args:
-        pWe (1D numpy array): The world price of commodity i in foreign
+        pWe (1D numpy array): The world export price of good i in foreign
             currency
-        pWm (1D numpy array): The world price of commodity i in foreign
+        pWm (1D numpy array): The world import price of good i in foreign
             currency.
-        E (1D numpy array): Exports of commodity i
-        M (1D numpy array): Imports of commodity i
-        Sf (float): Total foreign savings (??)
-        Fsh = Repatriated profits
+        E (1D numpy array): Exports of good i
+        M (1D numpy array): Imports of good i
+        Sf (float): Total foreign savings
+        Fsh (float): Repatriated profits
         er (float): The real exchange rate
 
     Returns:
@@ -153,17 +153,18 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
 
 def eqpferror(F, Ff0):
     '''
-    Comparing labor supply from the model to that in the data.
+    Comparing labor demand from the model to that in the data.
 
-    ..math:: F_{h,i} -
+    ..math::
+        F_{h} - \sum_{i}F_{h,i}
 
     Args:
         F (2D numpy array): The use of factor h in the production of
             good i
-        Ff0 (float): Total labor demand from SAM
+        Ff0 (float): Total demand for factor h from SAM
 
     Returns:
-        pf_error (float):
+        pf_error (float): Error in aggregate labor demand
     '''
     F1 = F.drop(['CAP'])
     Ff1 = Ff0.drop(['CAP'])
@@ -175,18 +176,18 @@ def eqpkerror(F, Kk, Kk0, Ff0):
     '''
     Comparing capital demand in the model and data.
 
-    ..math::
+    ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0
 
 
     Args:
         F (2D numpy array): The use of factor h in the production of
             good i
         Kk (float): Total capital stock
-        Kk0 (float): Total capital stock from SAM??
-        Ff0 (float): Total labor demand from SAM??
+        Kk0 (float): Total capital stock from SAM
+        Ff0 (float): Total labor demand from SAM
 
     Returns:
-        pk_error (float):
+        pk_error (float): Error in aggregate capital demand
     '''
     Fcap = F.loc[['CAP']]
     pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
