@@ -87,7 +87,7 @@ class model_data(object):
         # aggregate imports
         self.Mm0 = self.M0.sum()
         # aggregate exports
-        self.Ee0 = self.E0.sum
+        self.Ee0 = self.E0.sum()
         # aggregate gross domestic product
         self.Gdp0 = (self.XXp0 + self.XXv0 + self.XXg0 + self.Ee0 -
                      self.Mm0)

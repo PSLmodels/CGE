@@ -151,7 +151,7 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
     return pq_error
 
 
-def eqpferror(F, Ff0):
+def eqpf(F, Ff0):
     '''
     Comparing labor demand from the model to that in the data.
 
@@ -172,7 +172,7 @@ def eqpferror(F, Ff0):
     return pf_error
 
 
-def eqpkerror(F, Kk, Kk0, Ff0):
+def eqpk(F, Kk, Kk0, Ff0):
     '''
     Comparing capital demand in the model and data.
 
