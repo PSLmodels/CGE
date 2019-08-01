@@ -3,15 +3,15 @@ def eqpy(b, F, beta, Y):
     Production function.
 
     .. math::
-        Y_{j} = b_{j}\prod_{h}F_{h,j}^{\\beta_{h,j}}
+        Y_{i} = b_{i}\prod_{h}F_{h,i}^{\\beta_{h,i}}
 
     Args:
-        b (1D numpy array): Scale parameter for each good j
+        b (1D numpy array): Scale parameter for each good i
         F (2D numpy array): The use of factor h in the production of
-            good j
+            good i
         beta (2D numpy array): Cost share parameter for factor h in
-            production of good j
-        Y (1D numpy array): Value added for each good j
+            production of good i
+        Y (1D numpy array): Value added for each good i
 
     Returns:
         py_error (1D numpy array): The difference between Y and the
@@ -26,16 +26,16 @@ def eqX(ax, Z):
     Demand for intermediate inputs.
 
     .. math::
-        X_{i,j} = ax_{i,j}Z_{j}
+        X_{h,i} = ax_{h,j}Z_{j}
 
     Args:
-        ax (2D numpy array): Fixed proportions of intermeidate input i
-            used in production of good j (Leontif production function)
+        ax (2D numpy array): Fixed proportions of factor h
+            used in production of good i (Leontief production function)
         Z (1D numpy array): Output of industry j
 
     Returns:
-        X (2D numpy array): Demand for intermediate input i used in the
-            production of good j
+        X (2D numpy array): Demand for factor h used in the
+            production of good i
     '''
     X = ax * Z
     return X
@@ -46,15 +46,15 @@ def eqY(ay, Z):
     Value added.
 
     .. math::
-        Y_{j} = ay_{j}Z_{j}
+        Y_{i} = ay_{i,j}Z_{j}
 
     Args:
-        ay (1D numpy array): Leontif production parameter, share of
-            output of industry j in value added of good j
+        ay (1D numpy array): leontief production parameter, share of
+            output of industry j in value added of good i
         Z (1D numpy array): Output of industry j
 
     Returns:
-        Y (1D numpy array): Value added of good j
+        Y (1D numpy array): Value added of good i
     '''
     Y = ay * Z
     return Y
@@ -65,18 +65,18 @@ def eqpz(ay, ax, py, pq):
     Output prices.
 
     .. math::
-        pz_{j} = ay_{j}py_{j} + \sum_{i}ax_{i,j}pq_{i}
+        pz_{i} = ay_{i}py_{i} + \sum_{i}ax_{h,i}pq_{i}
 
     Args:
-        ay (1D numpy array): Leontif production parameter, share of
-            output of industry j in value added of good j
-        ax (2D numpy array): Fixed proportions of intermeidate input i
-            used in production of good j (Leontif production function)
-        py (1D numpy array): The price of value added for each good j
+        ay (1D numpy array): Leontief production parameter, share of
+            output of industry j in value added of good i
+        ax (2D numpy array): Fixed proportions of factor h
+            used in production of good i (leontief production function)
+        py (1D numpy array): The price of value added for each good i
         pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
 
     Returns:
-        pz (1D numpy array): price of output good j
+        pz (1D numpy array): price of output good i
     '''
     pz = ay * py + (ax * pq).sum(axis=0)
     return pz
@@ -84,17 +84,17 @@ def eqpz(ay, ax, py, pq):
 
 def eqXv(lam, XXv):
     '''
-    Investment demand for each good j
+    Investment demand for each good i
 
     .. math::
-        Xv_{j} = \lambda_{j}XXv
+        Xv_{j} = \lambda_{i}XXv
 
     Args:
-        lam (1D numpy array): Fixed shares of investment for each good j
+        lam (1D numpy array): Fixed shares of investment for each good i
         XXv (float??): Total investment
 
     Returns:
-        Xv (1D numpy array): Investment demand for each good j
+        Xv (1D numpy array): Investment demand for each good i
     '''
     Xv = lam * XXv
     return Xv
@@ -105,12 +105,12 @@ def eqFsh(R, Kf, er):
     Domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
-        FSH = R \cdot KF \cdot \\varepsilon
+        Fsh = R \cdot Kf \cdot \\varepsilon
 
     Args:
-        R (float): Real return on capital
+        R (float): Real return on domestic capital
         Kf (float): Foreign holdings of domestic capital
-        er (float): The real exchange rate
+        er (float): The real exchange rate (foreign/domestic)
 
     Returns:
         Fsh = Repatriated profits
@@ -121,17 +121,17 @@ def eqFsh(R, Kf, er):
 
 def eqpe(er, pWe):
     '''
-    Export prices.
+    World export price equation.
 
     .. math::
         pe_{i} = \\varepsilon \cdot pWe_{i}
 
     Args:
-        er (float): The real exchange rate
-        pWe (1D numpy array): The world price of commodity i in foreign currency
+        er (float): The real exchange rate (foreign/domestic)
+        pWe (1D numpy array): The export price of good i in domestic currency
 
     Returns:
-        pe (1D numpy array): Price of commodity i exports in domestic currency
+        pe (1D numpy array): The world export price of good i exports in foreign currency
     '''
     pe = er * pWe
     return pe
@@ -139,17 +139,17 @@ def eqpe(er, pWe):
 
 def eqpm(er, pWm):
     '''
-    Import prices.
+    World import price equation.
 
     .. math::
         pm_{i} = \\varepsilon \cdot pWm_{i}
 
     Args:
-        er (float): The real exchange rate
-        pWm (1D numpy array): The world price of commodity i in foreign currency.
+        er (float): The real exchange rate (foreign/domestic)
+        pWm (1D numpy array): The world import price of good i in domestic currency.
 
     Returns:
-        pm (1D numpy array): The price of commodity i imports in domestic currency.
+        pm (1D numpy array): The world import price of good i imports in foreign currency.
     '''
     pm = er * pWm
     return pm
@@ -160,18 +160,18 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
     CES production function for the importing firm.
 
     .. math::
-        Q_{i} = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\\right]^{\\frac{1}{\eta_{i}}}
+        Q(i) = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\\right]^{\\frac{1}{\eta_{i}}}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
         deltam (1D numpy array): Share parameter for use of imports of good i in produciton Armington good i
         deltad (1D numpy array): Share parameter for use of domestically produced good i in produciton Armington good i
-        eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
+        eta (1D numpy array): The elasticity of substitution between imports of good i and domestically supplied good i
         M (1D numpy array): The imports of good i
         D (1D numpy array): The domestic supply of good i from domestic production
 
     Returns:
-        Q (1D numpy array): The domestic supply of good i, the Armington good
+        Q (1D numpy array): The domestic supply of good Q(i), the Armington good
     '''
     Q = gamma * (deltam * M ** eta + deltad * D ** eta) ** (1 / eta)
     return Q
@@ -190,8 +190,8 @@ def eqM(gamma, deltam, eta, Q, pq, pm, taum):
         eta (1D numpy array): The elasticity of substitution between imports and domestically supplied good i
         Q (1D numpy array): The domestic supply of good i, the Armington good
         pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
-        pm (1D numpy array): The price of commodity i imports in domestic currency.
-        taum (1D numpy array): Tariff rate on commodity i
+        pm (1D numpy array): The price of good i imports in domestic currency.
+        taum (1D numpy array): Tariff rate on good i
 
     Returns:
         M (1D numpy array): Demand for imports of good i
@@ -276,7 +276,7 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xie (1D numpy array): Share parameter for the share of exports of good i used by firms exporting good i
         tauz (1D numpy array): Ad valorem tax rate on commodity i
-        phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
+        phi (1D numpy array): Transformation elasticity parameter between exports and domestic production of good i
         pz (1D numpy array): price of output good i
         pe (1D numpy array): Price of commodity i exports in domestic currency
         Z (1D numpy array): Output from exporters CET production function
@@ -299,7 +299,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
         xid (1D numpy array): Share parameter for the share of domestically produced good i used by firms exporting good i
         tauz (1D numpy array): Ad valorem tax rate on commodity i
-        phi (1D numpy array): Elasticity of substitution between exports (??) and domestically produced goods by firms exporting good i
+        phi (1D numpy array): Transformation elasticity parameter between exports and domestic production of good i
         pz (1D numpy array): price of output good i
         pd (1D numpy array): price of domesically produced good i
         Z (1D numpy array): Output from exporters CET production function

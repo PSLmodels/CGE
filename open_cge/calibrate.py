@@ -40,7 +40,7 @@ class model_data(object):
          # import tariff
         self.Tm0 = DataFrame(sam, index=['IDT'], columns=list(ind))
 
-        # the h-th factor input by the i-th firm
+        # the h-th factor input by the j-th firm
         self.F0 = DataFrame(sam, index=list(h), columns=list(ind))
         # factor endowment of the h-th factor
         self.Ff0 = self.F0.sum(axis=1)
@@ -50,7 +50,7 @@ class model_data(object):
         self.X0 = DataFrame(sam, index=list(ind), columns=list(ind))
         # total intermediate input by the j-th sector
         self.Xx0 = self.X0.sum(axis=0)
-        # output of the j-th good
+        # output of the i-th good
         self.Z0 = self.Y0 + self.Xx0
 
         # household consumption of the i-th good
@@ -71,20 +71,29 @@ class model_data(object):
                    + self.X0.sum(axis=1))
         # production tax rate
         tauz = self.Tz0 / self.Z0
-        # domestic
+        # domestic tax rate
         self.D0 = (1 + tauz.loc['ACT']) * self.Z0 - self.E0
 
         # Compute aggregates
+
+        # aggregate output
         self.Yy0 = self.Y0.sum()
+        # aggregate demand
         self.XXp0 = self.Xp0.sum()
+        # aggregate investment
         self.XXv0 = self.Xv0.sum()
+        # aggregate government spending
         self.XXg0 = self.Xg0.sum()
+        # aggregate imports
         self.Mm0 = self.M0.sum()
+        # aggregate exports
         self.Ee0 = self.E0.sum()
+        # aggregate gross domestic product
         self.Gdp0 = (self.XXp0 + self.XXv0 + self.XXg0 + self.Ee0 -
                      self.Mm0)
-
+        # growth rate of capital stock
         self.g = self.XXv0 / self.Kk0
+        # interest rate
         self.R0 = self.Ff0['CAP'] / self.Kk0
 
         # export price index

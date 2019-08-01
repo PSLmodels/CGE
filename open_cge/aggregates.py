@@ -24,17 +24,17 @@ def eqKd(g, Sp, lam, pq):
     Domestic capital holdings.
 
     .. math::
-        K^{d} = \\frac{S^{p}}{g\sum_{j}\lambda_{j}pq_{j}}
+        K^{d} = \\frac{S^{p}}{g\sum_{i}\lambda_{i}pq_{i}}
 
     Args:
         g (float): Exogenous long run growth rate of the economy
         Sp (float): Total household savings
-        lam (1D numpy array): Fixed shares of investment for each good j
+        lam (1D numpy array): Fixed shares of investment for each good i
         pq (1D numpy array): price of the Armington good (domestic +
-            imports) for each good j
+            imports) for each good i
 
     Returns:
-        Kd (float): Domestically owned capital ??
+        Kd (float): Domestically owned capital
     '''
     Kd = Sp / (g * (lam * pq).sum())
     return Kd
@@ -63,15 +63,15 @@ def eqKk(pf, Ff, R, lam, pq):
     Capital market clearing equation.
 
     .. math::
-        KK = \\frac{pf * FF}{R \sum_{j}\lambda_{j}pq_{j}}
+        KK = \\frac{pf * Ff}{R \sum_{i}\lambda_{i}pq_{i}}
 
     Args:
         pf (1D numpy array): The price of factor h
         Ff (1D numpy array): Endowment of factor h
         R (float): Real return on capital
-        lam (1D numpy array): Fixed shares of investment for each good j
+        lam (1D numpy array): Fixed shares of investment for each good i
         pq (1D numpy array): price of the Armington good (domestic +
-            imports) for each good j
+            imports) for each good i
 
     Returns:
         Kk (float): Total capital stock
@@ -90,14 +90,14 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
         \sum_{i}pWe_{i}E_{i} + \\frac{Sf}{\\varepsilon} = \sum_{i}pWm_{i}M_{i} + \\frac{Fsh}{\\varepsilon}
 
     Args:
-        pWe (1D numpy array): The world price of commodity i in foreign
+        pWe (1D numpy array): The world export price of good i in foreign
             currency
-        pWm (1D numpy array): The world price of commodity i in foreign
+        pWm (1D numpy array): The world import price of good i in foreign
             currency.
-        E (1D numpy array): Exports of commodity i
-        M (1D numpy array): Imports of commodity i
-        Sf (float): Total foreign savings (??)
-        Fsh = Repatriated profits
+        E (1D numpy array): Exports of good i
+        M (1D numpy array): Imports of good i
+        Sf (float): Total foreign savings
+        Fsh (float): Repatriated profits
         er (float): The real exchange rate
 
     Returns:
@@ -113,13 +113,13 @@ def eqSf(g, lam, pq, Kf):
     Net foreign investment/savings.
 
     .. math::
-        Sf = g Kf \sum_{j} \lambda_{j} pq_{j}
+        Sf = g Kf \sum_{i} \lambda_{i} pq_{i}
 
     Args:
         g (float): Exogenous long run growth rate of the economy
-        lam (1D numpy array): Fixed shares of investment for each good j
+        lam (1D numpy array): Fixed shares of investment for each good i
         pq (1D numpy array): price of the Armington good (domestic +
-            imports) for each good j
+            imports) for each good i
         Kf (float): Foreign owned domestic capital
 
     Returns:
@@ -134,18 +134,18 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
     Resource constraint.
 
     .. math::
-        Q_{i} = X^{p}_{j} + X^{g}_{j} + X^{v}_{j} + \sum_{j}X_{i,j}
+        Q(i) = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{i}X_{i,j}
 
     Args:
-        Q (1D numpy array): The domestic supply of good j, the Armington good
-        Xp (1D numpy array): Demand for production good j by consumers
-        Xg (1D numpy array): Government expenditures on commodity i
-        Xv (1D numpy array): Investment demand for each good j
-        X (2D numpy array): Demand for intermediate input i used in the
-            production of good j
+        Q (1D numpy array): The domestic supply of good Q(i), the Armington good
+        Xp (1D numpy array): Demand for production good i by consumers
+        Xg (1D numpy array): Government expenditures on good i
+        Xv (1D numpy array): Investment demand for each good i
+        X (2D numpy array): Demand for factor h used in the
+            production of good i
 
     Returns:
-        pq_error (1D numpy array): Error in resource constraint for each good j
+        pq_error (1D numpy array): Error in resource constraint for each good i
     '''
     pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
     return pq_error
@@ -153,15 +153,18 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
 
 def eqpf(F, Ff0):
     '''
-    Comparing labor supply from the model to that in the data.
+    Comparing labor demand from the model to that in the data.
+
+    ..math::
+        F_{h} - \sum_{i}F_{h,i}
 
     Args:
         F (2D numpy array): The use of factor h in the production of
-            good j
-        Ff0 (float): Total labor demand from SAM
+            good i
+        Ff0 (float): Total demand for factor h from SAM
 
     Returns:
-        pf_error ():
+        pf_error (float): Error in aggregate labor demand
     '''
     F1 = F.drop(['CAP'])
     Ff1 = Ff0.drop(['CAP'])
@@ -173,15 +176,18 @@ def eqpk(F, Kk, Kk0, Ff0):
     '''
     Comparing capital demand in the model and data.
 
+    ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0
+
+
     Args:
         F (2D numpy array): The use of factor h in the production of
-            good j
+            good i
         Kk (float): Total capital stock
-        Kk0 (float): Total capital stock from SAM??
-        Ff0 (float): Total labor demand from SAM??
+        Kk0 (float): Total capital stock from SAM
+        Ff0 (float): Total labor demand from SAM
 
     Returns:
-        pk_error ():
+        pk_error (float): Error in aggregate capital demand
     '''
     Fcap = F.loc[['CAP']]
     pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
