@@ -40,16 +40,16 @@ def test_eqKf():
     assert expected_Kf == test_Kf
 
 # Capital market clearing equation
-#def test_eqKk():
-#    pf = np.array([2, 4, 5, 1])
-#    Ff = np.array([3, 4, 5, 7])
-#    R = 0.02
-#    lam = np.array([0.3, 0.2, 0.1, 0.4])
-#    assert sum(lam) == 1
-#    pq = np.array([5, 6, 8, 4])
-#    expected_Kk = 529.41
-#    test_Kk = aggregates.eqKk(pf, Ff, R, lam, pq)
-#    assert_allclose(expected_Kk, test_Kk)
+def test_eqKk():
+    pf = pd.Series([5, 2], index = ['LAB','CAP'])
+    Ff = pd.Series([10, 20], index = ['LAB', 'CAP'])
+    R = 0.02
+    lam = np.array([0.3, 0.2, 0.1, 0.4])
+    assert sum(lam) == 1
+    pq = np.array([5, 6, 8, 4])
+    expected_Kk = 392.156863
+    test_Kk = aggregates.eqKk(pf, Ff, R, lam, pq)
+    assert_allclose(expected_Kk, test_Kk)
 
 # Balance of payments
 def test_eqbop():
