@@ -8,14 +8,6 @@ from pandas.testing import assert_frame_equal
 from numpy.testing import assert_allclose
 from open_cge import aggregates
 
-# Total investment
-def eqXXv():
-    g = 0.03
-    Kk = 100
-    expected_eqXXv = 3
-    test_eqXXv = aggregates.eqXXv(g, Kk)
-    assert expected_eqXXv == test_eqXXv
-
 # Total household saving
 def test_eqSp():
     ssp = 0.1
@@ -98,12 +90,31 @@ def test_eqpqerror():
 
 
 # Comparing labor supply from the model to that in the data
-#def test_eqpf():
+def test_eqpf():
+    F = pd.DataFrame.from_dict({'LAB': [10, 40], 'CAP': [30, 20]},
+    orient = 'index')
+    Ff0 = pd.Series(50, index = ['LAB', 'CAP'])
+    expected_pf_error = 0
+    test_pf_error = aggregates.eqpf(F, Ff0)
+    assert_allclose(expected_pf_error, test_pf_error)
 
 
 # Comparing capital demand in the model and data
-#def test_eqpk():
+def test_eqpk():
+    F = pd.DataFrame.from_dict({'LAB': [10, 40], 'CAP': [30, 20]},
+    orient = 'index')
+    Kk = 50
+    Ff0 = Ff0 = pd.Series(50, index = ['LAB', 'CAP'])
+    Kk0 = Ff0 = pd.Series(50, index = ['CAP'])
+    expected_pk_error = 0
+    test_pk_error = aggregates.eqpk(F, Kk, Ff0, Kk0)
+    assert_allclose(expected_pk_error, test_pk_error)
 
 
 # Total investment
-#def eqXXv():
+def eqXXv():
+    g = 0.03
+    Kk = 100
+    expected_eqXXv = 3
+    test_eqXXv = aggregates.eqXXv(g, Kk)
+    assert expected_eqXXv == test_eqXXv
