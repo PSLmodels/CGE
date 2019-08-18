@@ -8,14 +8,6 @@ from pandas.testing import assert_frame_equal
 from numpy.testing import assert_allclose
 from open_cge import aggregates
 
-# Total investment
-def eqXXv():
-    g = 0.03
-    Kk = 100
-    expected_eqXXv = 3
-    test_eqXXv = aggregates.eqXXv(g, Kk)
-    assert expected_eqXXv == test_eqXXv
-
 # Total household saving
 def test_eqSp():
     ssp = 0.1
@@ -48,16 +40,16 @@ def test_eqKf():
     assert expected_Kf == test_Kf
 
 # Capital market clearing equation
-#def test_eqKk():
-#    pf = np.array([2, 4, 5, 1])
-#    Ff = np.array([3, 4, 5, 7])
-#    R = 0.02
-#    lam = np.array([0.3, 0.2, 0.1, 0.4])
-#    assert sum(lam) == 1
-#    pq = np.array([5, 6, 8, 4])
-#    expected_Kk = 529.41
-#    test_Kk = aggregates.eqKk(pf, Ff, R, lam, pq)
-#    assert_allclose(expected_Kk, test_Kk)
+def test_eqKk():
+    pf = pd.Series([5, 2], index = ['LAB','CAP'])
+    Ff = pd.Series([10, 20], index = ['LAB', 'CAP'])
+    R = 0.02
+    lam = np.array([0.3, 0.2, 0.1, 0.4])
+    assert sum(lam) == 1
+    pq = np.array([5, 6, 8, 4])
+    expected_Kk = 392.156863
+    test_Kk = aggregates.eqKk(pf, Ff, R, lam, pq)
+    assert_allclose(expected_Kk, test_Kk)
 
 # Balance of payments
 def test_eqbop():
@@ -98,12 +90,31 @@ def test_eqpqerror():
 
 
 # Comparing labor supply from the model to that in the data
-#def test_eqpf():
+def test_eqpf():
+    F = pd.DataFrame.from_dict({'LAB': [10, 40], 'CAP': [30, 20]},
+    orient = 'index')
+    Ff0 = pd.Series(50, index = ['LAB', 'CAP'])
+    expected_pf_error = 0
+    test_pf_error = aggregates.eqpf(F, Ff0)
+    assert_allclose(expected_pf_error, test_pf_error)
 
 
 # Comparing capital demand in the model and data
-#def test_eqpk():
+def test_eqpk():
+    F = pd.DataFrame.from_dict({'LAB': [10, 40], 'CAP': [30, 20]},
+    orient = 'index')
+    Kk = 50
+    Ff0 = Ff0 = pd.Series(50, index = ['LAB', 'CAP'])
+    Kk0 = Ff0 = pd.Series(50, index = ['CAP'])
+    expected_pk_error = 0
+    test_pk_error = aggregates.eqpk(F, Kk, Ff0, Kk0)
+    assert_allclose(expected_pk_error, test_pk_error)
 
 
 # Total investment
-#def eqXXv():
+def eqXXv():
+    g = 0.03
+    Kk = 100
+    expected_eqXXv = 3
+    test_eqXXv = aggregates.eqXXv(g, Kk)
+    assert expected_eqXXv == test_eqXXv
