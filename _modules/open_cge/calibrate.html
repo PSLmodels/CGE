@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>open_cge.calibrate &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for open_cge.calibrate</h1><div class="highlight"><pre>
+<span></span><span class="c1"># import packages</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">DataFrame</span>
+
+
+<div class="viewcode-block" id="model_data"><a class="viewcode-back" href="../../calibrate.html#open_cge.calibrate.model_data">[docs]</a><span class="k">class</span> <span class="nc">model_data</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function reads the SAM file and initializes variables using</span>
+<span class="sd">    these data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sam (DataFrame): DataFrame containing social and economic data</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        model_data (data class): Data used in the CGE model</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sam</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">ind</span><span class="p">):</span>
+        <span class="c1"># foreign saving</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sf0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;INV&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;EXT&#39;</span><span class="p">])</span>
+        <span class="c1"># private saving</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sp0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;INV&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">])</span>
+        <span class="c1"># government saving/budget balance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sg0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;INV&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GOV&#39;</span><span class="p">])</span>
+        <span class="c1"># repatriation of profits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Fsh0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;EXT&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">])</span>
+        <span class="c1"># capital stock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Kk0</span> <span class="o">=</span> <span class="mi">10510</span>
+        <span class="c1"># foreign-owned capital stock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Kf0</span> <span class="o">=</span> <span class="mf">6414.35</span>
+        <span class="c1"># domestically-owned capital stock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Kd0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kk0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kf0</span>
+
+        <span class="c1"># direct tax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Td0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DTX&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">])</span>
+        <span class="c1"># transfers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Trf0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GOV&#39;</span><span class="p">])</span>
+        <span class="c1"># production tax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tz0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ACT&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+         <span class="c1"># import tariff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tm0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;IDT&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+
+        <span class="c1"># the h-th factor input by the j-th firm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">F0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="c1"># factor endowment of the h-th factor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Ff0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F0</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># composite factor (value added)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F0</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># intermediate input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="c1"># total intermediate input by the j-th sector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xx0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X0</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># output of the i-th good</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Z0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xx0</span>
+
+        <span class="c1"># household consumption of the i-th good</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xp0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">])</span>
+        <span class="c1"># government consumption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xg0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GOV&#39;</span><span class="p">])</span>
+        <span class="c1"># investment demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xv0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;INV&#39;</span><span class="p">])</span>
+        <span class="c1"># exports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;EXT&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E0</span><span class="p">[</span><span class="s1">&#39;EXT&#39;</span><span class="p">]</span>
+        <span class="c1"># imports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M0</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">sam</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;EXT&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M0</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;EXT&#39;</span><span class="p">]</span>
+
+        <span class="c1"># domestic supply/Armington composite good</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q0</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xp0</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xg0</span><span class="p">[</span><span class="s1">&#39;GOV&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xv0</span><span class="p">[</span><span class="s1">&#39;INV&#39;</span><span class="p">]</span>
+                   <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">X0</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># production tax rate</span>
+        <span class="n">tauz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tz0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z0</span>
+        <span class="c1"># domestic tax rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tauz</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;ACT&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">E0</span>
+
+        <span class="c1"># Compute aggregates</span>
+
+        <span class="c1"># aggregate output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Yy0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># aggregate demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XXp0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xp0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># aggregate investment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XXv0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xv0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># aggregate government spending</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XXg0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xg0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># aggregate imports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Mm0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># aggregate exports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Ee0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># aggregate gross domestic product</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Gdp0</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XXp0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">XXv0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">XXg0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ee0</span> <span class="o">-</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">Mm0</span><span class="p">)</span>
+        <span class="c1"># growth rate of capital stock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">XXv0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kk0</span>
+        <span class="c1"># interest rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ff0</span><span class="p">[</span><span class="s1">&#39;CAP&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kk0</span>
+
+        <span class="c1"># export price index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pWe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pWe</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pWe</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="c1"># import price index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pWm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pWm</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pWm</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="parameters"><a class="viewcode-back" href="../../calibrate.html#open_cge.calibrate.parameters">[docs]</a><span class="k">class</span> <span class="nc">parameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function sets the values of parameters used in the model.</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        parameters (parameters class): Class of parameters for use in</span>
+<span class="sd">            CGE model.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ind</span><span class="p">):</span>
+
+        <span class="c1"># elasticity of substitution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="c1"># substitution elasticity parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+
+        <span class="c1"># elasticity of transformation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psi</span> <span class="o">=</span> <span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psi</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">psi</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="c1"># transformation elasticity parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">psi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">psi</span>
+
+        <span class="c1"># share parameter in utility function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Xp0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">XXp0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">[</span><span class="s1">&#39;HOH&#39;</span><span class="p">]</span>
+        <span class="c1"># share parameter in production function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">F0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">Y0</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">F0</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span>
+        <span class="c1"># scale parameter in production function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Y0</span> <span class="o">/</span> <span class="n">temp</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># intermediate input requirement coefficient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">X0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">Z0</span>
+        <span class="c1"># composite factor input requirement coefficient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ay</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Y0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">Z0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Xg0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">XXg0</span>
+        <span class="c1"># government consumption share</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">[</span><span class="s1">&#39;GOV&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Xv0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">XXv0</span>
+        <span class="c1"># investment demand share</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span><span class="p">[</span><span class="s1">&#39;INV&#39;</span><span class="p">]</span>
+
+        <span class="c1"># production tax rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tauz</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Tz0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">Z0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tauz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tauz</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;ACT&#39;</span><span class="p">]</span>
+        <span class="c1"># import tariff rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taum</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Tm0</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">M0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taum</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;IDT&#39;</span><span class="p">]</span>
+
+        <span class="c1"># share parameter in Armington function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deltam</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taum</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">M0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)</span> <span class="o">/</span>
+                       <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taum</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">M0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">D0</span>
+                        <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deltad</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">D0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)</span> <span class="o">/</span>
+                       <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taum</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">M0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">D0</span>
+                        <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)))</span>
+
+        <span class="c1"># scale parameter in Armington function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Q0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deltam</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">M0</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">+</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">deltad</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">D0</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">)</span> <span class="o">**</span>
+                      <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span><span class="p">))</span>
+
+        <span class="c1"># share parameter in transformation function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xie</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">E0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">E0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)</span> <span class="o">+</span>
+                                              <span class="n">d</span><span class="o">.</span><span class="n">D0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xid</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">D0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">E0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)</span> <span class="o">+</span>
+                                              <span class="n">d</span><span class="o">.</span><span class="n">D0</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)))</span>
+
+        <span class="c1"># scale parameter in transformation function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Z0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xie</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">E0</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xid</span> <span class="o">*</span>
+                              <span class="n">d</span><span class="o">.</span><span class="n">D0</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">))</span>
+
+        <span class="c1"># average propensity to save</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ssp</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Sp0</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">d</span><span class="o">.</span><span class="n">Fsh0</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span>
+                                    <span class="n">d</span><span class="o">.</span><span class="n">Trf0</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ssp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asscalar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ssp</span><span class="p">)</span>
+        <span class="c1"># direct tax rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taud</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Td0</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asscalar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">taud</span><span class="p">)</span>
+        <span class="c1"># transfer rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tautr</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Trf0</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="p">[</span><span class="s1">&#39;LAB&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tautr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asscalar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tautr</span><span class="p">)</span>
+        <span class="c1"># government revenue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ginc</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Td0</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">Tz0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">Tm0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1"># household income</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hinc</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../public_api.html">Open CGE API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

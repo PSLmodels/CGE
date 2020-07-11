@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>open_cge.government &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for open_cge.government</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="eqTd"><a class="viewcode-back" href="../../government.html#open_cge.government.eqTd">[docs]</a><span></span><span class="k">def</span> <span class="nf">eqTd</span><span class="p">(</span><span class="n">taud</span><span class="p">,</span> <span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Direct tax revenue.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Td = \tau d \sum_{h}pf_{h}FF_{h}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        taud (float): Direct tax rate</span>
+<span class="sd">        pf (1D numpy array): The price of factor h</span>
+<span class="sd">        Ff (1D numpy array): Endowment of factor h</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Td (float): Total direct tax revenue.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Td</span> <span class="o">=</span> <span class="n">taud</span> <span class="o">*</span> <span class="p">(</span><span class="n">pf</span> <span class="o">*</span> <span class="n">Ff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Td</span></div>
+
+
+<div class="viewcode-block" id="eqTrf"><a class="viewcode-back" href="../../government.html#open_cge.government.eqTrf">[docs]</a><span class="k">def</span> <span class="nf">eqTrf</span><span class="p">(</span><span class="n">tautr</span><span class="p">,</span> <span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Total transfers to households.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Trf = \tau^{tr} \sum_{h}pf_{h}FF_{h}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tautr (float): Tranfer rate (??)</span>
+<span class="sd">        pf (1D numpy array): The price of factor h</span>
+<span class="sd">        Ff (1D numpy array): Endowment of factor h</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Trf (float): Total transfers to households</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Trf</span> <span class="o">=</span> <span class="n">tautr</span> <span class="o">*</span> <span class="n">pf</span><span class="p">[</span><span class="s1">&#39;LAB&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ff</span><span class="p">[</span><span class="s1">&#39;LAB&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Trf</span></div>
+
+
+<div class="viewcode-block" id="eqTz"><a class="viewcode-back" href="../../government.html#open_cge.government.eqTz">[docs]</a><span class="k">def</span> <span class="nf">eqTz</span><span class="p">(</span><span class="n">tauz</span><span class="p">,</span> <span class="n">pz</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Production tax revenue from each good.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Tz_{i} = \tau^{z}_{i} pz_{i}Z_{i}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tauz (1D numpy array): Ad valorem tax rate on good i</span>
+<span class="sd">        pz (1D numpy array): Price of output good i</span>
+<span class="sd">        Z (1D numpy array): Total output of good i</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tz (1D numpy array): Production tax revenue for each good i</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Tz</span> <span class="o">=</span> <span class="n">tauz</span> <span class="o">*</span> <span class="n">pz</span> <span class="o">*</span> <span class="n">Z</span>
+    <span class="k">return</span> <span class="n">Tz</span></div>
+
+
+<div class="viewcode-block" id="eqTm"><a class="viewcode-back" href="../../government.html#open_cge.government.eqTm">[docs]</a><span class="k">def</span> <span class="nf">eqTm</span><span class="p">(</span><span class="n">taum</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Tariff revenue from each good i.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Tm_{i} = \tau^{m}_{i} pm_{i}M_{i}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        taum (1D numpy array): Tariff rate on good i</span>
+<span class="sd">        pm (1D numpy array): price of import good i</span>
+<span class="sd">        M (1D numpy array): Imports of good i</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tm (1D numpy array): Tariff revenue for each good i</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Tm</span> <span class="o">=</span> <span class="n">taum</span> <span class="o">*</span> <span class="n">pm</span> <span class="o">*</span> <span class="n">M</span>
+    <span class="k">return</span> <span class="n">Tm</span></div>
+
+
+<div class="viewcode-block" id="eqXg"><a class="viewcode-back" href="../../government.html#open_cge.government.eqXg">[docs]</a><span class="k">def</span> <span class="nf">eqXg</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">XXg</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Government expenditures on good i</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        X^{g}_{i} = \mu_{i}XX_{g}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mu (1D numpy array): Government expenditure share parameters for</span>
+<span class="sd">            each good i</span>
+<span class="sd">        XXg (float): Total government spending on goods/services</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Xg (1D numpy array): Government expenditures on good i</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Xg</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">XXg</span>
+    <span class="k">return</span> <span class="n">Xg</span></div>
+
+
+<div class="viewcode-block" id="eqSg"><a class="viewcode-back" href="../../government.html#open_cge.government.eqSg">[docs]</a><span class="k">def</span> <span class="nf">eqSg</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Td</span><span class="p">,</span> <span class="n">Tz</span><span class="p">,</span> <span class="n">Tm</span><span class="p">,</span> <span class="n">XXg</span><span class="p">,</span> <span class="n">Trf</span><span class="p">,</span> <span class="n">pq</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Total government savings.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Sg = Td + \sum_{i}Tz_{i} + \sum_{i}Tm_{i} - (Trf + \sum_{i}Xg_{i})</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mu (1D numpy array): Government expenditure share parameters for</span>
+<span class="sd">            each good i</span>
+<span class="sd">        Td (float): Total direct tax revenue</span>
+<span class="sd">        Tz (1D numpy array): Production tax revenue for each good i</span>
+<span class="sd">        Tm (1D numpy array): Tariff revenue for each good i</span>
+<span class="sd">        XXg (float): Total government spending on goods/services</span>
+<span class="sd">        Trf (float): Total transfers to households</span>
+<span class="sd">        pq (1D numpy array): price of the Armington good (domestic +</span>
+<span class="sd">            imports) for each good i</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Sg (float): Total government savings</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Sg</span> <span class="o">=</span> <span class="n">Td</span> <span class="o">+</span> <span class="n">Tz</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">Tm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">Trf</span> <span class="o">+</span> <span class="n">XXg</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu</span> <span class="o">*</span> <span class="n">pq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">Sg</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../public_api.html">Open CGE API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

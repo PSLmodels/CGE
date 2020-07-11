@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Aggregates Equations &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CGE Calibration" href="calibrate.html" />
+    <link rel="prev" title="Open CGE API" href="public_api.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="economic-aggregates-equations">
+<span id="aggregates"></span><h1>Economic Aggregates Equations<a class="headerlink" href="#economic-aggregates-equations" title="Permalink to this headline">¶</a></h1>
+<p><strong>Aggregates</strong></p>
+<div class="section" id="module-open_cge.aggregates">
+<span id="open-cge-aggregates"></span><h2>open_cge.aggregates<a class="headerlink" href="#module-open_cge.aggregates" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="open_cge.aggregates.eqKd">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqKd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">g</span></em>, <em class="sig-param"><span class="n">Sp</span></em>, <em class="sig-param"><span class="n">lam</span></em>, <em class="sig-param"><span class="n">pq</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqKd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqKd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Domestic capital holdings.</p>
+<div class="math notranslate nohighlight">
+\[K^{d} = \frac{S^{p}}{g\sum_{i}\lambda_{i}pq_{i}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) -- Exogenous long run growth rate of the economy</p></li>
+<li><p><strong>Sp</strong> (<em>float</em>) -- Total household savings</p></li>
+<li><p><strong>lam</strong> (<em>1D numpy array</em>) -- Fixed shares of investment for each good i</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) -- price of the Armington good (domestic +
+imports) for each good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Domestically owned capital</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Kd (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqKf">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqKf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Kk</span></em>, <em class="sig-param"><span class="n">Kd</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqKf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqKf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Foreign holdings of domestically used capital.</p>
+<div class="math notranslate nohighlight">
+\[K^{f} = KK - K^{d}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Kk</strong> (<em>float</em>) -- Total capital stock</p></li>
+<li><p><strong>Kd</strong> (<em>float</em>) -- Domestically owned capital</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Foreign owned domestic capital</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Kf (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqKk">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqKk</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pf</span></em>, <em class="sig-param"><span class="n">Ff</span></em>, <em class="sig-param"><span class="n">R</span></em>, <em class="sig-param"><span class="n">lam</span></em>, <em class="sig-param"><span class="n">pq</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqKk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqKk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capital market clearing equation.</p>
+<div class="math notranslate nohighlight">
+\[KK = \frac{pf * Ff}{R \sum_{i}\lambda_{i}pq_{i}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) -- The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) -- Endowment of factor h</p></li>
+<li><p><strong>R</strong> (<em>float</em>) -- Real return on capital</p></li>
+<li><p><strong>lam</strong> (<em>1D numpy array</em>) -- Fixed shares of investment for each good i</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) -- price of the Armington good (domestic +
+imports) for each good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total capital stock</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Kk (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqSf">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqSf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">g</span></em>, <em class="sig-param"><span class="n">lam</span></em>, <em class="sig-param"><span class="n">pq</span></em>, <em class="sig-param"><span class="n">Kf</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqSf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqSf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Net foreign investment/savings.</p>
+<div class="math notranslate nohighlight">
+\[Sf = g Kf \sum_{i} \lambda_{i} pq_{i}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) -- Exogenous long run growth rate of the economy</p></li>
+<li><p><strong>lam</strong> (<em>1D numpy array</em>) -- Fixed shares of investment for each good i</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) -- price of the Armington good (domestic +
+imports) for each good i</p></li>
+<li><p><strong>Kf</strong> (<em>float</em>) -- Foreign owned domestic capital</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total foreign savings (??)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Sf (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqSp">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqSp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ssp</span></em>, <em class="sig-param"><span class="n">pf</span></em>, <em class="sig-param"><span class="n">Ff</span></em>, <em class="sig-param"><span class="n">Fsh</span></em>, <em class="sig-param"><span class="n">Trf</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqSp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqSp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total household savings.</p>
+<div class="math notranslate nohighlight">
+\[Sp = ssp \cdot \left(\sum_{h}pf_{h}Ff_{h} \right)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ssp</strong> (<em>float</em>) -- Fixed household savings rate</p></li>
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) -- The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) -- Endowment of factor h</p></li>
+<li><p><strong>Fsh</strong> (<em>float</em>) -- Repatriated profits</p></li>
+<li><p><strong>Trf</strong> (<em>float</em>) -- Total transfers to households</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total household savings</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Sp (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqXXv">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqXXv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">g</span></em>, <em class="sig-param"><span class="n">Kk</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqXXv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqXXv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total investment.</p>
+<div class="math notranslate nohighlight">
+\[XXv = g \cdot KK\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) -- Exogenous long run growth rate of the economy</p></li>
+<li><p><strong>Kk</strong> (<em>float</em>) -- Total capital stock</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total investment.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>XXv (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqbop">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqbop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pWe</span></em>, <em class="sig-param"><span class="n">pWm</span></em>, <em class="sig-param"><span class="n">E</span></em>, <em class="sig-param"><span class="n">M</span></em>, <em class="sig-param"><span class="n">Sf</span></em>, <em class="sig-param"><span class="n">Fsh</span></em>, <em class="sig-param"><span class="n">er</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqbop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqbop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Balance of payments.</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i}pWe_{i}E_{i} + \frac{Sf}{\varepsilon} = \sum_{i}pWm_{i}M_{i} + \frac{Fsh}{\varepsilon}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pWe</strong> (<em>1D numpy array</em>) -- The world export price of good i in foreign
+currency</p></li>
+<li><p><strong>pWm</strong> (<em>1D numpy array</em>) -- The world import price of good i in foreign
+currency.</p></li>
+<li><p><strong>E</strong> (<em>1D numpy array</em>) -- Exports of good i</p></li>
+<li><p><strong>M</strong> (<em>1D numpy array</em>) -- Imports of good i</p></li>
+<li><p><strong>Sf</strong> (<em>float</em>) -- Total foreign savings</p></li>
+<li><p><strong>Fsh</strong> (<em>float</em>) -- Repatriated profits</p></li>
+<li><p><strong>er</strong> (<em>float</em>) -- The real exchange rate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Error in balance of payments equation.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bop_error (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqpf">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqpf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">F</span></em>, <em class="sig-param"><span class="n">Ff0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqpf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqpf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comparing labor demand from the model to that in the data.</p>
+<dl class="simple">
+<dt>..math::</dt><dd><p>F_{h} - sum_{i}F_{h,i}</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> (<em>2D numpy array</em>) -- The use of factor h in the production of
+good i</p></li>
+<li><p><strong>Ff0</strong> (<em>float</em>) -- Total demand for factor h from SAM</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Error in aggregate labor demand</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pf_error (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqpk">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqpk</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">F</span></em>, <em class="sig-param"><span class="n">Kk</span></em>, <em class="sig-param"><span class="n">Kk0</span></em>, <em class="sig-param"><span class="n">Ff0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqpk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqpk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comparing capital demand in the model and data.</p>
+<p>..math:: sum_{i}F_{h,i} - frac{Kk}{Kk0} cdot Ff0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> (<em>2D numpy array</em>) -- The use of factor h in the production of
+good i</p></li>
+<li><p><strong>Kk</strong> (<em>float</em>) -- Total capital stock</p></li>
+<li><p><strong>Kk0</strong> (<em>float</em>) -- Total capital stock from SAM</p></li>
+<li><p><strong>Ff0</strong> (<em>float</em>) -- Total labor demand from SAM</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Error in aggregate capital demand</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pk_error (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.aggregates.eqpqerror">
+<code class="sig-prename descclassname">open_cge.aggregates.</code><code class="sig-name descname">eqpqerror</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">Xp</span></em>, <em class="sig-param"><span class="n">Xg</span></em>, <em class="sig-param"><span class="n">Xv</span></em>, <em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/aggregates.html#eqpqerror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.aggregates.eqpqerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resource constraint.</p>
+<div class="math notranslate nohighlight">
+\[Q(i) = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{i}X_{i,j}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Q</strong> (<em>1D numpy array</em>) -- The domestic supply of good Q(i), the Armington good</p></li>
+<li><p><strong>Xp</strong> (<em>1D numpy array</em>) -- Demand for production good i by consumers</p></li>
+<li><p><strong>Xg</strong> (<em>1D numpy array</em>) -- Government expenditures on good i</p></li>
+<li><p><strong>Xv</strong> (<em>1D numpy array</em>) -- Investment demand for each good i</p></li>
+<li><p><strong>X</strong> (<em>2D numpy array</em>) -- Demand for factor h used in the
+production of good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Error in resource constraint for each good i</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pq_error (1D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="public_api.html">Open CGE API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Economic Aggregates Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrate.html">CGE Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execute.html">Model Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firms.html">Firm Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="government.html">Government Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="household.html">Household Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleCGE.html">Simple CGE Model</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="public_api.html">Open CGE API</a><ul>
+      <li>Previous: <a href="public_api.html" title="previous chapter">Open CGE API</a></li>
+      <li>Next: <a href="calibrate.html" title="next chapter">CGE Calibration</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/aggregates.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

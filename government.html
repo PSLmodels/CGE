@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Equations &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Household Equations" href="household.html" />
+    <link rel="prev" title="Firm Equations" href="firms.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="government-equations">
+<span id="government"></span><h1>Government Equations<a class="headerlink" href="#government-equations" title="Permalink to this headline">¶</a></h1>
+<p><strong>Government</strong></p>
+<div class="section" id="module-open_cge.government">
+<span id="open-cge-government"></span><h2>open_cge.government<a class="headerlink" href="#module-open_cge.government" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="open_cge.government.eqSg">
+<code class="sig-prename descclassname">open_cge.government.</code><code class="sig-name descname">eqSg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">Td</span></em>, <em class="sig-param"><span class="n">Tz</span></em>, <em class="sig-param"><span class="n">Tm</span></em>, <em class="sig-param"><span class="n">XXg</span></em>, <em class="sig-param"><span class="n">Trf</span></em>, <em class="sig-param"><span class="n">pq</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/government.html#eqSg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.government.eqSg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total government savings.</p>
+<div class="math notranslate nohighlight">
+\[Sg = Td + \sum_{i}Tz_{i} + \sum_{i}Tm_{i} - (Trf + \sum_{i}Xg_{i})\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mu</strong> (<em>1D numpy array</em>) -- Government expenditure share parameters for
+each good i</p></li>
+<li><p><strong>Td</strong> (<em>float</em>) -- Total direct tax revenue</p></li>
+<li><p><strong>Tz</strong> (<em>1D numpy array</em>) -- Production tax revenue for each good i</p></li>
+<li><p><strong>Tm</strong> (<em>1D numpy array</em>) -- Tariff revenue for each good i</p></li>
+<li><p><strong>XXg</strong> (<em>float</em>) -- Total government spending on goods/services</p></li>
+<li><p><strong>Trf</strong> (<em>float</em>) -- Total transfers to households</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) -- price of the Armington good (domestic +
+imports) for each good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total government savings</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Sg (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.government.eqTd">
+<code class="sig-prename descclassname">open_cge.government.</code><code class="sig-name descname">eqTd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">taud</span></em>, <em class="sig-param"><span class="n">pf</span></em>, <em class="sig-param"><span class="n">Ff</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/government.html#eqTd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.government.eqTd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direct tax revenue.</p>
+<div class="math notranslate nohighlight">
+\[Td =    au d \sum_{h}pf_{h}FF_{h}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taud</strong> (<em>float</em>) -- Direct tax rate</p></li>
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) -- The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) -- Endowment of factor h</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total direct tax revenue.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Td (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.government.eqTm">
+<code class="sig-prename descclassname">open_cge.government.</code><code class="sig-name descname">eqTm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">taum</span></em>, <em class="sig-param"><span class="n">pm</span></em>, <em class="sig-param"><span class="n">M</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/government.html#eqTm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.government.eqTm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tariff revenue from each good i.</p>
+<div class="math notranslate nohighlight">
+\[Tm_{i} =        au^{m}_{i} pm_{i}M_{i}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taum</strong> (<em>1D numpy array</em>) -- Tariff rate on good i</p></li>
+<li><p><strong>pm</strong> (<em>1D numpy array</em>) -- price of import good i</p></li>
+<li><p><strong>M</strong> (<em>1D numpy array</em>) -- Imports of good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tariff revenue for each good i</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tm (1D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.government.eqTrf">
+<code class="sig-prename descclassname">open_cge.government.</code><code class="sig-name descname">eqTrf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tautr</span></em>, <em class="sig-param"><span class="n">pf</span></em>, <em class="sig-param"><span class="n">Ff</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/government.html#eqTrf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.government.eqTrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total transfers to households.</p>
+<div class="math notranslate nohighlight">
+\[Trf =   au^{tr} \sum_{h}pf_{h}FF_{h}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tautr</strong> (<em>float</em>) -- Tranfer rate (??)</p></li>
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) -- The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) -- Endowment of factor h</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total transfers to households</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Trf (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.government.eqTz">
+<code class="sig-prename descclassname">open_cge.government.</code><code class="sig-name descname">eqTz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tauz</span></em>, <em class="sig-param"><span class="n">pz</span></em>, <em class="sig-param"><span class="n">Z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/government.html#eqTz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.government.eqTz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Production tax revenue from each good.</p>
+<div class="math notranslate nohighlight">
+\[Tz_{i} =        au^{z}_{i} pz_{i}Z_{i}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tauz</strong> (<em>1D numpy array</em>) -- Ad valorem tax rate on good i</p></li>
+<li><p><strong>pz</strong> (<em>1D numpy array</em>) -- Price of output good i</p></li>
+<li><p><strong>Z</strong> (<em>1D numpy array</em>) -- Total output of good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Production tax revenue for each good i</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tz (1D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.government.eqXg">
+<code class="sig-prename descclassname">open_cge.government.</code><code class="sig-name descname">eqXg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">XXg</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/government.html#eqXg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.government.eqXg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Government expenditures on good i</p>
+<div class="math notranslate nohighlight">
+\[X^{g}_{i} = \mu_{i}XX_{g}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mu</strong> (<em>1D numpy array</em>) -- Government expenditure share parameters for
+each good i</p></li>
+<li><p><strong>XXg</strong> (<em>float</em>) -- Total government spending on goods/services</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Government expenditures on good i</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Xg (1D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="public_api.html">Open CGE API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="aggregates.html">Economic Aggregates Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrate.html">CGE Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execute.html">Model Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firms.html">Firm Equations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Government Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="household.html">Household Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleCGE.html">Simple CGE Model</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="public_api.html">Open CGE API</a><ul>
+      <li>Previous: <a href="firms.html" title="previous chapter">Firm Equations</a></li>
+      <li>Next: <a href="household.html" title="next chapter">Household Equations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/government.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>open_cge.simpleCGE &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for open_cge.simpleCGE</h1><div class="highlight"><pre>
+<span></span><span class="c1"># import packages</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">government</span> <span class="k">as</span> <span class="n">gov</span>
+<span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">household</span> <span class="k">as</span> <span class="n">hh</span>
+<span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">aggregates</span> <span class="k">as</span> <span class="n">agg</span>
+<span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">firms</span>
+
+
+<div class="viewcode-block" id="cge_system"><a class="viewcode-back" href="../../simpleCGE.html#open_cge.simpleCGE.cge_system">[docs]</a><span class="k">def</span> <span class="nf">cge_system</span><span class="p">(</span><span class="n">pvec</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function solves the system of equations that represents the</span>
+<span class="sd">    CGE model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pvec (Numpy array): Vector of prices</span>
+<span class="sd">        args (tuple): Tuple of arguments for equations</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        p_error (Numpy array): Errors from CGE equations</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Kd</span><span class="p">,</span> <span class="n">pd</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">er</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span>
+
+    <span class="n">py</span> <span class="o">=</span> <span class="n">pvec</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)]</span>
+    <span class="n">pf</span> <span class="o">=</span> <span class="n">pvec</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">):</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">)]</span>
+    <span class="n">py</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">py</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+    <span class="n">pf</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">firms</span><span class="o">.</span><span class="n">eqpm</span><span class="p">(</span><span class="n">er</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">pWm</span><span class="p">)</span>
+    <span class="n">pq</span> <span class="o">=</span> <span class="n">firms</span><span class="o">.</span><span class="n">eqpq</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pd</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">taum</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">eta</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">deltam</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">deltad</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">Kk</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">eqKk</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">lam</span><span class="p">,</span> <span class="n">pq</span><span class="p">)</span>
+    <span class="n">Kf</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">eqKf</span><span class="p">(</span><span class="n">Kk</span><span class="p">,</span> <span class="n">Kd</span><span class="p">)</span>
+    <span class="n">Fsh</span> <span class="o">=</span> <span class="n">firms</span><span class="o">.</span><span class="n">eqFsh</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Kf</span><span class="p">,</span> <span class="n">er</span><span class="p">)</span>
+    <span class="n">Td</span> <span class="o">=</span> <span class="n">gov</span><span class="o">.</span><span class="n">eqTd</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">taud</span><span class="p">,</span> <span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">)</span>
+    <span class="n">Trf</span> <span class="o">=</span> <span class="n">gov</span><span class="o">.</span><span class="n">eqTrf</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">tautr</span><span class="p">,</span> <span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">firms</span><span class="o">.</span><span class="n">eqY</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">ay</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">hh</span><span class="o">.</span><span class="n">eqF</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">pf</span><span class="p">)</span>
+    <span class="n">Sp</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">eqSp</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">ssp</span><span class="p">,</span> <span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">Fsh</span><span class="p">,</span> <span class="n">Trf</span><span class="p">)</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">hh</span><span class="o">.</span><span class="n">eqI</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">Sp</span><span class="p">,</span> <span class="n">Td</span><span class="p">,</span> <span class="n">Fsh</span><span class="p">,</span> <span class="n">Trf</span><span class="p">)</span>
+
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">eqpf</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="p">)</span>
+    <span class="n">pk_error</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">eqpk</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">Kk</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">Kk0</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="p">)</span>
+    <span class="n">py_error</span> <span class="o">=</span> <span class="n">firms</span><span class="o">.</span><span class="n">eqpy</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pf_error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pk_error</span><span class="p">)</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">pf_error</span><span class="p">)</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pf_error</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">pf_error</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pf_error</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">py_error</span> <span class="o">=</span> <span class="n">py_error</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pf_error</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="n">p_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">py_error</span><span class="p">,</span> <span class="n">pf_error</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">p_error</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../public_api.html">Open CGE API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

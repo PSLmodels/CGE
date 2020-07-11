@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Household Equations &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Simple CGE Model" href="simpleCGE.html" />
+    <link rel="prev" title="Government Equations" href="government.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="household-equations">
+<span id="household"></span><h1>Household Equations<a class="headerlink" href="#household-equations" title="Permalink to this headline">¶</a></h1>
+<p><strong>Household</strong></p>
+<div class="section" id="module-open_cge.household">
+<span id="open-cge-household"></span><h2>open_cge.household<a class="headerlink" href="#module-open_cge.household" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="open_cge.household.eqF">
+<code class="sig-prename descclassname">open_cge.household.</code><code class="sig-name descname">eqF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">py</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">pf</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/household.html#eqF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.household.eqF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factor demand.</p>
+<div class="math notranslate nohighlight">
+\[F_{h,j} = \beta_{h,j}\frac{py_{j}}{pf_{h}}Y_{j}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<em>2D numpy array</em>) -- Cost share parameter for factor h in
+production of good j</p></li>
+<li><p><strong>py</strong> (<em>1D array</em>) -- The price of value added for each good j</p></li>
+<li><p><strong>Y</strong> (<em>1D numpy array</em>) -- Value added for each good j</p></li>
+<li><p><strong>pf</strong> (<em>1D array</em>) -- Price of each factor h</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The demand for factor h used in the</dt><dd><p>production of good j</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>F (2D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.household.eqI">
+<code class="sig-prename descclassname">open_cge.household.</code><code class="sig-name descname">eqI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pf</span></em>, <em class="sig-param"><span class="n">Ff</span></em>, <em class="sig-param"><span class="n">Sp</span></em>, <em class="sig-param"><span class="n">Td</span></em>, <em class="sig-param"><span class="n">Fsh</span></em>, <em class="sig-param"><span class="n">Trf</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/household.html#eqI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.household.eqI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total income of consumers.</p>
+<div class="math notranslate nohighlight">
+\[I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) -- The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) -- Endowment of factor h</p></li>
+<li><p><strong>Sp</strong> (<em>float</em>) -- Total household savings</p></li>
+<li><p><strong>Td</strong> (<em>float</em>) -- Total direct tax revenue</p></li>
+<li><p><strong>= Repatriated profits</strong> (<em>Fsh</em>) -- </p></li>
+<li><p><strong>Trf</strong> (<em>float</em>) -- Total transfers to households</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Total income of consumers</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>I (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_cge.household.eqXp">
+<code class="sig-prename descclassname">open_cge.household.</code><code class="sig-name descname">eqXp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">I</span></em>, <em class="sig-param"><span class="n">pq</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/open_cge/household.html#eqXp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#open_cge.household.eqXp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demand for production good i by consumers.</p>
+<div class="math notranslate nohighlight">
+\[X^{p}_{i}= \frac{\alpha_{i}}{pq_{i}}I\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>1D numpy array</em>) -- Budget share of good i</p></li>
+<li><p><strong>I</strong> (<em>float</em>) -- Total income of consumers</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) -- price of the Armington good (domestic +
+imports) for each good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Demand for production good i by consumers</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Xp (1D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="public_api.html">Open CGE API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="aggregates.html">Economic Aggregates Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrate.html">CGE Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execute.html">Model Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firms.html">Firm Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="government.html">Government Equations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Household Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleCGE.html">Simple CGE Model</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="public_api.html">Open CGE API</a><ul>
+      <li>Previous: <a href="government.html" title="previous chapter">Government Equations</a></li>
+      <li>Next: <a href="simpleCGE.html" title="next chapter">Simple CGE Model</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/household.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

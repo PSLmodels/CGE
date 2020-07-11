@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>open_cge.aggregates &#8212; Open CGE 0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for open_cge.aggregates</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="eqSp"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqSp">[docs]</a><span></span><span class="k">def</span> <span class="nf">eqSp</span><span class="p">(</span><span class="n">ssp</span><span class="p">,</span> <span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">Fsh</span><span class="p">,</span> <span class="n">Trf</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Total household savings.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Sp = ssp \cdot \left(\sum_{h}pf_{h}Ff_{h} \\right)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ssp (float): Fixed household savings rate</span>
+<span class="sd">        pf (1D numpy array): The price of factor h</span>
+<span class="sd">        Ff (1D numpy array): Endowment of factor h</span>
+<span class="sd">        Fsh (float): Repatriated profits</span>
+<span class="sd">        Trf (float): Total transfers to households</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Sp (float): Total household savings</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Sp</span> <span class="o">=</span> <span class="n">ssp</span> <span class="o">*</span> <span class="p">((</span><span class="n">pf</span> <span class="o">*</span> <span class="n">Ff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">Fsh</span> <span class="o">+</span> <span class="n">Trf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Sp</span></div>
+
+
+<div class="viewcode-block" id="eqKd"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqKd">[docs]</a><span class="k">def</span> <span class="nf">eqKd</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Sp</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">pq</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Domestic capital holdings.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        K^{d} = \\frac{S^{p}}{g\sum_{i}\lambda_{i}pq_{i}}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (float): Exogenous long run growth rate of the economy</span>
+<span class="sd">        Sp (float): Total household savings</span>
+<span class="sd">        lam (1D numpy array): Fixed shares of investment for each good i</span>
+<span class="sd">        pq (1D numpy array): price of the Armington good (domestic +</span>
+<span class="sd">            imports) for each good i</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Kd (float): Domestically owned capital</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Kd</span> <span class="o">=</span> <span class="n">Sp</span> <span class="o">/</span> <span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="n">lam</span> <span class="o">*</span> <span class="n">pq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">Kd</span></div>
+
+
+<div class="viewcode-block" id="eqKf"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqKf">[docs]</a><span class="k">def</span> <span class="nf">eqKf</span><span class="p">(</span><span class="n">Kk</span><span class="p">,</span> <span class="n">Kd</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Foreign holdings of domestically used capital.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        K^{f} = KK - K^{d}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Kk (float): Total capital stock</span>
+<span class="sd">        Kd (float): Domestically owned capital</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Kf (float): Foreign owned domestic capital</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Kf</span> <span class="o">=</span> <span class="n">Kk</span> <span class="o">-</span> <span class="n">Kd</span>
+    <span class="k">return</span> <span class="n">Kf</span></div>
+
+
+<div class="viewcode-block" id="eqKk"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqKk">[docs]</a><span class="k">def</span> <span class="nf">eqKk</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">pq</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Capital market clearing equation.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        KK = \\frac{pf * Ff}{R \sum_{i}\lambda_{i}pq_{i}}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pf (1D numpy array): The price of factor h</span>
+<span class="sd">        Ff (1D numpy array): Endowment of factor h</span>
+<span class="sd">        R (float): Real return on capital</span>
+<span class="sd">        lam (1D numpy array): Fixed shares of investment for each good i</span>
+<span class="sd">        pq (1D numpy array): price of the Armington good (domestic +</span>
+<span class="sd">            imports) for each good i</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Kk (float): Total capital stock</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="c1">#    R = ( (pf[&#39;CAP&#39;] * Ff[&#39;CAP&#39;]) / Kk) / ((lam * pq).sum())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;kk inputs= &#39;</span><span class="p">,</span> <span class="n">pf</span><span class="p">[</span><span class="s1">&#39;CAP&#39;</span><span class="p">],</span> <span class="n">Ff</span><span class="p">[</span><span class="s1">&#39;CAP&#39;</span><span class="p">],</span> <span class="n">R</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">pq</span><span class="p">)</span>
+    <span class="n">Kk</span> <span class="o">=</span> <span class="p">(</span><span class="n">pf</span><span class="p">[</span><span class="s1">&#39;CAP&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ff</span><span class="p">[</span><span class="s1">&#39;CAP&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="p">((</span><span class="n">lam</span> <span class="o">*</span> <span class="n">pq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">Kk</span></div>
+
+
+<div class="viewcode-block" id="eqbop"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqbop">[docs]</a><span class="k">def</span> <span class="nf">eqbop</span><span class="p">(</span><span class="n">pWe</span><span class="p">,</span> <span class="n">pWm</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Sf</span><span class="p">,</span> <span class="n">Fsh</span><span class="p">,</span> <span class="n">er</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Balance of payments.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \sum_{i}pWe_{i}E_{i} + \\frac{Sf}{\\varepsilon} = \sum_{i}pWm_{i}M_{i} + \\frac{Fsh}{\\varepsilon}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pWe (1D numpy array): The world export price of good i in foreign</span>
+<span class="sd">            currency</span>
+<span class="sd">        pWm (1D numpy array): The world import price of good i in foreign</span>
+<span class="sd">            currency.</span>
+<span class="sd">        E (1D numpy array): Exports of good i</span>
+<span class="sd">        M (1D numpy array): Imports of good i</span>
+<span class="sd">        Sf (float): Total foreign savings</span>
+<span class="sd">        Fsh (float): Repatriated profits</span>
+<span class="sd">        er (float): The real exchange rate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bop_error (float): Error in balance of payments equation.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">bop_error</span> <span class="o">=</span> <span class="p">(</span><span class="n">pWe</span> <span class="o">*</span> <span class="n">E</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">Sf</span> <span class="o">/</span> <span class="n">er</span> <span class="o">-</span> <span class="p">((</span><span class="n">pWm</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">Fsh</span> <span class="o">/</span> <span class="n">er</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bop_error</span></div>
+
+
+<div class="viewcode-block" id="eqSf"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqSf">[docs]</a><span class="k">def</span> <span class="nf">eqSf</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">pq</span><span class="p">,</span> <span class="n">Kf</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Net foreign investment/savings.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Sf = g Kf \sum_{i} \lambda_{i} pq_{i}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (float): Exogenous long run growth rate of the economy</span>
+<span class="sd">        lam (1D numpy array): Fixed shares of investment for each good i</span>
+<span class="sd">        pq (1D numpy array): price of the Armington good (domestic +</span>
+<span class="sd">            imports) for each good i</span>
+<span class="sd">        Kf (float): Foreign owned domestic capital</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Sf (float): Total foreign savings (??)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Sf</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="n">Kf</span> <span class="o">*</span> <span class="p">(</span><span class="n">lam</span> <span class="o">*</span> <span class="n">pq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Sf</span></div>
+
+
+<div class="viewcode-block" id="eqpqerror"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqpqerror">[docs]</a><span class="k">def</span> <span class="nf">eqpqerror</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">Xp</span><span class="p">,</span> <span class="n">Xg</span><span class="p">,</span> <span class="n">Xv</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Resource constraint.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        Q(i) = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{i}X_{i,j}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Q (1D numpy array): The domestic supply of good Q(i), the Armington good</span>
+<span class="sd">        Xp (1D numpy array): Demand for production good i by consumers</span>
+<span class="sd">        Xg (1D numpy array): Government expenditures on good i</span>
+<span class="sd">        Xv (1D numpy array): Investment demand for each good i</span>
+<span class="sd">        X (2D numpy array): Demand for factor h used in the</span>
+<span class="sd">            production of good i</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pq_error (1D numpy array): Error in resource constraint for each good i</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">pq_error</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xp</span> <span class="o">+</span> <span class="n">Xg</span> <span class="o">+</span> <span class="n">Xv</span> <span class="o">+</span> <span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pq_error</span></div>
+
+
+<div class="viewcode-block" id="eqpf"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqpf">[docs]</a><span class="k">def</span> <span class="nf">eqpf</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">Ff0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Comparing labor demand from the model to that in the data.</span>
+
+<span class="sd">    ..math::</span>
+<span class="sd">        F_{h} - \sum_{i}F_{h,i}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        F (2D numpy array): The use of factor h in the production of</span>
+<span class="sd">            good i</span>
+<span class="sd">        Ff0 (float): Total demand for factor h from SAM</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pf_error (float): Error in aggregate labor demand</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">F1</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;CAP&#39;</span><span class="p">])</span>
+    <span class="n">Ff1</span> <span class="o">=</span> <span class="n">Ff0</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;CAP&#39;</span><span class="p">])</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">Ff1</span> <span class="o">-</span> <span class="n">F1</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pf_error</span></div>
+
+
+<div class="viewcode-block" id="eqpk"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqpk">[docs]</a><span class="k">def</span> <span class="nf">eqpk</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">Kk</span><span class="p">,</span> <span class="n">Kk0</span><span class="p">,</span> <span class="n">Ff0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Comparing capital demand in the model and data.</span>
+
+<span class="sd">    ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        F (2D numpy array): The use of factor h in the production of</span>
+<span class="sd">            good i</span>
+<span class="sd">        Kk (float): Total capital stock</span>
+<span class="sd">        Kk0 (float): Total capital stock from SAM</span>
+<span class="sd">        Ff0 (float): Total labor demand from SAM</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pk_error (float): Error in aggregate capital demand</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Fcap</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;CAP&#39;</span><span class="p">]]</span>
+    <span class="n">pk_error</span> <span class="o">=</span> <span class="n">Fcap</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">Kk</span> <span class="o">/</span> <span class="n">Kk0</span> <span class="o">*</span> <span class="n">Ff0</span><span class="p">[</span><span class="s1">&#39;CAP&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pk_error</span></div>
+
+
+<div class="viewcode-block" id="eqXXv"><a class="viewcode-back" href="../../aggregates.html#open_cge.aggregates.eqXXv">[docs]</a><span class="k">def</span> <span class="nf">eqXXv</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Kk</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Total investment.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        XXv = g \cdot KK</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (float): Exogenous long run growth rate of the economy</span>
+<span class="sd">        Kk (float): Total capital stock</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        XXv (float): Total investment.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">XXv</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="n">Kk</span>
+    <span class="k">return</span> <span class="n">XXv</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Open CGE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Contributor Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../public_api.html">Open CGE API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jason DeBacker and Dinar Prihardini.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
