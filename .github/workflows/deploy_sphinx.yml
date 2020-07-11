@@ -19,8 +19,6 @@ jobs:
           environment-file: environment.yml
           python-version: 3.7
           auto-activate-base: false
-          # environment-file: environment.yml
-          # activate-environment: cge_env
 
       - name: Install and Build # install Sphinx and build docs
         shell: bash -l {0}
@@ -28,9 +26,7 @@ jobs:
           conda install sphinx
           conda list
           pip install -e .
-          ls
           cd docs
-          ls
           make html
 
       - name: Deploy
