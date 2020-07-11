@@ -15,18 +15,19 @@ jobs:
       - name: Setup Miniconda
         uses: goanpeca/setup-miniconda@v1
         with:
-          auto-update-conda: true
-          auto-activate-base: false
-          miniconda-version: 'latest'
+          activate-environment: cge_env
+          environment-file: environment.yml
           python-version: 3.7
+          auto-activate-base: false
           # environment-file: environment.yml
           # activate-environment: cge_env
 
       - name: Install and Build # install Sphinx and build docs
+      - shell: bash -l {0}
         run: |
           conda install sphinx
           conda list
-          sphinx-build --version
+          pip install -e .
           ls
           cd docs
           ls
