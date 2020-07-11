@@ -22,7 +22,7 @@ jobs:
           # environment-file: environment.yml
           # activate-environment: cge_env
 
-      - name: Install and Build # install Sphinx and build docs
+      # - name: Install and Build # install Sphinx and build docs
       - shell: bash -l {0}
         run: |
           conda install sphinx
