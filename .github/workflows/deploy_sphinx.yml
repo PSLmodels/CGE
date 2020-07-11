@@ -19,14 +19,11 @@ jobs:
           auto-activate-base: false
           miniconda-version: 'latest'
           python-version: 3.7
-          environment-file: environment.yml
-          activate-environment: cge_env
+          # environment-file: environment.yml
+          # activate-environment: cge_env
 
       - name: Install and Build # install Sphinx and build docs
         run: |
-          conda init zsh
-          conda activate ogusa-dev
-          pip install -e .
           conda install sphinx
           conda list
           sphinx-build --version
