@@ -1,0 +1,24 @@
+{
+    "name": "Open CGE",
+    "img": "",
+    "banner_title": "Open CGE",
+    "banner_subtitle": "A computational general equilibrium model for policy analysis",
+    "detailed_description": "An open source computational general equilibrium model for policy analysis",
+    "policy_area": "Policy Analysis",
+    "geography": "Any geographic region",
+    "language": "Python",
+    "maintainers": [
+        {
+            "name": "Jason DeBacker",
+            "image": "https://github.com/jdebacker.png",
+            "link": "https://github.com/jdebacker"
+        }
+    ],
+    "links": {
+      "code_repository": "https://github.com/PSLmodels/CGE",
+      "user_documentation": "",
+      "contributor_documentation": "",
+      "webapp": "",
+      "recent_changes": "https://github.com/PSLmodels/CGE/releases"
+    }
+}
