@@ -1,5 +1,6 @@
 # import packages
 import numpy as np
+import pandas
 from pandas import Series, DataFrame
 from open_cge import government as gov
 from open_cge import household as hh
@@ -42,7 +43,7 @@ def cge_system(pvec, args):
     pk_error = agg.eqpk(F, Kk, d.Kk0, d.Ff0)
     py_error = firms.eqpy(p.b, F, p.beta, Y)
 
-    pf_error = pf_error.append(pk_error)
+    pf_error = pandas.concat((pf_error, pk_error))
     pf_error = DataFrame(pf_error)
     pf_error = pf_error.T
     pf_error = DataFrame(pf_error, columns=list(h))
