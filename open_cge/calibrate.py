@@ -37,7 +37,7 @@ class model_data(object):
         self.Trf0 = DataFrame(sam, index=['HOH'], columns=['GOV'])
         # production tax
         self.Tz0 = DataFrame(sam, index=['ACT'], columns=list(ind))
-         # import tariff
+        # import tariff
         self.Tm0 = DataFrame(sam, index=['IDT'], columns=list(ind))
 
         # the h-th factor input by the j-th firm
