@@ -176,7 +176,6 @@ def eqpk(F, Kk, Kk0, Ff0):
 
     ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0
 
-
     Args:
         F (2D numpy array): The use of factor h in the production of
             good i

@@ -74,6 +74,8 @@ class parameters(object):
     This function sets the values of parameters used in the model.
 
     Args:
+        d (data class): Class of data for use in CGE model
+        ind (list): List of industry names
 
     Returns:
         parameters (parameters class): Class of parameters for use in CGE model.

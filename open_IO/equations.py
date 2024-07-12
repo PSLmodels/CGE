@@ -5,7 +5,7 @@ This module defines the equations that characterize the CGE model.
 
 def eqpy(pf, beta):
     '''
-    Price of value added
+    Equation determining the price of value added
 
     .. math::
         py_{j} = \sum_{h}F_{h,j}{\\beta_{h,j}}
@@ -23,10 +23,9 @@ def eqpy(pf, beta):
     return py
 
 
-
 def eqX(ax, Z):
     '''
-    Demand for intermediate inputs.
+    Equation representing the demand for intermediate inputs.
 
     .. math::
         X_{i,j} = ax_{i,j}Z_{j}
@@ -46,7 +45,7 @@ def eqX(ax, Z):
 
 def eqY(ay, Z):
     '''
-    Value added.
+    Equation representing the production of value added.
 
     .. math::
         Y_{j} = ay_{j}Z_{j}
@@ -65,7 +64,7 @@ def eqY(ay, Z):
 
 def eqpz(ay, ax, py, pq):
     '''
-    Domestic Production/Output prices.
+    Equation representing domestic Production/Output prices.
 
     .. math::
         pz_{j} = ay_{j}py_{j} + \sum_{i}ax_{i,j}pq_{i}
@@ -87,7 +86,7 @@ def eqpz(ay, ax, py, pq):
 
 def eqTd(taud, pf, Ff):
     '''
-    Direct tax revenue.
+    Equation defining total direct tax revenue.
 
     .. math::
         Td = \tau d \sum_{h}pf_{h}FF_{h}
@@ -106,7 +105,7 @@ def eqTd(taud, pf, Ff):
 
 def eqTrf(tautr, pf, Ff):
     '''
-    Total transfers to households.
+    Equation defining total transfers to households.
 
     .. math::
         Trf = \tau^{tr} \sum_{h}pf_{h}FF_{h}
@@ -125,7 +124,7 @@ def eqTrf(tautr, pf, Ff):
 
 def eqTz(tauz, pz, Z):
     '''
-    Production tax revenue from each commodity.
+    Equation representing production tax revenue from each commodity.
 
     .. math::
         Tz_{j} = \tau^{z}_{j} pz_{j}Z_{j}
@@ -144,7 +143,7 @@ def eqTz(tauz, pz, Z):
 
 def eqTm(taum, pm, M):
     '''
-    Tariff revenue from each commodity.
+    Equation representing tariff revenue from each commodity.
 
     .. math::
         Tm_{j} = \tau^{m}_{j} pm_{j}M_{j}
@@ -163,7 +162,7 @@ def eqTm(taum, pm, M):
 
 def eqXg(mu, XXg):
     '''
-    Government expenditures on commodity j
+    Equation representing government expenditures on commodity j
 
     .. math::
         X^{g}_{j} = \mu_{j}XX_{g}
@@ -182,7 +181,7 @@ def eqXg(mu, XXg):
 
 def eqXv(lam, XXv):
     '''
-    Investment demand for each good j
+    Equation representing investment demand for each good j
 
     .. math::
         Xv_{j} = \lambda_{j}XXv
@@ -200,7 +199,7 @@ def eqXv(lam, XXv):
 
 def eqXXv(g, Kk):
     '''
-    Total investment.
+    Equation representing total investment.
 
     .. math::
         XXv = g \cdot KK
@@ -218,7 +217,7 @@ def eqXXv(g, Kk):
 
 def eqSp(ssp, pf, Ff, Fsh, Trf):
     '''
-    Total household savings.
+    Equation representing total household savings.
 
     .. math::
         Sp = ssp \cdot \left(\sum_{h}pf_{h}FF_{h} \\right)
@@ -239,7 +238,7 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
 
 def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
     '''
-    Total government savings.
+    Equation representing total government savings.
 
     .. math::
         Sg = Td + \sum_{j}Tz_{j} + \sum_{j}Tm_{j} - (Trf + \sum_{j}Xg_{j})
@@ -263,7 +262,7 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
 
 def eqFsh(R, Kf, er):
     '''
-    Domestic profits that are repatriated to foreign owners of capital.
+    Equation representing domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
         FSH = R \cdot KF \cdot \\varepsilon
@@ -282,7 +281,7 @@ def eqFsh(R, Kf, er):
 
 def eqKd(g, Sp, lam, pq):
     '''
-    Domestic capital holdings.
+    Equation representing domestic capital holdings.
 
     .. math::
         K^{d} = \\frac{S^{p}}{g\sum_{j}\lambda_{j}pq_{j}}
@@ -302,7 +301,7 @@ def eqKd(g, Sp, lam, pq):
 
 def eqKf(Kk, Kd):
     '''
-    Foreign holdings of domestically used capital.
+    Equation representing foreign holdings of domestically used capital.
 
     .. math::
         K^{f} = KK - K^{d}
@@ -320,7 +319,7 @@ def eqKf(Kk, Kd):
 
 def eqKk(pf, Ff, R, lam, pq):
     '''
-    Capital market clearing equation.
+    Equation describing the capital market clearing equation.
 
     .. math::
         KK = \\frac{pf * FF}{R \sum_{j}\lambda_{j}pq_{j}}
@@ -342,7 +341,7 @@ def eqKk(pf, Ff, R, lam, pq):
 
 def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
     '''
-    Demand for production good i by consumers.
+    Equation for demand for production good i by consumers.
 
     .. math::
         X^{p}_{i}= \\frac{}\\alpha_{i}}{pq_{i}}\left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
@@ -366,7 +365,7 @@ def eqXp(alpha, pf, Ff, Sp, Td, Fsh, Trf, pq):
 
 def eqpe(er, pWe):
     '''
-    Export prices.
+    Equation defining export prices.
 
     .. math::
         pe_{i} = \\varepsilon \cdot pWe_{i}
@@ -384,7 +383,7 @@ def eqpe(er, pWe):
 
 def eqpm(er, pWm):
     '''
-    Import prices.
+    Equation defining import prices.
 
     .. math::
         pm_{i} = \\varepsilon \cdot pWm_{i}
@@ -626,6 +625,22 @@ def eqpq(deltam, taum, tauz, pm, pz, pq):
 
 
 def eqpqbar(deltam, taum, tauz, pm, pz):
+    '''
+    Equation describing the price of the Armington good.
+
+    .. math::
+        pq_{j} = deltam_{j}pm_{j}(1+\\tau^{m}_{i}) + (1-deltam_{j})pz_{j}(1+\\tau^{z}_{i})
+
+    Args:
+        deltam (1D numpy array): import propensity for good j
+        tauz (1D numpy array): Ad valorem tax rate on commodity i
+        taum (1D numpy array): Tariff rate on commodity i
+        pm (1D numpy array): The price of commodity i imports in domestic currency.
+        pz (1D numpy array): price of output good i
+
+    Returns:
+        pq (1D numpy array): price of the Armington good (domestic + imports) for each good i
+    '''
     pq = deltam * pm * (1 + taum) + (1 - deltam) * pz * (1 + tauz)
     return pq
 

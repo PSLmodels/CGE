@@ -10,12 +10,14 @@ class model_data(object):
 
     Args:
         sam (DataFrame): DataFrame containing social and economic data
+        h (list): List of factors of production
+        ind (list): List of industries
 
     Returns:
         model_data (data class): Data used in the CGE model
     '''
 
-    def __init__(self, sam, h, u, ind):
+    def __init__(self, sam, h, ind):
         # foreign saving
         self.Sf0 = DataFrame(sam, index=['INV'], columns=['EXT'])
         # private saving
@@ -109,6 +111,8 @@ class parameters(object):
     This function sets the values of parameters used in the model.
 
     Args:
+        d (data class): Class of data for use in CGE model
+        ind (list): List of industries
 
     Returns:
         parameters (parameters class): Class of parameters for use in

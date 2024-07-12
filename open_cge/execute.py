@@ -6,8 +6,7 @@ import os
 from open_cge import government as gov
 from open_cge import household as hh
 from open_cge import aggregates as agg
-from open_cge import firms
-from open_cge import calibrate
+from open_cge import firms, calibrate
 from open_cge import simpleCGE as cge
 
 # load social accounting matrix
@@ -15,7 +14,7 @@ current_path = os.path.abspath(os.path.dirname(__file__))
 sam_path = os.path.join(current_path, 'SAM.xlsx')
 sam = pd.read_excel(sam_path, index_col=0, header=0)
 
-# declare sets
+# declare sets of variables
 u = ('AGR', 'OIL', 'IND', 'SER', 'LAB', 'CAP', 'LAND', 'NTR',
      'DTX', 'IDT', 'ACT', 'HOH', 'GOV', 'INV', 'EXT')
 ind = ('AGR', 'OIL', 'IND', 'SER')
@@ -33,9 +32,10 @@ def check_square():
     if not sam_small.shape[0] == sam_small.shape[1]:
         raise ValueError(f"SAM is not square. It has {sam_small.shape[0]} rows and {sam_small.shape[0]} columns")
 
+
 def row_total():
     '''
-    this function tests whether the row sums
+    This function tests whether the row sums
     of the SAM equal the expected value.
     '''
     sam_small = sam.iloc[:, :-3]
@@ -44,9 +44,10 @@ def row_total():
     row_sum = pd.Series(row_sum)
     return row_sum
 
+
 def col_total():
     '''
-    this function tests whether column sums
+    This function tests whether column sums
     of the SAM equal the expected values.
     '''
     sam_small = sam.iloc[:, :-3]
@@ -55,9 +56,10 @@ def col_total():
     col_sum = pd.Series(col_sum)
     return col_sum
 
+
 def row_col_equal():
     '''
-    this function tests whether row sums
+    This function tests whether row sums
     and column sums of the SAM are equal.
     '''
     sam_small = sam.iloc[:, :-3]
@@ -66,9 +68,10 @@ def row_col_equal():
     col_sum = sam_small.sum(axis=1)
     np.testing.assert_allclose(row_sum, col_sum)
 
+
 def runner():
     '''
-    this function runs the cge model
+    This function solves the CGE model
     '''
 
     # solve cge_system

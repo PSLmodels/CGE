@@ -14,7 +14,7 @@ import calibrate
 sam_path = os.path.join(current_path, 'SAM.xlsx')
 sam = pd.read_excel(sam_path)
 
-# declare sets
+# declare sets of variables
 u = ('AGR', 'OIL', 'IND', 'SER', 'LAB', 'CAP', 'LAND', 'NTR',
      'DTX', 'IDT', 'ACT', 'HOH', 'GOV', 'INV', 'EXT')
 ind = ('AGR', 'OIL', 'IND', 'SER')
@@ -35,7 +35,7 @@ def io_system(pvec, args):
         p_error (Numpy array): Errors from IO equations
     '''
     (p, d, ind, h, er, pf) = args
-	
+
     pq = pvec[0:len(ind)]
     pq = Series(pq, index=list(ind))
     pm = eq.eqpm(er, d.pWm)
@@ -43,7 +43,7 @@ def io_system(pvec, args):
     pz = eq.eqpz(p.ay, p.ax, py, pq)
     pq_error = eq.eqpq(p.deltam, p.taum, p.tauz, pm, pz, pq)
     pq_error = pq_error.values
-	
+
     return pq_error
 
 
@@ -88,7 +88,7 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
     pprime = results.x
     pqprime = pprime[0:len(ind)]
     pqprime = Series(pqprime, index=list(ind))
-	
+
     pvec = pprime
     pq_error = io_system(pvec, io_args)
 
@@ -96,10 +96,10 @@ while (dist > tpi_tol) & (tpi_iter < tpi_max_iter):
     print('Distance at iteration ', tpi_iter, ' is ', dist)
 
 
-pm = eq.eqpm(er, d.pWm)	
+pm = eq.eqpm(er, d.pWm)
 py = eq.eqpy(pf, p.beta)
 pz = eq.eqpz(p.ay, p.ax, py, pqprime)
 pqbar = eq.eqpqbar(p.deltam, p.taum, p.tauz, pm, pz)
-   
+
 print('Model solved, pq = ', pqbar)
 
