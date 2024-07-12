@@ -128,11 +128,9 @@ def runner():
         Qprime = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
         pdprime = firms.eqpd(p.gamma, p.deltam, p.eta, Qprime, pq, D)
         Zprime = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
-        #    Zprime = Zprime.iloc[0]
         Kdprime = agg.eqKd(d.g, Sp, p.lam, pq)
         Ffprime = d.Ff0
-        # Ffprime['CAP'] = R * d.Kk * (p.lam * pq).sum() / pf[1]
-        Ffprime['CAP'] = R * Kk * (p.lam * pq).sum() / pfprime[1]
+        Ffprime['CAP'] = R * Kk * (p.lam * pq).sum() / pfprime.iloc[1]
 
         dist = (((Zbar - Zprime) ** 2) ** (1 / 2)).sum()
         print('Distance at iteration ', tpi_iter, ' is ', dist)
@@ -144,7 +142,7 @@ def runner():
 
         Q = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
 
-    print('Model solved, Q = ', Q)
+    print('Model solved, Q = ', Q.to_markdown())
 
     return Q
 
