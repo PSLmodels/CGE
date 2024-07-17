@@ -19,7 +19,7 @@ jobs:
           miniforge-variant: Mambaforge
           activate-environment: cge_env
           environment-file: environment.yml
-          python-version: "3.12"
+          python-version: "3.11"
           auto-activate-base: false
 
       - name: Build # Build Jupyter Book
