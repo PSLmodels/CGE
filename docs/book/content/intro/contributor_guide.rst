@@ -17,7 +17,7 @@ Setup Python
 -------------
 
 Open CGE is written in the Python programming language.
-Download and install the free Anaconda distribution of Python 3.6 from
+Download and install the free Anaconda distribution of Python 3.10+ from
 `Anaconda`_.  You must do this even if you already have
 Python installed on your computer because the Anaconda distribution
 contains additional Python packages that are used by Open CGE (many of

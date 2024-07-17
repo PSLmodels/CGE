@@ -1,9 +1,9 @@
 def eqF(beta, py, Y, pf):
-    '''
+    r"""
     Factor demand.
 
     .. math::
-        F_{h,j} = \\beta_{h,j}\\frac{py_{j}}{pf_{h}}Y_{j}
+        F_{h,j} = \beta_{h,j}\frac{py_{j}}{pf_{h}}Y_{j}
 
     Args:
         beta (2D numpy array): Cost share parameter for factor h in
@@ -15,17 +15,17 @@ def eqF(beta, py, Y, pf):
     Returns:
         F (2D numpy array): The demand for factor h used in the
             production of good j
-    '''
+    """
     F = beta.div(pf, axis=0) * Y * py
     return F
 
 
 def eqI(pf, Ff, Sp, Td, Fsh, Trf):
-    '''
+    r"""
     Total income of consumers.
 
     .. math::
-        I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
+        I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)
 
     Args:
         pf (1D numpy array): The price of factor h
@@ -37,17 +37,17 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
 
     Returns:
         I (float): Total income of consumers
-    '''
+    """
     I = (pf * Ff).sum() - Sp - Td - Fsh + Trf
     return I
 
 
 def eqXp(alpha, I, pq):
-    '''
+    r"""
     Demand for production good i by consumers.
 
     .. math::
-        X^{p}_{i}= \\frac{\\alpha_{i}}{pq_{i}}I
+        X^{p}_{i}= \frac{\alpha_{i}}{pq_{i}}I
 
     Args:
         alpha (1D numpy array): Budget share of good i
@@ -57,6 +57,6 @@ def eqXp(alpha, I, pq):
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
-    '''
+    """
     Xp = alpha.div(pq, axis=0) * I
     return Xp

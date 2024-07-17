@@ -8,6 +8,7 @@ from pandas.testing import assert_frame_equal
 from numpy.testing import assert_allclose
 from open_cge import aggregates
 
+
 # Total household saving
 def test_eqSp():
     ssp = 0.1
@@ -31,6 +32,7 @@ def test_Kd():
     test_Kd = aggregates.eqKd(g, Sp, lam, pq)
     assert math.isclose(expected_Kd, test_Kd)
 
+
 # Foreign holdings of domestically used capital
 def test_eqKf():
     Kk = 110.0
@@ -39,10 +41,11 @@ def test_eqKf():
     test_Kf = aggregates.eqKf(Kk, Kd)
     assert expected_Kf == test_Kf
 
+
 # Capital market clearing equation
 def test_eqKk():
-    pf = pd.Series([5, 2], index = ['LAB','CAP'])
-    Ff = pd.Series([10, 20], index = ['LAB', 'CAP'])
+    pf = pd.Series([5, 2], index=["LAB", "CAP"])
+    Ff = pd.Series([10, 20], index=["LAB", "CAP"])
     R = 0.02
     lam = np.array([0.3, 0.2, 0.1, 0.4])
     assert sum(lam) == 1
@@ -51,9 +54,10 @@ def test_eqKk():
     test_Kk = aggregates.eqKk(pf, Ff, R, lam, pq)
     assert_allclose(expected_Kk, test_Kk)
 
+
 # Balance of payments
 def test_eqbop():
-    pWe = np.array( [2, 3, 6, 7])
+    pWe = np.array([2, 3, 6, 7])
     pWm = np.array([4, 6, 2, 5])
     E = np.array([5, 8, 10, 12])
     M = np.array([10, 6, 12, 15])
@@ -63,6 +67,7 @@ def test_eqbop():
     expected_bop_error = 0.0
     test_bop_error = aggregates.eqbop(pWe, pWm, E, M, Sf, Fsh, er)
     assert expected_bop_error == test_bop_error
+
 
 # Net foreign investment/savings
 def test_eqSf():
@@ -76,6 +81,7 @@ def test_eqSf():
     print(test_Sf)
     assert_allclose(expected_Sf, test_Sf)
 
+
 # Resource constraint
 def test_eqpqerror():
     Q = np.array([30, 40, 50, 60])
@@ -88,12 +94,12 @@ def test_eqpqerror():
     assert_allclose(expected_pq_error, test_pq_error)
 
 
-
 # Comparing labor supply from the model to that in the data
 def test_eqpf():
-    F = pd.DataFrame.from_dict({'LAB': [10, 40], 'CAP': [30, 20]},
-    orient = 'index')
-    Ff0 = pd.Series(50, index = ['LAB', 'CAP'])
+    F = pd.DataFrame.from_dict(
+        {"LAB": [10, 40], "CAP": [30, 20]}, orient="index"
+    )
+    Ff0 = pd.Series(50, index=["LAB", "CAP"])
     expected_pf_error = 0
     test_pf_error = aggregates.eqpf(F, Ff0)
     assert_allclose(expected_pf_error, test_pf_error)
@@ -101,11 +107,12 @@ def test_eqpf():
 
 # Comparing capital demand in the model and data
 def test_eqpk():
-    F = pd.DataFrame.from_dict({'LAB': [10, 40], 'CAP': [30, 20]},
-    orient = 'index')
+    F = pd.DataFrame.from_dict(
+        {"LAB": [10, 40], "CAP": [30, 20]}, orient="index"
+    )
     Kk = 50
-    Ff0 = Ff0 = pd.Series(50, index = ['LAB', 'CAP'])
-    Kk0 = Ff0 = pd.Series(50, index = ['CAP'])
+    Ff0 = Ff0 = pd.Series(50, index=["LAB", "CAP"])
+    Kk0 = Ff0 = pd.Series(50, index=["CAP"])
     expected_pk_error = 0
     test_pk_error = aggregates.eqpk(F, Kk, Ff0, Kk0)
     assert_allclose(expected_pk_error, test_pk_error)

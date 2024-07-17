@@ -1,5 +1,5 @@
 def eqTd(taud, pf, Ff):
-    '''
+    r"""
     Direct tax revenue.
 
     .. math::
@@ -12,13 +12,13 @@ def eqTd(taud, pf, Ff):
 
     Returns:
         Td (float): Total direct tax revenue.
-    '''
+    """
     Td = taud * (pf * Ff).sum()
     return Td
 
 
 def eqTrf(tautr, pf, Ff):
-    '''
+    r"""
     Total transfers to households.
 
     .. math::
@@ -31,13 +31,13 @@ def eqTrf(tautr, pf, Ff):
 
     Returns:
         Trf (float): Total transfers to households
-    '''
-    Trf = tautr * pf['LAB'] * Ff['LAB']
+    """
+    Trf = tautr * pf["LAB"] * Ff["LAB"]
     return Trf
 
 
 def eqTz(tauz, pz, Z):
-    '''
+    r"""
     Production tax revenue from each good.
 
     .. math::
@@ -50,13 +50,13 @@ def eqTz(tauz, pz, Z):
 
     Returns:
         Tz (1D numpy array): Production tax revenue for each good i
-    '''
+    """
     Tz = tauz * pz * Z
     return Tz
 
 
 def eqTm(taum, pm, M):
-    '''
+    r"""
     Tariff revenue from each good i.
 
     .. math::
@@ -69,13 +69,13 @@ def eqTm(taum, pm, M):
 
     Returns:
         Tm (1D numpy array): Tariff revenue for each good i
-    '''
+    """
     Tm = taum * pm * M
     return Tm
 
 
 def eqXg(mu, XXg):
-    '''
+    r"""
     Government expenditures on good i
 
     .. math::
@@ -88,13 +88,13 @@ def eqXg(mu, XXg):
 
     Returns:
         Xg (1D numpy array): Government expenditures on good i
-    '''
+    """
     Xg = mu * XXg
     return Xg
 
 
 def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
-    '''
+    r"""
     Total government savings.
 
     .. math::
@@ -113,6 +113,6 @@ def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
 
     Returns:
         Sg (float): Total government savings
-    '''
+    """
     Sg = Td + Tz.sum() + Tm.sum() - (Trf + XXg * (mu * pq).sum())
     return Sg

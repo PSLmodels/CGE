@@ -7,6 +7,7 @@ from pandas.testing import assert_frame_equal
 from open_cge import firms
 from numpy.testing import assert_allclose
 
+
 # Test production function output
 def test_eqpy():
     b = np.array([0.6, 0.4])
@@ -16,7 +17,8 @@ def test_eqpy():
     Y = np.array([3, 2])
     expected_py_error = np.array([0.835533, 0.084917])
     test_py_error = firms.eqpy(b, F, beta, Y)
-    assert_allclose(expected_py_error, test_py_error, rtol = 1e-5)
+    assert_allclose(expected_py_error, test_py_error, rtol=1e-5)
+
 
 # Test demand for intermediate inputs
 def test_eqX():
@@ -27,6 +29,7 @@ def test_eqX():
     test_X = firms.eqX(ax, Z)
     assert_allclose(expected_X, test_X)
 
+
 # Test value added
 def test_eqY():
     ay = np.array([0.1, 0.3])
@@ -35,15 +38,17 @@ def test_eqY():
     test_Y = firms.eqY(ay, Z)
     assert_allclose(expected_Y, test_Y)
 
+
 # Test output prices
 def test_eqpz():
-    ay =  np.array([0.2, 0.8])
+    ay = np.array([0.2, 0.8])
     ax = np.array([[0.4, 0.6], [0.6, 0.4]])
     py = np.array([5, 7])
     pq = np.array([12, 16])
     expected_pz = np.array([13, 21.6])
     test_pz = firms.eqpz(ay, ax, py, pq)
     assert_allclose(expected_pz, test_pz)
+
 
 # Test investment demand for each good
 def test_eqXv():
@@ -52,6 +57,7 @@ def test_eqXv():
     expected_Xv = np.array([40, 60])
     test_Xv = firms.eqXv(lam, XXv)
     assert_allclose(expected_Xv, test_Xv)
+
 
 # Test repatriated profits
 def test_eqFsh():
@@ -62,6 +68,7 @@ def test_eqFsh():
     test_Fsh = firms.eqFsh(R, Kf, er)
     assert_allclose(espected_Fsh, test_Fsh)
 
+
 # Test export prices
 def test_eqpe():
     er = 2.0
@@ -70,6 +77,7 @@ def test_eqpe():
     test_pe = firms.eqpe(er, pWe)
     assert_allclose(expected_pe, test_pe)
 
+
 # Test import prices
 def test_eqpm():
     er = 2.0
@@ -77,6 +85,7 @@ def test_eqpm():
     expected_pm = np.array([6, 14, 26, 44])
     test_pm = firms.eqpm(er, pWm)
     assert_allclose(expected_pm, test_pm)
+
 
 # Test CES production for importing firms
 def test_eqQ():
@@ -120,6 +129,7 @@ def test_eqD():
     test_D = firms.eqD(gamma, deltad, eta, Q, pq, pd)
     assert_allclose(expected_D, test_D)
 
+
 # Test price of domestically produced goods from importers
 def test_eqpd():
     gamma = np.array([0.8, 0.5])
@@ -144,6 +154,7 @@ def test_eqZ():
     expected_Z = np.array([125.572867, 64.176968])
     test_Z = firms.eqZ(theta, xie, xid, phi, E, D)
     assert_allclose(expected_Z, test_Z)
+
 
 # Test supply of exports
 def test_eqE():

@@ -18,6 +18,7 @@ def test_eqTd():
     test_Td = government.eqTd(taud, pf, Ff)
     assert_allclose(expected_Td, test_Td)
 
+
 # Total transfers to households
 
 
@@ -30,6 +31,7 @@ def test_eqTz():
     test_Tz = government.eqTz(tauz, pz, Z)
     assert_allclose(expected_Tz, test_Tz)
 
+
 # Tariff revenue from each commodity
 def test_eqTm():
     taum = np.array([0.05, 0.09, 0.10, 0.15])
@@ -39,6 +41,7 @@ def test_eqTm():
     test_Tm = government.eqTm(taum, pm, M)
     assert_allclose(expected_Tm, test_Tm)
 
+
 # Government expenditures on commodity j
 def test_eqXg():
     mu = np.array([0.2, 0.4, 0.3, 0.1])
@@ -46,6 +49,7 @@ def test_eqXg():
     expected_Xg = np.array([20, 40, 30, 10])
     test_Xg = government.eqXg(mu, XXg)
     assert_allclose(expected_Xg, test_Xg)
+
 
 # Total government savings
 def test_eqSg():

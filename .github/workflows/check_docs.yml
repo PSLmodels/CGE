@@ -1,0 +1,33 @@
+name: Check that docs build
+on:
+  pull_request:
+    paths:
+      - './docs/*'
+      - '**.md'
+      - './open_cge/**.py'
+
+jobs:
+  build-and-deploy:
+    if: github.repository == 'PSLmodels/CGE'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-variant: Mambaforge
+          activate-environment: cge_env
+          environment-file: environment.yml
+          python-version: "3.11"
+          auto-activate-base: false
+
+      - name: Build # Build Jupyter Book
+        shell: bash -l {0}
+        run: |
+          pip install -e .
+          python -m ipykernel install --user --name=cge_env
+          jb build ./docs/book

@@ -1,7 +1,7 @@
 name: Build and Deploy Sphinx docs
 on:
   push:
-    branches:    
+    branches:
       - master
 jobs:
   build-and-deploy:
@@ -9,30 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
 
       - name: Setup Miniconda
-        uses: goanpeca/setup-miniconda@v1
+        uses: conda-incubator/setup-miniconda@v3
         with:
+          miniforge-variant: Mambaforge
           activate-environment: cge_env
           environment-file: environment.yml
-          python-version: 3.7
+          python-version: "3.11"
           auto-activate-base: false
 
-      - name: Install and Build # install Sphinx and build docs
+      - name: Build # Build Jupyter Book
         shell: bash -l {0}
         run: |
-          conda install sphinx
-          conda list
           pip install -e .
-          cd docs
-          make html
+          python -m ipykernel install --user --name=cge_env
+          jb build ./docs/book
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: docs/build/html # The folder the action should deploy.
+          FOLDER: docs/book/_build/html # The folder the action should deploy.
