@@ -1,0 +1,34 @@
+name: Check that docs build
+on:
+  pull_request:
+    paths:
+      - './docs/*'
+      - '**.md'
+      - './open_cge/**.py'
+
+jobs:
+  build-and-deploy:
+    if: github.repository == 'PSLmodels/CGE'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: cge_env
+          environment-file: environment.yml
+          python-version: 3.7
+          auto-activate-base: false
+
+      - name: Install and Build # install Sphinx and build docs
+        shell: bash -l {0}
+        run: |
+          conda install sphinx
+          conda list
+          pip install -e .
+          cd docs
+          make html
