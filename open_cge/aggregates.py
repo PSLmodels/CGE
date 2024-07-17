@@ -3,7 +3,7 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
     Total household savings.
 
     .. math::
-        Sp = ssp \cdot \left(\sum_{h}pf_{h}Ff_{h} \\right)
+        Sp = ssp \cdot \left(\sum_{h}pf_{h}Ff_{h} \right)
 
     Args:
         ssp (float): Fixed household savings rate
@@ -24,7 +24,7 @@ def eqKd(g, Sp, lam, pq):
     Domestic capital holdings.
 
     .. math::
-        K^{d} = \\frac{S^{p}}{g\sum_{i}\lambda_{i}pq_{i}}
+        K^{d} = \frac{S^{p}}{g\sum_{i}\lambda_{i}pq_{i}}
 
     Args:
         g (float): Exogenous long run growth rate of the economy
@@ -63,7 +63,7 @@ def eqKk(pf, Ff, R, lam, pq):
     Capital market clearing equation.
 
     .. math::
-        KK = \\frac{pf * Ff}{R \sum_{i}\lambda_{i}pq_{i}}
+        KK = \frac{pf * Ff}{R \sum_{i}\lambda_{i}pq_{i}}
 
     Args:
         pf (1D numpy array): The price of factor h
@@ -85,7 +85,7 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
     Balance of payments.
 
     .. math::
-        \sum_{i}pWe_{i}E_{i} + \\frac{Sf}{\\varepsilon} = \sum_{i}pWm_{i}M_{i} + \\frac{Fsh}{\\varepsilon}
+        \sum_{i}pWe_{i}E_{i} + \frac{Sf}{\varepsilon} = \sum_{i}pWm_{i}M_{i} + \frac{Fsh}{\varepsilon}
 
     Args:
         pWe (1D numpy array): The world export price of good i in foreign
@@ -174,7 +174,7 @@ def eqpk(F, Kk, Kk0, Ff0):
     r"""
     Comparing capital demand in the model and data.
 
-    ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0
+    ..math:: \sum_{i}F_{h,i} - \frac{Kk}{\Kk0} \cdot Ff0
 
     Args:
         F (2D numpy array): The use of factor h in the production of

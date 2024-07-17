@@ -3,7 +3,7 @@ def eqF(beta, py, Y, pf):
     Factor demand.
 
     .. math::
-        F_{h,j} = \\beta_{h,j}\\frac{py_{j}}{pf_{h}}Y_{j}
+        F_{h,j} = \beta_{h,j}\frac{py_{j}}{pf_{h}}Y_{j}
 
     Args:
         beta (2D numpy array): Cost share parameter for factor h in
@@ -25,7 +25,7 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
     Total income of consumers.
 
     .. math::
-        I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\\right)
+        I = \left(\sum_{h}pf_{h}Ff_{h} - S^{p} - T^{d}- FSH - TRF\right)
 
     Args:
         pf (1D numpy array): The price of factor h
@@ -47,7 +47,7 @@ def eqXp(alpha, I, pq):
     Demand for production good i by consumers.
 
     .. math::
-        X^{p}_{i}= \\frac{\\alpha_{i}}{pq_{i}}I
+        X^{p}_{i}= \frac{\alpha_{i}}{pq_{i}}I
 
     Args:
         alpha (1D numpy array): Budget share of good i

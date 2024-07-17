@@ -3,7 +3,7 @@ def eqpy(b, F, beta, Y):
     Production function.
 
     .. math::
-        Y_{i} = b_{i}\prod_{h}F_{h,i}^{\\beta_{h,i}}
+        Y_{i} = b_{i}\prod_{h}F_{h,i}^{\beta_{h,i}}
 
     Args:
         b (1D numpy array): Scale parameter for each good i
@@ -105,7 +105,7 @@ def eqFsh(R, Kf, er):
     Domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
-        Fsh = R \cdot Kf \cdot \\varepsilon
+        Fsh = R \cdot Kf \cdot \varepsilon
 
     Args:
         R (float): Real return on domestic capital
@@ -124,7 +124,7 @@ def eqpe(er, pWe):
     World export price equation.
 
     .. math::
-        pe_{i} = \\varepsilon \cdot pWe_{i}
+        pe_{i} = \varepsilon \cdot pWe_{i}
 
     Args:
         er (float): The real exchange rate (foreign/domestic)
@@ -142,7 +142,7 @@ def eqpm(er, pWm):
     World import price equation.
 
     .. math::
-        pm_{i} = \\varepsilon \cdot pWm_{i}
+        pm_{i} = \varepsilon \cdot pWm_{i}
 
     Args:
         er (float): The real exchange rate (foreign/domestic)
@@ -160,7 +160,7 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
     CES production function for the importing firm.
 
     .. math::
-        Q(i) = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\\right]^{\\frac{1}{\eta_{i}}}
+        Q(i) = \gamma_{i}\left[\delta^{m}_{i}M^{\eta_{i}}_{i} + \delta^{d}_{i}D^{\eta_{i}}_{i}\right]^{\frac{1}{\eta_{i}}}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -182,7 +182,7 @@ def eqM(gamma, deltam, eta, Q, pq, pm, taum):
     Demand for imports.
 
     .. math::
-        M_{i} = \left(\gamma^{\eta_{i}}_{i}\delta^{m}_{i}\\frac{pq_{i}}{(1+\\tau^{m}_{i})pm_{i}}\\right)^{\\frac{1}{1-\eta_{i}}}Q_{i}
+        M_{i} = \left(\gamma^{\eta_{i}}_{i}\delta^{m}_{i}\frac{pq_{i}}{(1+\tau^{m}_{i})pm_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -205,7 +205,7 @@ def eqD(gamma, deltad, eta, Q, pq, pd):
     Demand for domestically produced goods from importers.
 
     .. math::
-        D_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}\\frac{pq_{i}}{pd_{i}}\\right)^{\\frac{1}{1-\eta_{i}}}Q_{i}
+        D_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}\frac{pq_{i}}{pd_{i}}\right)^{\frac{1}{1-\eta_{i}}}Q_{i}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -227,7 +227,7 @@ def eqpd(gamma, deltad, eta, Q, pq, D):
     Price of domestically produced goods from importers.
 
     .. math::
-        pd_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}pq_{i}\\right)\left(\\frac{D_{i}}{Q_{i}}\\right)^{\eta_{i}-1}
+        pd_{i} = \left(\gamma_{i}^{\eta_{i}}\delta^{d}_{i}pq_{i}\right)\left(\frac{D_{i}}{Q_{i}}\right)^{\eta_{i}-1}
 
     Args:
         gamma (1D numpy array): Scale parameter for CES production function
@@ -249,7 +249,7 @@ def eqZ(theta, xie, xid, phi, E, D):
     Exporting firm production function.
 
     .. math::
-        Z_{i} = \\theta_{i}\left[\\xi_{i}^{E}E_{i}^{\phi_{i}} + \\xi_{i}^{D}D_{i}^{\phi_{i}}\\right]^{\\frac{1}{\phi_{i}}}
+        Z_{i} = \theta_{i}\left[\xi_{i}^{E}E_{i}^{\phi_{i}} + \xi_{i}^{D}D_{i}^{\phi_{i}}\right]^{\frac{1}{\phi_{i}}}
 
     Args:
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
@@ -271,7 +271,7 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
     Supply of exports.
 
     .. math::
-        E_{i} = \left(\\theta_{i}^{\phi_{i}}\\xi^{E}_{i}(1+\\tau^{z}_{i}\\frac{pz_{i}}{pe_{i}})\\right)^{\\frac{1}{1-\phi_{i}}}Z_{i}
+        E_{i} = \left(\theta_{i}^{\phi_{i}}\xi^{E}_{i}(1+\tau^{z}_{i}\frac{pz_{i}}{pe_{i}})\right)^{\frac{1}{1-\phi_{i}}}Z_{i}
 
     Args:
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
@@ -294,7 +294,7 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
     Demand for domestic goods by exporters.
 
     .. math::
-        D_{i} = \left(\\theta_{i}^{\phi_{i}}\\xi^{D}_{i}(1+\\tau^{z}_{i}\\frac{pz_{i}}{pd_{i}})\\right)^{\\frac{1}{1-\phi_{i}}}Z_{i}
+        D_{i} = \left(\theta_{i}^{\phi_{i}}\xi^{D}_{i}(1+\tau^{z}_{i}\frac{pz_{i}}{pd_{i}})\right)^{\frac{1}{1-\phi_{i}}}Z_{i}
 
     Args:
         theta (1D numpy array): Scaling coefficient of the ith good transformation from domestic output to exports
