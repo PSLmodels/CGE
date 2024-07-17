@@ -13,5 +13,11 @@ dependencies:
 - numpydoc
 - pip
 - openpyxl
+- sphinx>=3.5.4
+- sphinx-argparse
+- sphinxcontrib-bibtex>=2.0.0
+- sphinx-math-dollar
+- pydata-sphinx-theme
+- jupyter-book>=0.11.3
 - pip:
     - black
