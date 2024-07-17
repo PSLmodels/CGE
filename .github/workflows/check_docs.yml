@@ -21,14 +21,12 @@ jobs:
         with:
           activate-environment: cge_env
           environment-file: environment.yml
-          python-version: 3.7
+          python-version: 3.12
           auto-activate-base: false
 
-      - name: Install and Build # install Sphinx and build docs
+      - name: Build # Build Jupyter Book
         shell: bash -l {0}
         run: |
-          conda install sphinx
-          conda list
           pip install -e .
-          cd docs
-          make html
+          python -m ipykernel install --user --name=cge_env
+          jb build ./docs/book
