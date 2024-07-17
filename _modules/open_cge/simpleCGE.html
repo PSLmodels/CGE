@@ -1,40 +1,349 @@
 
 <!DOCTYPE html>
 
-<html lang="Python">
+
+<html lang="en" data-content_root="../../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>open_cge.simpleCGE &#8212; Open CGE 0.0 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>open_cge.simpleCGE &#8212; CGE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/open_cge/simpleCGE';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-   
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
   
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-  </head><body>
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
 
-          <div class="body" role="main">
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../content/intro/index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">CGE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../content/intro/index.html">
+                    Open CGE
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/intro/contributor_guide.html">Contributor Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing to CGE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/intro/contributor_guide.html">Contributor Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CGE API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../content/api/public_api.html">Open CGE API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/aggregates.html">Economic Aggregates Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/calibrate.html">CGE Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/execute.html">Model Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/firms.html">Firm Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/government.html">Government Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/household.html">Household Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../content/api/simpleCGE.html">Simple CGE Model</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PSLmodels/CGE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PSLmodels/CGE/issues/new?title=Issue%20on%20page%20%2F_modules/open_cge/simpleCGE.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for open_cge.simpleCGE</h1><div class="highlight"><pre>
 <span></span><span class="c1"># import packages</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">DataFrame</span>
 <span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">government</span> <span class="k">as</span> <span class="n">gov</span>
 <span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">household</span> <span class="k">as</span> <span class="n">hh</span>
@@ -42,8 +351,10 @@
 <span class="kn">from</span> <span class="nn">open_cge</span> <span class="kn">import</span> <span class="n">firms</span>
 
 
-<div class="viewcode-block" id="cge_system"><a class="viewcode-back" href="../../simpleCGE.html#open_cge.simpleCGE.cge_system">[docs]</a><span class="k">def</span> <span class="nf">cge_system</span><span class="p">(</span><span class="n">pvec</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="cge_system">
+<a class="viewcode-back" href="../../content/api/simpleCGE.html#open_cge.simpleCGE.cge_system">[docs]</a>
+<span class="k">def</span> <span class="nf">cge_system</span><span class="p">(</span><span class="n">pvec</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function solves the system of equations that represents the</span>
 <span class="sd">    CGE model.</span>
 
@@ -53,11 +364,11 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        p_error (Numpy array): Errors from CGE equations</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Kd</span><span class="p">,</span> <span class="n">pd</span><span class="p">,</span> <span class="n">Ff</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">er</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span>
 
-    <span class="n">py</span> <span class="o">=</span> <span class="n">pvec</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)]</span>
-    <span class="n">pf</span> <span class="o">=</span> <span class="n">pvec</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">):</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">)]</span>
+    <span class="n">py</span> <span class="o">=</span> <span class="n">pvec</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)]</span>
+    <span class="n">pf</span> <span class="o">=</span> <span class="n">pvec</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">)]</span>
     <span class="n">py</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">py</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
     <span class="n">pf</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
 
@@ -77,7 +388,7 @@
     <span class="n">pk_error</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">eqpk</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">Kk</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">Kk0</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">Ff0</span><span class="p">)</span>
     <span class="n">py_error</span> <span class="o">=</span> <span class="n">firms</span><span class="o">.</span><span class="n">eqpy</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
 
-    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pf_error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pk_error</span><span class="p">)</span>
+    <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">pf_error</span><span class="p">,</span> <span class="n">pk_error</span><span class="p">))</span>
     <span class="n">pf_error</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">pf_error</span><span class="p">)</span>
     <span class="n">pf_error</span> <span class="o">=</span> <span class="n">pf_error</span><span class="o">.</span><span class="n">T</span>
     <span class="n">pf_error</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">pf_error</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
@@ -89,71 +400,73 @@
     <span class="n">p_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">py_error</span><span class="p">,</span> <span class="n">pf_error</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">p_error</span></div>
+
 </pre></div>
 
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">Open CGE</a></h1>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jason DeBacker
+</p>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Contributor Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../public_api.html">Open CGE API</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019, Jason DeBacker and Dinar Prihardini.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
-
+  </div>
+  
+  <div class="footer-item">
     
 
+  <p class="copyright">
     
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

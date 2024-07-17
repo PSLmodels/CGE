@@ -1,0 +1,804 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Economic Aggregates Equations &#8212; CGE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/api/aggregates';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CGE Calibration" href="calibrate.html" />
+    <link rel="prev" title="Open CGE API" href="public_api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro/index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">CGE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro/index.html">
+                    Open CGE
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro/contributor_guide.html">Contributor Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing to CGE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro/contributor_guide.html">Contributor Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CGE API</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="public_api.html">Open CGE API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Economic Aggregates Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrate.html">CGE Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execute.html">Model Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firms.html">Firm Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="government.html">Government Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="household.html">Household Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleCGE.html">Simple CGE Model</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PSLmodels/CGE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PSLmodels/CGE/issues/new?title=Issue%20on%20page%20%2Fcontent/api/aggregates.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/api/aggregates.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Economic Aggregates Equations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-open_cge.aggregates">open_cge.aggregates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqKd"><code class="docutils literal notranslate"><span class="pre">eqKd()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqKf"><code class="docutils literal notranslate"><span class="pre">eqKf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqKk"><code class="docutils literal notranslate"><span class="pre">eqKk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqSf"><code class="docutils literal notranslate"><span class="pre">eqSf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqSp"><code class="docutils literal notranslate"><span class="pre">eqSp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqXXv"><code class="docutils literal notranslate"><span class="pre">eqXXv()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqbop"><code class="docutils literal notranslate"><span class="pre">eqbop()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqpf"><code class="docutils literal notranslate"><span class="pre">eqpf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqpk"><code class="docutils literal notranslate"><span class="pre">eqpk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqpqerror"><code class="docutils literal notranslate"><span class="pre">eqpqerror()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="economic-aggregates-equations">
+<span id="aggregates"></span><h1>Economic Aggregates Equations<a class="headerlink" href="#economic-aggregates-equations" title="Link to this heading">#</a></h1>
+<p><strong>Aggregates</strong></p>
+<section id="module-open_cge.aggregates">
+<span id="open-cge-aggregates"></span><h2>open_cge.aggregates<a class="headerlink" href="#module-open_cge.aggregates" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqKd">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqKd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqKd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqKd" title="Link to this definition">#</a></dt>
+<dd><p>Domestic capital holdings.</p>
+<div class="math notranslate nohighlight">
+\[K^{d} = \frac{S^{p}}{g\sum_{i}\lambda_{i}pq_{i}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) – Exogenous long run growth rate of the economy</p></li>
+<li><p><strong>Sp</strong> (<em>float</em>) – Total household savings</p></li>
+<li><p><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good i</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic +
+imports) for each good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Domestically owned capital</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kd (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqKf">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqKf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Kk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqKf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqKf" title="Link to this definition">#</a></dt>
+<dd><p>Foreign holdings of domestically used capital.</p>
+<div class="math notranslate nohighlight">
+\[K^{f} = KK - K^{d}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Kk</strong> (<em>float</em>) – Total capital stock</p></li>
+<li><p><strong>Kd</strong> (<em>float</em>) – Domestically owned capital</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Foreign owned domestic capital</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kf (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqKk">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqKk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqKk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqKk" title="Link to this definition">#</a></dt>
+<dd><p>Capital market clearing equation.</p>
+<div class="math notranslate nohighlight">
+\[KK = \frac{pf * Ff}{R \sum_{i}\lambda_{i}pq_{i}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</p></li>
+<li><p><strong>R</strong> (<em>float</em>) – Real return on capital</p></li>
+<li><p><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good i</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic +
+imports) for each good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Total capital stock</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kk (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqSf">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqSf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqSf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqSf" title="Link to this definition">#</a></dt>
+<dd><p>Net foreign investment/savings.</p>
+<div class="math notranslate nohighlight">
+\[Sf = g Kf \sum_{i} \lambda_{i} pq_{i}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) – Exogenous long run growth rate of the economy</p></li>
+<li><p><strong>lam</strong> (<em>1D numpy array</em>) – Fixed shares of investment for each good i</p></li>
+<li><p><strong>pq</strong> (<em>1D numpy array</em>) – price of the Armington good (domestic +
+imports) for each good i</p></li>
+<li><p><strong>Kf</strong> (<em>float</em>) – Foreign owned domestic capital</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Total foreign savings (??)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sf (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqSp">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqSp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ssp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fsh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Trf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqSp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqSp" title="Link to this definition">#</a></dt>
+<dd><p>Total household savings.</p>
+<div class="math notranslate nohighlight">
+\[Sp = ssp \cdot \left(\sum_{h}pf_{h}Ff_{h} \right)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ssp</strong> (<em>float</em>) – Fixed household savings rate</p></li>
+<li><p><strong>pf</strong> (<em>1D numpy array</em>) – The price of factor h</p></li>
+<li><p><strong>Ff</strong> (<em>1D numpy array</em>) – Endowment of factor h</p></li>
+<li><p><strong>Fsh</strong> (<em>float</em>) – Repatriated profits</p></li>
+<li><p><strong>Trf</strong> (<em>float</em>) – Total transfers to households</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Total household savings</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sp (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqXXv">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqXXv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqXXv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqXXv" title="Link to this definition">#</a></dt>
+<dd><p>Total investment.</p>
+<div class="math notranslate nohighlight">
+\[XXv = g \cdot KK\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) – Exogenous long run growth rate of the economy</p></li>
+<li><p><strong>Kk</strong> (<em>float</em>) – Total capital stock</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Total investment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>XXv (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqbop">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqbop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pWe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pWm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fsh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">er</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqbop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqbop" title="Link to this definition">#</a></dt>
+<dd><p>Balance of payments.</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i}pWe_{i}E_{i} + \frac{Sf}{\varepsilon} = \sum_{i}pWm_{i}M_{i} + \frac{Fsh}{\varepsilon}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pWe</strong> (<em>1D numpy array</em>) – The world export price of good i in foreign
+currency</p></li>
+<li><p><strong>pWm</strong> (<em>1D numpy array</em>) – The world import price of good i in foreign
+currency.</p></li>
+<li><p><strong>E</strong> (<em>1D numpy array</em>) – Exports of good i</p></li>
+<li><p><strong>M</strong> (<em>1D numpy array</em>) – Imports of good i</p></li>
+<li><p><strong>Sf</strong> (<em>float</em>) – Total foreign savings</p></li>
+<li><p><strong>Fsh</strong> (<em>float</em>) – Repatriated profits</p></li>
+<li><p><strong>er</strong> (<em>float</em>) – The real exchange rate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error in balance of payments equation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bop_error (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqpf">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqpf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ff0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqpf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqpf" title="Link to this definition">#</a></dt>
+<dd><p>Comparing labor demand from the model to that in the data.</p>
+<dl class="simple">
+<dt>..math::</dt><dd><p>F_{h} - sum_{i}F_{h,i}</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> (<em>2D numpy array</em>) – The use of factor h in the production of
+good i</p></li>
+<li><p><strong>Ff0</strong> (<em>float</em>) – Total demand for factor h from SAM</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error in aggregate labor demand</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pf_error (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqpk">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqpk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kk0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ff0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqpk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqpk" title="Link to this definition">#</a></dt>
+<dd><p>Comparing capital demand in the model and data.</p>
+<p>..math:: sum_{i}F_{h,i} - frac{Kk}{Kk0} cdot Ff0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> (<em>2D numpy array</em>) – The use of factor h in the production of
+good i</p></li>
+<li><p><strong>Kk</strong> (<em>float</em>) – Total capital stock</p></li>
+<li><p><strong>Kk0</strong> (<em>float</em>) – Total capital stock from SAM</p></li>
+<li><p><strong>Ff0</strong> (<em>float</em>) – Total labor demand from SAM</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error in aggregate capital demand</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pk_error (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="open_cge.aggregates.eqpqerror">
+<span class="sig-prename descclassname"><span class="pre">open_cge.aggregates.</span></span><span class="sig-name descname"><span class="pre">eqpqerror</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/open_cge/aggregates.html#eqpqerror"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#open_cge.aggregates.eqpqerror" title="Link to this definition">#</a></dt>
+<dd><p>Resource constraint.</p>
+<div class="math notranslate nohighlight">
+\[Q(i) = X^{p}_{i} + X^{g}_{i} + X^{v}_{i} + \sum_{i}X_{i,j}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Q</strong> (<em>1D numpy array</em>) – The domestic supply of good Q(i), the Armington good</p></li>
+<li><p><strong>Xp</strong> (<em>1D numpy array</em>) – Demand for production good i by consumers</p></li>
+<li><p><strong>Xg</strong> (<em>1D numpy array</em>) – Government expenditures on good i</p></li>
+<li><p><strong>Xv</strong> (<em>1D numpy array</em>) – Investment demand for each good i</p></li>
+<li><p><strong>X</strong> (<em>2D numpy array</em>) – Demand for factor h used in the
+production of good i</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error in resource constraint for each good i</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pq_error (1D numpy array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/api"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="public_api.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Open CGE API</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="calibrate.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CGE Calibration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-open_cge.aggregates">open_cge.aggregates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqKd"><code class="docutils literal notranslate"><span class="pre">eqKd()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqKf"><code class="docutils literal notranslate"><span class="pre">eqKf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqKk"><code class="docutils literal notranslate"><span class="pre">eqKk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqSf"><code class="docutils literal notranslate"><span class="pre">eqSf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqSp"><code class="docutils literal notranslate"><span class="pre">eqSp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqXXv"><code class="docutils literal notranslate"><span class="pre">eqXXv()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqbop"><code class="docutils literal notranslate"><span class="pre">eqbop()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqpf"><code class="docutils literal notranslate"><span class="pre">eqpf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqpk"><code class="docutils literal notranslate"><span class="pre">eqpk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open_cge.aggregates.eqpqerror"><code class="docutils literal notranslate"><span class="pre">eqpqerror()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jason DeBacker
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
