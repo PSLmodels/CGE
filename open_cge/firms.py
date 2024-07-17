@@ -1,5 +1,5 @@
 def eqpy(b, F, beta, Y):
-    '''
+    """
     Production function.
 
     .. math::
@@ -16,13 +16,13 @@ def eqpy(b, F, beta, Y):
     Returns:
         py_error (1D numpy array): The difference between Y and the
             production function evaluated at F.
-    '''
-    py_error = Y - b * (F ** beta).prod(axis=0)
+    """
+    py_error = Y - b * (F**beta).prod(axis=0)
     return py_error
 
 
 def eqX(ax, Z):
-    '''
+    """
     Demand for intermediate inputs.
 
     .. math::
@@ -36,13 +36,13 @@ def eqX(ax, Z):
     Returns:
         X (2D numpy array): Demand for factor h used in the
             production of good i
-    '''
+    """
     X = ax * Z
     return X
 
 
 def eqY(ay, Z):
-    '''
+    """
     Value added.
 
     .. math::
@@ -55,13 +55,13 @@ def eqY(ay, Z):
 
     Returns:
         Y (1D numpy array): Value added of good i
-    '''
+    """
     Y = ay * Z
     return Y
 
 
 def eqpz(ay, ax, py, pq):
-    '''
+    """
     Output prices.
 
     .. math::
@@ -77,13 +77,13 @@ def eqpz(ay, ax, py, pq):
 
     Returns:
         pz (1D numpy array): price of output good i
-    '''
+    """
     pz = ay * py + (ax * pq).sum(axis=0)
     return pz
 
 
 def eqXv(lam, XXv):
-    '''
+    """
     Investment demand for each good i
 
     .. math::
@@ -95,13 +95,13 @@ def eqXv(lam, XXv):
 
     Returns:
         Xv (1D numpy array): Investment demand for each good i
-    '''
+    """
     Xv = lam * XXv
     return Xv
 
 
 def eqFsh(R, Kf, er):
-    '''
+    """
     Domestic profits that are repatriated to foreign owners of capital.
 
     .. math::
@@ -114,13 +114,13 @@ def eqFsh(R, Kf, er):
 
     Returns:
         Fsh = Repatriated profits
-    '''
+    """
     Fsh = R * Kf * er
     return Fsh
 
 
 def eqpe(er, pWe):
-    '''
+    """
     World export price equation.
 
     .. math::
@@ -132,13 +132,13 @@ def eqpe(er, pWe):
 
     Returns:
         pe (1D numpy array): The world export price of good i exports in foreign currency
-    '''
+    """
     pe = er * pWe
     return pe
 
 
 def eqpm(er, pWm):
-    '''
+    """
     World import price equation.
 
     .. math::
@@ -150,13 +150,13 @@ def eqpm(er, pWm):
 
     Returns:
         pm (1D numpy array): The world import price of good i imports in foreign currency.
-    '''
+    """
     pm = er * pWm
     return pm
 
 
 def eqQ(gamma, deltam, deltad, eta, M, D):
-    '''
+    """
     CES production function for the importing firm.
 
     .. math::
@@ -172,13 +172,13 @@ def eqQ(gamma, deltam, deltad, eta, M, D):
 
     Returns:
         Q (1D numpy array): The domestic supply of good Q(i), the Armington good
-    '''
-    Q = gamma * (deltam * M ** eta + deltad * D ** eta) ** (1 / eta)
+    """
+    Q = gamma * (deltam * M**eta + deltad * D**eta) ** (1 / eta)
     return Q
 
 
 def eqM(gamma, deltam, eta, Q, pq, pm, taum):
-    '''
+    """
     Demand for imports.
 
     .. math::
@@ -195,13 +195,13 @@ def eqM(gamma, deltam, eta, Q, pq, pm, taum):
 
     Returns:
         M (1D numpy array): Demand for imports of good i
-    '''
-    M = (gamma ** eta * deltam * pq / ((1 + taum) * pm)) ** (1 / (1 - eta)) * Q
+    """
+    M = (gamma**eta * deltam * pq / ((1 + taum) * pm)) ** (1 / (1 - eta)) * Q
     return M
 
 
 def eqD(gamma, deltad, eta, Q, pq, pd):
-    '''
+    """
     Demand for domestically produced goods from importers.
 
     .. math::
@@ -217,13 +217,13 @@ def eqD(gamma, deltad, eta, Q, pq, pd):
 
     Returns:
         D (1D numpy array): Demand for domestically produced good i from importers
-    '''
-    D = (gamma ** eta * deltad * pq / pd) ** (1 / (1 - eta)) * Q
+    """
+    D = (gamma**eta * deltad * pq / pd) ** (1 / (1 - eta)) * Q
     return pd
 
 
 def eqpd(gamma, deltad, eta, Q, pq, D):
-    '''
+    """
     Price of domestically produced goods from importers.
 
     .. math::
@@ -239,13 +239,13 @@ def eqpd(gamma, deltad, eta, Q, pq, D):
 
     Returns:
         pd (1D numpy array): price of domesically produced good i
-    '''
-    pd = (gamma ** eta * deltad * pq) * (D / Q) ** (eta - 1)
+    """
+    pd = (gamma**eta * deltad * pq) * (D / Q) ** (eta - 1)
     return pd
 
 
 def eqZ(theta, xie, xid, phi, E, D):
-    '''
+    """
     Exporting firm production function.
 
     .. math::
@@ -261,12 +261,13 @@ def eqZ(theta, xie, xid, phi, E, D):
 
     Returns:
         Z (1D numpy array): Output from exporters CET production function
-    '''
-    Z = theta * (xie * E ** phi + xid * D ** phi) ** (1 / phi)
+    """
+    Z = theta * (xie * E**phi + xid * D**phi) ** (1 / phi)
     return Z
 
+
 def eqE(theta, xie, tauz, phi, pz, pe, Z):
-    '''
+    """
     Supply of exports.
 
     .. math::
@@ -283,13 +284,13 @@ def eqE(theta, xie, tauz, phi, pz, pe, Z):
 
     Returns:
         E (1D numpy array): Exports of good i
-    '''
-    E = (theta ** phi * xie * (1 + tauz) * pz / pe) ** (1 / (1 - phi)) * Z
+    """
+    E = (theta**phi * xie * (1 + tauz) * pz / pe) ** (1 / (1 - phi)) * Z
     return E
 
 
 def eqDex(theta, xid, tauz, phi, pz, pd, Z):
-    '''
+    """
     Demand for domestic goods by exporters.
 
     .. math::
@@ -306,13 +307,15 @@ def eqDex(theta, xid, tauz, phi, pz, pd, Z):
 
     Returns:
         D (1D numpy array): Demand for domestic good i by exporters.
-    '''
-    D = (theta ** phi * xid * (1 + tauz) * pz / pd) ** (1 / (1 - phi)) * Z
+    """
+    D = (theta**phi * xid * (1 + tauz) * pz / pd) ** (1 / (1 - phi)) * Z
     return D
 
 
 def eqpq(pm, pd, taum, eta, deltam, deltad, gamma):
 
-    pq = (((pm * (1 + taum)) ** eta / (deltam * gamma ** eta)) ** (1 / (eta - 1))
-			+ (pd ** eta / (deltad * gamma ** eta)) ** (1 / (eta - 1))) ** ((eta - 1) / eta)
+    pq = (
+        ((pm * (1 + taum)) ** eta / (deltam * gamma**eta)) ** (1 / (eta - 1))
+        + (pd**eta / (deltad * gamma**eta)) ** (1 / (eta - 1))
+    ) ** ((eta - 1) / eta)
     return pq

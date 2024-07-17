@@ -9,7 +9,7 @@ from open_cge import firms
 
 
 def cge_system(pvec, args):
-    '''
+    """
     This function solves the system of equations that represents the
     CGE model.
 
@@ -19,11 +19,11 @@ def cge_system(pvec, args):
 
     Returns:
         p_error (Numpy array): Errors from CGE equations
-    '''
+    """
     (p, d, ind, h, Z, Q, Kd, pd, Ff, R, er) = args
 
-    py = pvec[0:len(ind)]
-    pf = pvec[len(ind): len(ind) + len(h)]
+    py = pvec[0 : len(ind)]
+    pf = pvec[len(ind) : len(ind) + len(h)]
     py = Series(py, index=list(ind))
     pf = Series(pf, index=list(h))
 

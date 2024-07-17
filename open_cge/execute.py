@@ -11,33 +11,50 @@ from open_cge import simpleCGE as cge
 
 # load social accounting matrix
 current_path = os.path.abspath(os.path.dirname(__file__))
-sam_path = os.path.join(current_path, 'SAM.xlsx')
+sam_path = os.path.join(current_path, "SAM.xlsx")
 sam = pd.read_excel(sam_path, index_col=0, header=0)
 
 # declare sets of variables
-u = ('AGR', 'OIL', 'IND', 'SER', 'LAB', 'CAP', 'LAND', 'NTR',
-     'DTX', 'IDT', 'ACT', 'HOH', 'GOV', 'INV', 'EXT')
-ind = ('AGR', 'OIL', 'IND', 'SER')
-h = ('LAB', 'CAP', 'LAND', 'NTR')
-w = ('LAB', 'LAND', 'NTR')
+u = (
+    "AGR",
+    "OIL",
+    "IND",
+    "SER",
+    "LAB",
+    "CAP",
+    "LAND",
+    "NTR",
+    "DTX",
+    "IDT",
+    "ACT",
+    "HOH",
+    "GOV",
+    "INV",
+    "EXT",
+)
+ind = ("AGR", "OIL", "IND", "SER")
+h = ("LAB", "CAP", "LAND", "NTR")
+w = ("LAB", "LAND", "NTR")
 
 
 def check_square():
-    '''
+    """
     this function tests whether the SAM is a square matrix.
-    '''
+    """
     sam_small = sam.iloc[:, :-3]
     sam_small = sam_small.drop("TOTAL")
     sam_small.to_numpy(dtype=None, copy=True)
     if not sam_small.shape[0] == sam_small.shape[1]:
-        raise ValueError(f"SAM is not square. It has {sam_small.shape[0]} rows and {sam_small.shape[0]} columns")
+        raise ValueError(
+            f"SAM is not square. It has {sam_small.shape[0]} rows and {sam_small.shape[0]} columns"
+        )
 
 
 def row_total():
-    '''
+    """
     This function tests whether the row sums
     of the SAM equal the expected value.
-    '''
+    """
     sam_small = sam.iloc[:, :-3]
     sam_small = sam_small.drop("TOTAL")
     row_sum = sam_small.sum(axis=0)
@@ -46,10 +63,10 @@ def row_total():
 
 
 def col_total():
-    '''
+    """
     This function tests whether column sums
     of the SAM equal the expected values.
-    '''
+    """
     sam_small = sam.iloc[:, :-3]
     sam_small = sam_small.drop("TOTAL")
     col_sum = sam_small.sum(axis=1)
@@ -58,10 +75,10 @@ def col_total():
 
 
 def row_col_equal():
-    '''
+    """
     This function tests whether row sums
     and column sums of the SAM are equal.
-    '''
+    """
     sam_small = sam.iloc[:, :-3]
     sam_small = sam_small.drop("TOTAL")
     row_sum = sam_small.sum(axis=0)
@@ -70,9 +87,9 @@ def row_col_equal():
 
 
 def runner():
-    '''
+    """
     This function solves the CGE model
-    '''
+    """
 
     # solve cge_system
     dist = 10
@@ -95,7 +112,7 @@ def runner():
     Ffbar = d.Ff0
     Kdbar = d.Kd0
     Qbar = d.Q0
-    pdbar = pvec[0:len(ind)]
+    pdbar = pvec[0 : len(ind)]
 
     pm = firms.eqpm(er, d.pWm)
 
@@ -104,11 +121,12 @@ def runner():
         cge_args = [p, d, ind, h, Zbar, Qbar, Kdbar, pdbar, Ffbar, R, er]
 
         print("initial guess = ", pvec)
-        results = opt.root(cge.cge_system, pvec, args=cge_args, method='lm',
-                           tol=1e-5)
+        results = opt.root(
+            cge.cge_system, pvec, args=cge_args, method="lm", tol=1e-5
+        )
         pprime = results.x
-        pyprime = pprime[0:len(ind)]
-        pfprime = pprime[len(ind):len(ind) + len(h)]
+        pyprime = pprime[0 : len(ind)]
+        pfprime = pprime[len(ind) : len(ind) + len(h)]
         pyprime = Series(pyprime, index=list(ind))
         pfprime = Series(pfprime, index=list(h))
 
@@ -133,10 +151,10 @@ def runner():
         Zprime = firms.eqZ(p.theta, p.xie, p.xid, p.phi, E, D)
         Kdprime = agg.eqKd(d.g, Sp, p.lam, pq)
         Ffprime = d.Ff0
-        Ffprime['CAP'] = R * Kk * (p.lam * pq).sum() / pfprime.iloc[1]
+        Ffprime["CAP"] = R * Kk * (p.lam * pq).sum() / pfprime.iloc[1]
 
         dist = (((Zbar - Zprime) ** 2) ** (1 / 2)).sum()
-        print('Distance at iteration ', tpi_iter, ' is ', dist)
+        print("Distance at iteration ", tpi_iter, " is ", dist)
         pdbar = xi * pdprime + (1 - xi) * pdbar
         Zbar = xi * Zprime + (1 - xi) * Zbar
         Kdbar = xi * Kdprime + (1 - xi) * Kdbar
@@ -145,7 +163,7 @@ def runner():
 
         Q = firms.eqQ(p.gamma, p.deltam, p.deltad, p.eta, M, D)
 
-    print('Model solved, Q = ', Q.to_markdown())
+    print("Model solved, Q = ", Q.to_markdown())
 
     return Q
 

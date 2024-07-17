@@ -11,3 +11,6 @@ dependencies:
 - pytest-pep8
 - pytest-xdist
 - numpydoc
+- pip
+- pip:
+    - black

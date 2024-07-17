@@ -1,5 +1,5 @@
 def eqSp(ssp, pf, Ff, Fsh, Trf):
-    '''
+    """
     Total household savings.
 
     .. math::
@@ -14,13 +14,13 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
 
     Returns:
         Sp (float): Total household savings
-    '''
+    """
     Sp = ssp * ((pf * Ff).sum() - Fsh + Trf)
     return Sp
 
 
 def eqKd(g, Sp, lam, pq):
-    '''
+    """
     Domestic capital holdings.
 
     .. math::
@@ -35,13 +35,13 @@ def eqKd(g, Sp, lam, pq):
 
     Returns:
         Kd (float): Domestically owned capital
-    '''
+    """
     Kd = Sp / (g * (lam * pq).sum())
     return Kd
 
 
 def eqKf(Kk, Kd):
-    '''
+    """
     Foreign holdings of domestically used capital.
 
     .. math::
@@ -53,13 +53,13 @@ def eqKf(Kk, Kd):
 
     Returns:
         Kf (float): Foreign owned domestic capital
-    '''
+    """
     Kf = Kk - Kd
     return Kf
 
 
 def eqKk(pf, Ff, R, lam, pq):
-    '''
+    """
     Capital market clearing equation.
 
     .. math::
@@ -75,13 +75,13 @@ def eqKk(pf, Ff, R, lam, pq):
 
     Returns:
         Kk (float): Total capital stock
-    '''
-    Kk = (pf['CAP'] * Ff['CAP']) / (R * ((lam * pq).sum()))
+    """
+    Kk = (pf["CAP"] * Ff["CAP"]) / (R * ((lam * pq).sum()))
     return Kk
 
 
 def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
-    '''
+    """
     Balance of payments.
 
     .. math::
@@ -101,13 +101,13 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
     Returns:
         bop_error (float): Error in balance of payments equation.
 
-    '''
+    """
     bop_error = (pWe * E).sum() + Sf / er - ((pWm * M).sum() + Fsh / er)
     return bop_error
 
 
 def eqSf(g, lam, pq, Kf):
-    '''
+    """
     Net foreign investment/savings.
 
     .. math::
@@ -122,13 +122,13 @@ def eqSf(g, lam, pq, Kf):
 
     Returns:
         Sf (float): Total foreign savings (??)
-    '''
+    """
     Sf = g * Kf * (lam * pq).sum()
     return Sf
 
 
 def eqpqerror(Q, Xp, Xg, Xv, X):
-    '''
+    """
     Resource constraint.
 
     .. math::
@@ -144,13 +144,13 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
 
     Returns:
         pq_error (1D numpy array): Error in resource constraint for each good i
-    '''
+    """
     pq_error = Q - (Xp + Xg + Xv + X.sum(axis=1))
     return pq_error
 
 
 def eqpf(F, Ff0):
-    '''
+    """
     Comparing labor demand from the model to that in the data.
 
     ..math::
@@ -163,15 +163,15 @@ def eqpf(F, Ff0):
 
     Returns:
         pf_error (float): Error in aggregate labor demand
-    '''
-    F1 = F.drop(['CAP'])
-    Ff1 = Ff0.drop(['CAP'])
+    """
+    F1 = F.drop(["CAP"])
+    Ff1 = Ff0.drop(["CAP"])
     pf_error = Ff1 - F1.sum(axis=1)
     return pf_error
 
 
 def eqpk(F, Kk, Kk0, Ff0):
-    '''
+    """
     Comparing capital demand in the model and data.
 
     ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0
@@ -185,14 +185,14 @@ def eqpk(F, Kk, Kk0, Ff0):
 
     Returns:
         pk_error (float): Error in aggregate capital demand
-    '''
-    Fcap = F.loc[['CAP']]
-    pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0['CAP']
+    """
+    Fcap = F.loc[["CAP"]]
+    pk_error = Fcap.sum(axis=1) - Kk / Kk0 * Ff0["CAP"]
     return pk_error
 
 
 def eqXXv(g, Kk):
-    '''
+    """
     Total investment.
 
     .. math::
@@ -204,6 +204,6 @@ def eqXXv(g, Kk):
 
     Returns:
         XXv (float): Total investment.
-    '''
+    """
     XXv = g * Kk
     return XXv

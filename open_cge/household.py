@@ -1,5 +1,5 @@
 def eqF(beta, py, Y, pf):
-    '''
+    """
     Factor demand.
 
     .. math::
@@ -15,13 +15,13 @@ def eqF(beta, py, Y, pf):
     Returns:
         F (2D numpy array): The demand for factor h used in the
             production of good j
-    '''
+    """
     F = beta.div(pf, axis=0) * Y * py
     return F
 
 
 def eqI(pf, Ff, Sp, Td, Fsh, Trf):
-    '''
+    """
     Total income of consumers.
 
     .. math::
@@ -37,13 +37,13 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
 
     Returns:
         I (float): Total income of consumers
-    '''
+    """
     I = (pf * Ff).sum() - Sp - Td - Fsh + Trf
     return I
 
 
 def eqXp(alpha, I, pq):
-    '''
+    """
     Demand for production good i by consumers.
 
     .. math::
@@ -57,6 +57,6 @@ def eqXp(alpha, I, pq):
 
     Returns:
         Xp (1D numpy array): Demand for production good i by consumers
-    '''
+    """
     Xp = alpha.div(pq, axis=0) * I
     return Xp
