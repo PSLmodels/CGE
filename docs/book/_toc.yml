@@ -1,0 +1,9 @@
+format: jb-book
+root: content/intro/index
+parts:
+- caption: Contributing to CGE
+  chapters:
+  - file: content/intro/contributor_guide
+- caption: CGE API
+  chapters:
+  - file: content/api/public_api
