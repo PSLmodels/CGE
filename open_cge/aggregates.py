@@ -1,5 +1,5 @@
 def eqSp(ssp, pf, Ff, Fsh, Trf):
-    """
+    r"""
     Total household savings.
 
     .. math::
@@ -20,7 +20,7 @@ def eqSp(ssp, pf, Ff, Fsh, Trf):
 
 
 def eqKd(g, Sp, lam, pq):
-    """
+    r"""
     Domestic capital holdings.
 
     .. math::
@@ -41,7 +41,7 @@ def eqKd(g, Sp, lam, pq):
 
 
 def eqKf(Kk, Kd):
-    """
+    r"""
     Foreign holdings of domestically used capital.
 
     .. math::
@@ -59,7 +59,7 @@ def eqKf(Kk, Kd):
 
 
 def eqKk(pf, Ff, R, lam, pq):
-    """
+    r"""
     Capital market clearing equation.
 
     .. math::
@@ -81,7 +81,7 @@ def eqKk(pf, Ff, R, lam, pq):
 
 
 def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
-    """
+    r"""
     Balance of payments.
 
     .. math::
@@ -107,7 +107,7 @@ def eqbop(pWe, pWm, E, M, Sf, Fsh, er):
 
 
 def eqSf(g, lam, pq, Kf):
-    """
+    r"""
     Net foreign investment/savings.
 
     .. math::
@@ -128,7 +128,7 @@ def eqSf(g, lam, pq, Kf):
 
 
 def eqpqerror(Q, Xp, Xg, Xv, X):
-    """
+    r"""
     Resource constraint.
 
     .. math::
@@ -150,7 +150,7 @@ def eqpqerror(Q, Xp, Xg, Xv, X):
 
 
 def eqpf(F, Ff0):
-    """
+    r"""
     Comparing labor demand from the model to that in the data.
 
     ..math::
@@ -171,7 +171,7 @@ def eqpf(F, Ff0):
 
 
 def eqpk(F, Kk, Kk0, Ff0):
-    """
+    r"""
     Comparing capital demand in the model and data.
 
     ..math:: \sum_{i}F_{h,i} - \\frac{Kk}{\\Kk0} \cdot Ff0
@@ -192,7 +192,7 @@ def eqpk(F, Kk, Kk0, Ff0):
 
 
 def eqXXv(g, Kk):
-    """
+    r"""
     Total investment.
 
     .. math::

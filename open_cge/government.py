@@ -1,5 +1,5 @@
 def eqTd(taud, pf, Ff):
-    """
+    r"""
     Direct tax revenue.
 
     .. math::
@@ -18,7 +18,7 @@ def eqTd(taud, pf, Ff):
 
 
 def eqTrf(tautr, pf, Ff):
-    """
+    r"""
     Total transfers to households.
 
     .. math::
@@ -37,7 +37,7 @@ def eqTrf(tautr, pf, Ff):
 
 
 def eqTz(tauz, pz, Z):
-    """
+    r"""
     Production tax revenue from each good.
 
     .. math::
@@ -56,7 +56,7 @@ def eqTz(tauz, pz, Z):
 
 
 def eqTm(taum, pm, M):
-    """
+    r"""
     Tariff revenue from each good i.
 
     .. math::
@@ -75,7 +75,7 @@ def eqTm(taum, pm, M):
 
 
 def eqXg(mu, XXg):
-    """
+    r"""
     Government expenditures on good i
 
     .. math::
@@ -94,7 +94,7 @@ def eqXg(mu, XXg):
 
 
 def eqSg(mu, Td, Tz, Tm, XXg, Trf, pq):
-    """
+    r"""
     Total government savings.
 
     .. math::

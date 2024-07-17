@@ -1,5 +1,5 @@
 def eqF(beta, py, Y, pf):
-    """
+    r"""
     Factor demand.
 
     .. math::
@@ -21,7 +21,7 @@ def eqF(beta, py, Y, pf):
 
 
 def eqI(pf, Ff, Sp, Td, Fsh, Trf):
-    """
+    r"""
     Total income of consumers.
 
     .. math::
@@ -43,7 +43,7 @@ def eqI(pf, Ff, Sp, Td, Fsh, Trf):
 
 
 def eqXp(alpha, I, pq):
-    """
+    r"""
     Demand for production good i by consumers.
 
     .. math::
