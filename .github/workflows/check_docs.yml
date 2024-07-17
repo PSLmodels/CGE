@@ -19,9 +19,10 @@ jobs:
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
+          miniforge-variant: Mambaforge
           activate-environment: cge_env
           environment-file: environment.yml
-          python-version: 3.12
+          python-version: "3.12"
           auto-activate-base: false
 
       - name: Build # Build Jupyter Book
