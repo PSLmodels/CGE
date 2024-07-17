@@ -102,7 +102,7 @@ def runner():
     pvec = np.ones(len(ind) + len(h))
 
     # Load data and parameters classes
-    d = calibrate.model_data(sam, h, u, ind)
+    d = calibrate.model_data(sam, h, ind)
     p = calibrate.parameters(d, ind)
 
     R = d.R0
